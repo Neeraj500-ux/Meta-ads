@@ -15,14 +15,7 @@ export default function HeroVisual() {
           <span className="ml-auto rounded bg-plum-100 px-1.5 py-0.5 text-[8px] font-bold text-plum-700">Sponsored</span>
         </div>
         <div className="mx-3 mt-2.5 overflow-hidden rounded-xl bg-gradient-to-br from-plum-700 to-plum-500">
-          <svg viewBox="0 0 180 150" className="block w-full">
-            <circle cx="140" cy="30" r="46" fill="#ffd65a" opacity=".9" />
-            <path d="M70 40c0-8 6-12 12-12h10c6 0 12 4 12 12l6 28-16 8 6 52H64l6-52-16-8z" fill="#fcf8f3" />
-            <path d="M82 28c3 8 17 8 20 0" fill="none" stroke="#f77d54" strokeWidth="3" strokeLinecap="round" />
-            <path d="M58 120h68" stroke="#f77d54" strokeWidth="4" strokeLinecap="round" />
-            <circle cx="30" cy="110" r="5" fill="#f77d54" />
-            <circle cx="40" cy="30" r="3" fill="#ffd65a" />
-          </svg>
+          <img src="Collaborative Indian Fashion Design Studio.png" className="h-500 w-500" />
         </div>
         <div className="space-y-1.5 px-3 pt-2.5">
           <div className="h-2.5 w-4/5 rounded bg-plum-800/85" />
