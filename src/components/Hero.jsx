@@ -598,7 +598,7 @@ export default function Hero() {
       {/* Headline */}
       <div className="container-x">
         <div className="mx-auto max-w-5xl text-center">
-          <p className="hero-enter inline-flex max-w-full items-center gap-3 rounded-full border border-white/20 bg-gradient-to-r from-plum-800 to-plum-700 px-4 py-2.5 text-left text-xs font-semibold leading-relaxed text-white shadow-soft sm:px-6 sm:text-sm">
+          <p className="hero-enter inline-flex max-w-full items-center justify-center gap-3 rounded-full border border-white/20 bg-gradient-to-r from-plum-800 to-plum-700 px-4 py-2.5 text-center text-xs font-semibold leading-relaxed text-white shadow-soft sm:justify-start sm:px-6 sm:text-left sm:text-sm">
             <span
               aria-hidden="true"
               className="h-2.5 w-2.5 shrink-0 rounded-full bg-sun-400"
