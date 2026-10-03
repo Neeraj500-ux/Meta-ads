@@ -76,7 +76,6 @@ const approach = [
     "text": "Deliver enquiries quickly and use follow-up feedback to keep improving campaign quality."
   }
 ];
-
 /* All styling is scoped to these sections; no extra dependencies are required. */
 const styles = `
 .s1{--ink:#2d2038;--muted:#74677e;--plum:#805297;--coral:#ef8165;color:var(--ink);padding:clamp(60px,7vw,104px) 0;background:#fffcfa;position:relative;isolation:isolate}
@@ -112,14 +111,18 @@ const styles = `
 .s1 svg{display:block;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
 .s1-compare{background:radial-gradient(ellipse at 0 25%,#fceae570,transparent 42%),radial-gradient(ellipse at 100% 75%,#efe4f570,transparent 42%),#fffcfa}
 .s1-compare-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:stretch}
-.s1-panel{--tone:#c84e67;--tint:#fff1f4;--line:#f1dce2;--shadow:#ecd2db;--soft:#fffafb;min-width:0;border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,#fff,var(--soft));box-shadow:0 24px 60px #442c3b07,inset 0 1px 0 #fff;position:relative;padding:clamp(22px,3vw,34px);display:flex;flex-direction:column}
-.s1-panel--green{--tone:#267852;--tint:#eaf7ef;--line:#d5e9dc;--shadow:#d2e6da;--soft:#f8fdfa}
+.s1-panel{--icon-light:#ff8fa0;--icon-face:#ec4e6b;--icon-dark:#cc2f50;--icon-base:#a82340;--icon-glow:#ec4e6b28;--tone:#c84e67;--tint:#fff1f4;--line:#f1dce2;--shadow:#ecd2db;--soft:#fffafb;min-width:0;border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,#fff,var(--soft));box-shadow:0 24px 60px #442c3b07,inset 0 1px 0 #fff;position:relative;padding:clamp(22px,3vw,34px);display:flex;flex-direction:column}
+.s1-panel--green{--icon-light:#63db9c;--icon-face:#25ad68;--icon-dark:#19844e;--icon-base:#12673b;--icon-glow:#25ad6828;--tone:#267852;--tint:#eaf7ef;--line:#d5e9dc;--shadow:#d2e6da;--soft:#f8fdfa}
 .s1-panel::before{content:'';position:absolute;left:34px;right:34px;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--tone),transparent);opacity:.4}
 .s1-panel-top{display:flex;align-items:center;gap:12px;justify-content:space-between;margin-bottom:22px}
 .s1-panel-label{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:800;color:var(--tone);letter-spacing:.09em;text-transform:uppercase}
 .s1-panel-label::before{content:'';width:5px;height:5px;background:currentColor;border-radius:50%}
-.s1-panel-icon{color:var(--tone);background:linear-gradient(145deg,#fff,var(--tint));border-color:var(--line);box-shadow:0 3px 0 var(--shadow),0 8px 18px #39293506;animation:s1-float 5s ease-in-out infinite}
-.s1-panel--green .s1-panel-icon{animation-delay:-2.5s}
+.s1 .s1-panel-icon{appearance:none;font:inherit;padding:0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;width:44px;height:44px;flex-basis:44px;color:#fff;background:linear-gradient(145deg,var(--icon-light),var(--icon-face) 55%,var(--icon-dark));border:1px solid var(--icon-face);box-shadow:0 5px 0 var(--icon-base),0 10px 20px var(--icon-glow),inset 0 2px 2px #ffffff65,inset 0 -2px 3px #0000000d;transition:transform .18s,box-shadow .18s;position:relative;isolation:isolate}
+.s1-panel-icon svg{width:21px;height:21px;stroke:#fff;stroke-width:2;filter:drop-shadow(0 1px 1px #00000018);animation:s1-float 5s ease-in-out infinite}
+.s1-panel-icon::before{content:'';position:absolute;inset:2px 4px auto;height:15px;border-radius:10px;background:linear-gradient(#ffffff24,transparent);pointer-events:none}
+.s1-panel--green .s1 .s1-panel-icon{appearance:none;font:inherit;padding:0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;width:44px;height:44px;flex-basis:44px;color:#fff;background:linear-gradient(145deg,var(--icon-light),var(--icon-face) 55%,var(--icon-dark));border:1px solid var(--icon-face);box-shadow:0 5px 0 var(--icon-base),0 10px 20px var(--icon-glow),inset 0 2px 2px #ffffff65,inset 0 -2px 3px #0000000d;transition:transform .18s,box-shadow .18s;position:relative;isolation:isolate}
+.s1-panel-icon svg{width:21px;height:21px;stroke:#fff;stroke-width:2;filter:drop-shadow(0 1px 1px #00000018);animation:s1-float 5s ease-in-out infinite}
+.s1-panel-icon::before{content:'';position:absolute;inset:2px 4px auto;height:15px;border-radius:10px;background:linear-gradient(#ffffff24,transparent);pointer-events:none}
 .s1-panel h3{font-size:clamp(23px,2.15vw,28px);line-height:1.28;letter-spacing:-.035em;font-weight:800;max-width:440px;text-wrap:balance}
 .s1-panel-desc{margin-top:13px!important;font-size:13px!important;line-height:1.85!important}
 .s1-list-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:24px 0 12px;padding-top:18px;border-top:1px solid var(--line)}
@@ -130,12 +133,12 @@ const styles = `
 .s1-item[data-open="true"]{background:#fff;border-color:var(--line);box-shadow:0 5px 16px #30213b03}
 .s1 .s1-row-button{appearance:none;font:inherit;text-align:left;border:0;background:transparent;color:var(--ink);width:100%;min-height:54px;display:flex;gap:11px;align-items:flex-start;padding:14px;cursor:pointer;border-radius:14px;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .s1-row-title{font-size:14px;font-weight:700;line-height:1.55;flex:1;min-width:0}
-.s1-status{display:grid;place-items:center;width:20px;height:20px;flex:0 0 20px;border-radius:7px;color:var(--tone);background:var(--tint);border:1px solid var(--line);margin-top:1px;transition:transform .2s,background .2s}
-.s1-status svg{width:12px;height:12px;stroke-width:2.4}
+.s1-status{display:grid;place-items:center;width:24px;height:24px;flex:0 0 24px;border-radius:8px;color:#fff;background:linear-gradient(145deg,var(--icon-light),var(--icon-face) 55%,var(--icon-dark));border:1px solid var(--icon-face);box-shadow:0 3px 0 var(--icon-base),0 6px 10px var(--icon-glow),inset 0 1px 1px #ffffff70; margin-top:1px;transition:transform .18s,box-shadow .18s;position:relative}
+.s1-status svg{width:13px;height:13px;stroke:#fff;stroke-width:2.7;filter:drop-shadow(0 1px 1px #00000015)}
 .s1-chevron{flex:0 0 14px;width:14px!important;height:14px!important;color:#ae9db4;margin-top:4px;transition:transform .22s}
 .s1-item[data-open="true"] .s1-chevron{transform:rotate(180deg)}
-.s1-row-button:active .s1-status{transform:scale(.8) rotate(-10deg)}
-.s1-item-description{padding:0 39px 16px 45px;color:var(--muted);font-size:12px;line-height:1.85;overflow-wrap:break-word;animation:s1-detail .24s ease-out}
+.s1-row-button:active .s1-status{display:grid;place-items:center;width:24px;height:24px;flex:0 0 24px;border-radius:8px;color:#fff;background:linear-gradient(145deg,var(--icon-light),var(--icon-face) 55%,var(--icon-dark));border:1px solid var(--icon-face);box-shadow:0 3px 0 var(--icon-base),0 6px 10px var(--icon-glow),inset 0 1px 1px #ffffff70; margin-top:1px;transition:transform .18s,box-shadow .18s;position:relative}
+.s1-item-description{padding:0 39px 16px 49px;color:var(--muted);font-size:12px;line-height:1.85;overflow-wrap:break-word;animation:s1-detail .24s ease-out}
 .s1-item-description[hidden]{display:none}
 .s1-panel-foot{margin-top:auto;padding-top:22px;font-size:11px;color:var(--tone);display:flex;align-items:center;gap:8px;line-height:1.6}
 .s1-panel-foot svg{width:15px;height:15px;flex:0 0 15px}
@@ -149,17 +152,17 @@ const styles = `
 .s1 button:focus-visible,.s1 a:focus-visible{outline:3px solid #805297;outline-offset:4px}
 @keyframes s1-float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-4px) rotate(3deg)}}
 @keyframes s1-detail{from{opacity:.45;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
-@media(hover:hover) and (pointer:fine){.s1-step:hover{transform:translateY(-4px);box-shadow:0 15px 32px #53326009}.s1-row-button:hover .s1-status{transform:rotate(-6deg)}.s1-item:hover{border-color:var(--line)}.s1-text-button:hover{text-decoration:underline}}
+@media(hover:hover) and (pointer:fine){.s1-step:hover{transform:translateY(-4px);box-shadow:0 15px 32px #53326009}.s1-row-button:hover .s1-status{display:grid;place-items:center;width:24px;height:24px;flex:0 0 24px;border-radius:8px;color:#fff;background:linear-gradient(145deg,var(--icon-light),var(--icon-face) 55%,var(--icon-dark));border:1px solid var(--icon-face);box-shadow:0 3px 0 var(--icon-base),0 6px 10px var(--icon-glow),inset 0 1px 1px #ffffff70; margin-top:1px;transition:transform .18s,box-shadow .18s;position:relative}
 @media(max-width:1023px){.s1-steps{grid-template-columns:repeat(2,minmax(0,1fr))}.s1-intro-grid{gap:28px}}
 @media(max-width:767px){.s1-intro-grid,.s1-compare-grid{grid-template-columns:minmax(0,1fr)}.s1-intro-title{position:static;text-align:center}.s1-intro-title h2{max-width:580px;margin:auto}.s1-panel{border-radius:24px}.s1-panel h3{max-width:100%}.s1-heading{margin-bottom:28px}.s1-panel-top{margin-bottom:18px}.s1-bottom{border-radius:24px;margin-top:22px}.s1-intro-copy .s1-cta{justify-content:center}}
-@media(max-width:480px){.s1-steps{grid-template-columns:minmax(0,1fr);gap:13px}.s1-step{padding:23px}.s1-step-top{margin-bottom:17px}.s1-step h3{font-size:19px}.s1-panel{padding:23px 18px}.s1-row-button{padding:13px 10px!important;gap:9px!important}.s1-row-title{font-size:13px}.s1-item-description{padding:0 29px 15px 39px}.s1-intro-copy{padding:24px 20px}.s1-cta>a{width:100%}.s1-bottom{padding:27px 20px}.s1-notes{gap:9px 14px}.s1 p{font-size:14px}}
+@media(max-width:480px){.s1-steps{grid-template-columns:minmax(0,1fr);gap:13px}.s1-step{padding:23px}.s1-step-top{margin-bottom:17px}.s1-step h3{font-size:19px}.s1-panel{padding:23px 18px}.s1-row-button{padding:13px 10px!important;gap:9px!important}.s1-row-title{font-size:13px}.s1-item-description{padding:0 29px 15px 43px}.s1-intro-copy{padding:24px 20px}.s1-cta>a{width:100%}.s1-bottom{padding:27px 20px}.s1-notes{gap:9px 14px}.s1 p{font-size:14px}}
+.s1 .s1-panel-icon:active{transform:translateY(4px) scale(.97);box-shadow:0 1px 0 var(--icon-base),0 3px 8px var(--icon-glow),inset 0 1px 2px #ffffff40}
+.s1 .s1-row-button:active .s1-status{transform:translateY(2px) scale(.94);box-shadow:0 1px 0 var(--icon-base),0 2px 5px var(--icon-glow),inset 0 1px 1px #ffffff50}
 @media(prefers-reduced-motion:reduce){.s1 *, .s1 *::before,.s1 *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.s1-step:hover{transform:none}}
 `;
-
 function SectionStyles() {
   return <style>{styles}</style>;
 }
-
 function Icon({ name = "check", className = "" }) {
   const paths = {
     check: <path d="m5 12 4 4L19 6" />,
@@ -174,7 +177,6 @@ function Icon({ name = "check", className = "" }) {
   };
   return <svg className={className} viewBox="0 0 24 24" aria-hidden="true">{paths[name] || paths.check}</svg>;
 }
-
 export function Intro() {
   return (
     <section id="about" className="s1">
@@ -194,7 +196,6 @@ export function Intro() {
     </section>
   );
 }
-
 export function Approach() {
   const icons = ["pin", "course", "filter", "arrow"];
   return (
@@ -219,7 +220,6 @@ export function Approach() {
     </section>
   );
 }
-
 /* Descriptions are visible initially. Tap a row to fold or reopen its detail. */
 function ComparisonCard({ positive = false, items, title, summary }) {
   const id = useId();
@@ -233,7 +233,7 @@ function ComparisonCard({ positive = false, items, title, summary }) {
       {positive && <div id="solution" />}
       <div className="s1-panel-top">
         <span className="s1-panel-label">{positive ? "How We Fix This" : "Common Challenges"}</span>
-        <span className="s1-mini-icon s1-panel-icon"><Icon name={positive ? "target" : "warning"} /></span>
+        <button type="button" className="s1-mini-icon s1-panel-icon" aria-controls={`${id}-list`} aria-label={`${allOpen ? "Collapse" : "Expand"} all ${positive ? "solution" : "problem"} details`} onClick={() => setOpenItems(items.map(() => !allOpen))}><Icon name={positive ? "target" : "warning"} /></button>
       </div>
       <h3>{title}</h3>
       <p className="s1-panel-desc">{summary}</p>
@@ -257,7 +257,6 @@ function ComparisonCard({ positive = false, items, title, summary }) {
     </Reveal>
   );
 }
-
 export function Problems() {
   return (
     <section id="problems" className="s1 s1-compare">
@@ -285,7 +284,6 @@ export function Problems() {
     </section>
   );
 }
-
 // The solution is included beside Problems. Keep the existing App export compatible.
 export function Solution() {
   return null;
