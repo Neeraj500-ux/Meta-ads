@@ -2,6 +2,9 @@ import { journey, marquee } from "../data/content.js";
 import { bookingHref, bookingIsExternal, chatHref, chatIsExternal } from "../config/site.js";
 import { Button } from "./ui.jsx";
 import HeroVisual from "./HeroVisual.jsx";
+import VideoEmbed from "./VideoEmbed.jsx";
+
+const benefits = ["Promote Your Courses", "Generate Student Enquiries", "Create Admission Opportunities"];
 
 export default function Hero() {
   return (
@@ -10,6 +13,7 @@ export default function Hero() {
       <div aria-hidden="true" className="absolute -right-24 top-24 -z-10 h-72 w-72 rounded-full border-2 border-plum-700/10 [background:repeating-radial-gradient(circle,transparent_0_29px,rgba(75,38,106,.08)_30px_31px,transparent_32px_60px)]" />
       <div aria-hidden="true" className="absolute -left-24 bottom-10 -z-10 h-80 w-80 rounded-full bg-sun-400/25 blur-3xl" />
 
+      {/* Headline, video and intro */}
       <div className="container-x">
         <div className="mx-auto max-w-4xl text-center">
           <p className="animate-rise inline-flex max-w-full items-center gap-2.5 rounded-full bg-gradient-to-r from-plum-800 to-plum-700 px-5 py-2.5 text-[13px] font-semibold text-white shadow-soft sm:text-sm">
@@ -20,9 +24,9 @@ export default function Hero() {
             Meta Ads for fashion, beauty and skill-based institutes
           </p>
 
-          <h1 className="animate-rise mt-7 text-[2.4rem] font-extrabold [animation-delay:90ms] sm:text-6xl lg:text-[4.2rem]">
+          <h1 className="animate-rise mt-7 text-[2.1rem] font-extrabold min-[400px]:text-[2.4rem] [animation-delay:90ms] sm:text-6xl lg:text-[4.2rem]">
             Aim for{" "}
-            <span className="relative whitespace-nowrap text-coral-500">
+            <span className="relative text-coral-500 sm:whitespace-nowrap">
               300+ student leads
               <svg aria-hidden="true" viewBox="0 0 300 14" preserveAspectRatio="none" className="absolute -bottom-1.5 left-0 h-2.5 w-full text-sun-400"><path d="M3 9c60-8 130-8 294-2" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" /></svg>
             </span>{" "}
@@ -32,20 +36,52 @@ export default function Hero() {
           <p className="animate-rise mx-auto mt-7 max-w-2xl text-lg text-[#62536e] [animation-delay:180ms] sm:text-xl">
             Put your courses in front of prospective students through Facebook and Instagram ads designed around your institute, your location and your upcoming batches.
           </p>
-          <p className="animate-rise mx-auto mt-4 max-w-2xl [animation-delay:240ms]">
+
+          <div className="animate-rise mt-9 [animation-delay:240ms] sm:mt-11">
+            <VideoEmbed />
+          </div>
+
+          <p className="animate-rise mx-auto mt-9 max-w-2xl [animation-delay:300ms]">
             Whether you offer fashion designing, makeup, beauty or other skill-based programs, make it easier for interested students to discover your courses, request details and connect with your admissions team.
           </p>
+        </div>
+      </div>
 
-          <ul className="animate-rise mx-auto mt-8 flex max-w-3xl flex-wrap justify-center gap-x-8 gap-y-3 border-y border-coral-500/20 bg-gradient-to-r from-transparent via-coral-50 to-transparent py-4 [animation-delay:300ms]">
-            {["Promote Your Courses", "Generate Student Enquiries", "Create Admission Opportunities"].map((b) => (
-              <li key={b} className="flex items-center gap-2 text-sm font-bold text-plum-700">
-                <span aria-hidden="true" className="text-coral-500">✦</span>
-                {b}
-              </li>
+      {/* Full-width benefits carousel (auto-scrolls, pauses on hover) */}
+      <div className="relative left-1/2 mt-10 w-screen -translate-x-1/2 sm:mt-12">
+        <ul className="sr-only">
+          {benefits.map((b) => (
+            <li key={b}>{b}</li>
+          ))}
+        </ul>
+        <div
+          aria-hidden="true"
+          className="overflow-hidden border-y border-coral-500/20 bg-gradient-to-r from-coral-50/40 via-coral-50 to-coral-50/40 py-4 [mask-image:linear-gradient(90deg,transparent,black_6%,black_94%,transparent)] sm:py-5"
+        >
+          <div className="flex w-max animate-marquee hover:[animation-play-state:paused]" style={{ animationDuration: "32s" }}>
+            {[0, 1].map((copy) => (
+              <div key={copy} className="flex shrink-0 items-center gap-4 pr-4 sm:gap-6 sm:pr-6">
+                {[0, 1, 2].flatMap((round) =>
+                  benefits.map((b) => (
+                    <span
+                      key={`${copy}-${round}-${b}`}
+                      className="flex items-center gap-3 whitespace-nowrap rounded-full border border-plum-200 bg-white px-5 py-2.5 text-sm font-bold text-plum-700 shadow-soft sm:px-7 sm:py-3 sm:text-base"
+                    >
+                      <span className="text-coral-500">✦</span>
+                      {b}
+                    </span>
+                  ))
+                )}
+              </div>
             ))}
-          </ul>
+          </div>
+        </div>
+      </div>
 
-          <div className="animate-rise mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center [animation-delay:360ms]">
+      {/* Calls to action + target panel */}
+      <div className="container-x">
+        <div className="mx-auto max-w-4xl text-center">
+          <div className="animate-rise mt-10 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center [animation-delay:360ms]">
             <Button href={bookingHref} external={bookingIsExternal} className="sm:min-w-[320px] !min-h-[60px] !text-base">
               Discuss My Institute’s Campaign
             </Button>
@@ -93,6 +129,7 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* Second full-width ticker */}
       <div className="mt-14 overflow-hidden border-y border-coral-500/20 py-3 [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)]" aria-hidden="true">
         <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
           {[0, 1].map((k) => (
