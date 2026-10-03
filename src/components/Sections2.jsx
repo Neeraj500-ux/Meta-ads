@@ -1,13 +1,10 @@
 import { useState } from "react";
 import {
-  services,
   audiences,
-  steps,
   processDetails,
   reportMeasures,
   testimonials,
   featuredCampaign,
-  whyChoose,
 } from "../data/content.js";
 import {
   Reveal,
@@ -19,19 +16,83 @@ import {
   bookingHref,
   bookingIsExternal,
 } from "../config/site.js";
+const services = [
+  {
+    "title": "Hyper-Local Targeting",
+    "text": "We focus your campaigns on the locations that matter to your institute, so your team connects with students who can attend your classes."
+  },
+  {
+    "title": "Course-Specific Campaigns",
+    "text": "Fashion designing students see fashion designing ads. Beauty students see beauty ads. Every campaign is built around the course being promoted."
+  },
+  {
+    "title": "High-Intent Lead Filtering",
+    "text": "Qualification questions help identify students interested in your course, location and upcoming batch before their enquiry reaches your team."
+  },
+  {
+    "title": "Landing Pages That Convert",
+    "text": "A dedicated admission funnel gives students clear course information and a simple way to request details."
+  },
+  {
+    "title": "Instant Lead Delivery",
+    "text": "Student enquiries go directly to your admissions team, helping counsellors follow up while interest is still fresh."
+  },
+  {
+    "title": "Continuous Optimization",
+    "text": "We monitor campaigns daily and refine targeting, creatives and the enquiry journey to improve lead quality and reduce wasted spend."
+  }
+];
+const steps = [
+  {
+    "title": "Strategy Setup",
+    "text": "We understand your courses, ideal students, target locations and admission goals before building your campaign plan."
+  },
+  {
+    "title": "Admission Funnel & Campaign Setup",
+    "text": "We create your student enquiry system and launch course-specific Meta Ads designed to attract interested learners."
+  },
+  {
+    "title": "Lead Collection System",
+    "text": "Students submit their details through a clear enquiry form with qualification questions relevant to your institute."
+  },
+  {
+    "title": "Daily Lead Delivery",
+    "text": "New enquiries are delivered directly to your team for quick calls, counselling and follow-up."
+  },
+  {
+    "title": "Batch Filling Support",
+    "text": "We review campaign performance and feedback from your admissions team to refine the system and support your batch-filling goals."
+  }
+];
+const whyChoose = [
+  {
+    "title": "Specialized in Education Marketing",
+    "text": "We focus on student lead generation, with campaigns shaped around courses, admission cycles and the decisions learners make."
+  },
+  {
+    "title": "Proven Lead Generation Framework",
+    "text": "Our framework combines relevant audiences, course-focused messaging and qualification questions to attract students interested in learning a skill."
+  },
+  {
+    "title": "Consistent Lead Flow",
+    "text": "Keep your courses visible throughout the month, so enquiries do not depend only on referrals or admission season."
+  },
+  {
+    "title": "Complete Done-For-You Service",
+    "text": "We handle strategy, creatives, campaign management, optimization and reporting, while your team focuses on counselling and admissions."
+  }
+];
 
 const iconTone = [
   "from-white to-plum-100 text-plum-700 shadow-[0_6px_0_#e3d4eb]",
   "from-white to-coral-100 text-coral-700 shadow-[0_6px_0_#efdbc9]",
   "from-white to-sun-200 text-sun-700 shadow-[0_6px_0_#e9dfb5]",
 ];
-
 const audienceTint = [
   "bg-plum-100 text-plum-700",
   "bg-coral-100 text-coral-700",
   "bg-sun-200 text-sun-700",
 ];
-
 const audienceImages = {
   fashion: {
     files: [
@@ -57,18 +118,14 @@ const audienceImages = {
     alt: "Students learning practical skills at an institute",
   },
 };
-
 function getImageUrl(filename) {
   const base = import.meta.env.BASE_URL || "/";
   const prefix = base.endsWith("/") ? base : `${base}/`;
-
   return `${prefix}images/${encodeURIComponent(filename)}`;
 }
-
 function AudienceImage({ image }) {
   const [fileIndex, setFileIndex] = useState(0);
   const filename = image.files[fileIndex];
-
   if (!filename) {
     return (
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-5 text-center">
@@ -81,7 +138,6 @@ function AudienceImage({ image }) {
       </div>
     );
   }
-
   return (
     <img
       key={filename}
@@ -96,18 +152,16 @@ function AudienceImage({ image }) {
     />
   );
 }
-
 export function Services() {
   return (
     <section id="services" className="section-y">
       <div className="container-x">
-        <SectionHead title="A campaign plan built around your courses and admission goals.">
+        <SectionHead title="We Build a Student Acquisition System Designed for Institutes.">
           <p>
-            Your final proposal will confirm the services, deliverables and
-            responsibilities included in your package.
+            From location targeting to lead delivery, every part of the system
+            is built to help your admissions team connect with relevant students.
           </p>
         </SectionHead>
-
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {services.map((service, index) => (
             <Reveal
@@ -122,11 +176,8 @@ export function Services() {
               >
                 {String(index + 1).padStart(2, "0")}
               </span>
-
               <h3 className="text-xl font-bold">{service.title}</h3>
-
               <p className="mt-3 text-[15px]">{service.text}</p>
-
               {service.note && (
                 <p className="mt-auto border-t border-plum-100 pt-3 text-xs text-mute [margin-top:1.25rem]">
                   {service.note}
@@ -135,45 +186,37 @@ export function Services() {
             </Reveal>
           ))}
         </div>
-
         <Reveal className="mt-6 grid gap-8 rounded-3xl border border-plum-200/80 bg-gradient-to-br from-plum-50 to-sun-50 p-7 sm:grid-cols-2 sm:p-9">
           <div>
             <h3 className="text-xl font-bold">Performance reporting</h3>
-
             <p className="mt-3 text-[15px]">
               Review advertising spend, leads generated, cost per lead and
               available feedback from your admissions team.
             </p>
-
             <p className="mt-3 text-sm">
               <strong>Reporting schedule:</strong> agreed with you before work
               begins.
             </p>
           </div>
-
           <div>
             <h3 className="text-xl font-bold">
-              Optional additional services
+              Your admission funnel and follow-up system
             </h3>
-
             <p className="mt-3 text-[15px]">
-              Landing page creation, tracking setup, CRM integration, WhatsApp
-              automation and follow-up support can be discussed on your strategy
-              call. Availability and pricing are confirmed in your proposal.
+              We connect your ads, enquiry forms and lead delivery into a clear
+              admission journey. Tracking, CRM and WhatsApp requirements are
+              planned around how your team handles student enquiries.
             </p>
           </div>
         </Reveal>
-
         <Reveal className="mx-auto mt-6 max-w-3xl rounded-[28px] border border-[#e8d6c0] bg-gradient-to-br from-[#fff8ef] to-sun-50 p-8 text-center sm:p-10">
           <h3 className="text-xl font-bold">Fees and advertising budget</h3>
-
           <p className="mx-auto mt-3 max-w-xl text-[15px]">
             Your service fee, recommended advertising budget and whether ad
             spend is billed separately are set out clearly in your proposal
             after we review your courses and goals. Nothing is decided before
             you have seen it.
           </p>
-
           <Button
             href={bookingHref}
             external={bookingIsExternal}
@@ -186,18 +229,15 @@ export function Services() {
     </section>
   );
 }
-
 export function Audience() {
   return (
     <section className="section-y bg-gradient-to-br from-[#fbf7f2] to-[#faf3fb]">
       <div className="container-x">
         <SectionHead title="Marketing that reflects the skills you teach." />
-
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {audiences.map((audience, index) => {
             const audienceKey = String(audience.key).trim().toLowerCase();
             const image = audienceImages[audienceKey];
-
             return (
               <Reveal
                 key={audience.key}
@@ -216,7 +256,6 @@ export function Audience() {
                     </div>
                   )}
                 </div>
-
                 <div className="flex flex-1 flex-col p-6 sm:p-7">
                   <span
                     className={`inline-block self-start rounded-lg px-2.5 py-1 text-xs font-bold ${
@@ -225,11 +264,9 @@ export function Audience() {
                   >
                     {audience.label}
                   </span>
-
                   <h3 className="mt-4 text-xl font-bold leading-snug">
                     {audience.title}
                   </h3>
-
                   <div className="mt-3 space-y-3 text-[15px] leading-relaxed">
                     {audience.text.map((text, textIndex) => (
                       <p key={`${audience.key}-${textIndex}`}>{text}</p>
@@ -240,12 +277,10 @@ export function Audience() {
             );
           })}
         </div>
-
         <Reveal className="mx-auto mt-10 max-w-2xl text-center text-[15px]">
           This service is suited to institutes with a clear course offering and
           a team ready to respond to student enquiries.
         </Reveal>
-
         <SectionCta href={bookingHref} external={bookingIsExternal}>
           Discuss My Courses
         </SectionCta>
@@ -253,13 +288,13 @@ export function Audience() {
     </section>
   );
 }
-
 export function Process() {
   return (
     <section id="process" className="section-y">
       <div className="container-x">
-        <SectionHead title="A clear process from understanding your institute to reviewing results." />
-
+        <SectionHead title="How Our System Works">
+          <p>A simple process to reach the right students and help fill your upcoming batches.</p>
+        </SectionHead>
         <ol className="mx-auto max-w-3xl">
           {steps.map((step, index) => (
             <Reveal
@@ -273,7 +308,6 @@ export function Process() {
                   className="absolute bottom-0 left-[22px] top-14 w-0.5 bg-gradient-to-b from-plum-200 to-coral-300 sm:left-[28px] sm:top-16"
                 />
               )}
-
               <span
                 className={`relative z-10 grid h-11 w-11 shrink-0 place-items-center rounded-2xl font-display text-base font-extrabold shadow-soft sm:h-14 sm:w-14 sm:text-lg ${
                   index % 2
@@ -283,10 +317,8 @@ export function Process() {
               >
                 {String(index + 1).padStart(2, "0")}
               </span>
-
               <div className="min-w-0 pt-1">
                 <h3 className="text-xl font-bold">{step.title}</h3>
-
                 <p className="mt-2 text-[15px] sm:text-base">
                   {step.text}
                 </p>
@@ -294,7 +326,6 @@ export function Process() {
             </Reveal>
           ))}
         </ol>
-
         <Reveal className="mx-auto mt-12 grid max-w-3xl gap-4 rounded-2xl border border-plum-200/80 bg-plum-50 p-6 text-sm sm:grid-cols-3">
           {processDetails.map((detail) => (
             <p key={detail.label}>
@@ -303,7 +334,6 @@ export function Process() {
             </p>
           ))}
         </Reveal>
-
         <SectionCta href={bookingHref} external={bookingIsExternal}>
           Discuss My Campaign Strategy
         </SectionCta>
@@ -311,10 +341,8 @@ export function Process() {
     </section>
   );
 }
-
 export function Results() {
   const campaign = featuredCampaign;
-
   const rows = campaign
     ? [
         ["Institute", campaign.institute],
@@ -332,7 +360,6 @@ export function Results() {
           value !== undefined && value !== null && value !== ""
       )
     : reportMeasures.map((measure) => [measure.term, measure.desc]);
-
   return (
     <section
       id="results"
@@ -343,7 +370,7 @@ export function Results() {
           title={
             campaign
               ? "See what the campaign delivered, and what those enquiries led to."
-              : "How we report results, honestly."
+              : "Track the Numbers That Matter to Your Admissions."
           }
         >
           <p>
@@ -352,14 +379,12 @@ export function Results() {
               : "Leads, counselling bookings and admissions are different things. Your reports keep them separate, so you can see what the campaign contributed."}
           </p>
         </SectionHead>
-
         <Reveal className="card mx-auto max-w-4xl !p-7 sm:!p-10">
           <h3 className="text-xl font-bold">
             {campaign
               ? "Featured campaign"
               : "What every campaign report covers"}
           </h3>
-
           <dl className="mt-6 grid gap-3 sm:grid-cols-2">
             {rows.map(([term, description], index) => (
               <div
@@ -373,33 +398,28 @@ export function Results() {
                 <dt className="text-sm font-bold text-plum-700">
                   {term}
                 </dt>
-
                 <dd className="mt-1 text-[15px]">
                   {description}
                 </dd>
               </div>
             ))}
           </dl>
-
           <p className="mt-6 text-xs text-mute">
             {campaign
               ? "Figures are specific to this campaign and are not a promise of future results."
-              : "Verified case studies are shared on the strategy call, with the client’s permission. The 300+ figure on this page is a proposed target, not a result."}
+              : "Campaign reports bring together advertising performance and the admission feedback your team shares."}
           </p>
         </Reveal>
       </div>
     </section>
   );
 }
-
 export function Testimonials() {
   if (!testimonials.length) return null;
-
   return (
     <section id="testimonials" className="section-y">
       <div className="container-x">
-        <SectionHead title="Hear from the institutes I’ve worked with." />
-
+        <SectionHead title="Hear from the Institutes We’ve Worked With." />
         <div className="grid gap-6 md:grid-cols-2">
           {testimonials.map((testimonial, index) => (
             <Reveal
@@ -411,7 +431,6 @@ export function Testimonials() {
               <blockquote className="font-display text-xl leading-relaxed text-ink">
                 “{testimonial.quote}”
               </blockquote>
-
               <figcaption className="mt-6 border-t border-plum-100 pt-4 text-sm">
                 <strong>{testimonial.name}</strong>
                 <br />
@@ -424,20 +443,17 @@ export function Testimonials() {
     </section>
   );
 }
-
 export function WhyChoose() {
   const accentColors = [
     "bg-plum-700",
     "bg-coral-500",
     "bg-sun-400",
   ];
-
   return (
     <section className="section-y">
       <div className="container-x">
-        <SectionHead title="A focused approach to your institute’s student enquiries." />
-
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+        <SectionHead title="Why Institutes Choose Us" />
+        <div className="grid gap-5 md:grid-cols-2 lg:gap-6">
           {whyChoose.map((item, index) => (
             <Reveal
               key={item.title}
@@ -450,14 +466,11 @@ export function WhyChoose() {
                   accentColors[index % accentColors.length]
                 }`}
               />
-
               <h3 className="text-lg font-bold">{item.title}</h3>
-
               <p className="mt-3 text-[15px]">{item.text}</p>
             </Reveal>
           ))}
         </div>
-
         <SectionCta href={bookingHref} external={bookingIsExternal}>
           Let’s Discuss Your Admission Goals
         </SectionCta>
