@@ -3,28 +3,69 @@ import { Reveal, Button } from "./ui.jsx";
 import { bookingHref, bookingIsExternal, site } from "../config/site.js";
 // Complete replacement for Sections1.jsx. No additional packages required.
 const problems = [
-  { title: "Ads in the wrong locations", text: "Your budget reaches students outside your service area." },
-  { title: "Leads from cities you don’t serve", text: "Enquiries come from students who cannot attend your classes." },
-  { title: "Students asking about the wrong course", text: "Generic ads attract interest in programs you don’t offer." },
-  { title: "Enquiries that never answer calls", text: "Low-intent leads leave your team chasing responses." },
-  { title: "Hours spent on unqualified leads", text: "Repeated calls take time away from admission-ready students." },
-  { title: "More leads, fewer admissions", text: "Form submissions grow, but your batches stay unfilled." },
-  { title: "Budget lost to broad targeting", text: "Irrelevant audiences use up your advertising spend." },
+  {
+    title: "Ads in the wrong locations",
+    text: "Your budget reaches students outside your service area.",
+  },
+  {
+    title: "Leads from cities you don’t serve",
+    text: "Enquiries come from students who cannot attend your classes.",
+  },
+  {
+    title: "Students asking about the wrong course",
+    text: "Generic ads attract interest in programs you don’t offer.",
+  },
+  {
+    title: "Enquiries that never answer calls",
+    text: "Low-intent leads leave your team chasing responses.",
+  },
+  {
+    title: "Hours spent on unqualified leads",
+    text: "Repeated calls take time away from admission-ready students.",
+  },
+  {
+    title: "More leads, fewer admissions",
+    text: "Form submissions grow, but your batches stay unfilled.",
+  },
+  {
+    title: "Budget lost to broad targeting",
+    text: "Irrelevant audiences use up your advertising spend.",
+  },
 ];
 const solutions = [
-  { title: "Hyper-Local Targeting", text: "Reach students in the locations your institute serves." },
-  { title: "Course-Specific Campaigns", text: "Fashion ads for fashion students. Beauty ads for beauty students." },
-  { title: "High-Intent Lead Filtering", text: "Qualification questions help identify serious students." },
-  { title: "Landing Pages That Convert", text: "Clear course details and a simple admission enquiry form." },
-  { title: "Instant Lead Delivery", text: "Enquiries go straight to your team for quick follow-up." },
-  { title: "Continuous Optimization", text: "Daily refinements help improve quality and reduce wasted spend." },
+  {
+    title: "Hyper-Local Targeting",
+    text: "Reach students in the locations your institute serves.",
+  },
+  {
+    title: "Course-Specific Campaigns",
+    text: "Fashion ads for fashion students. Beauty ads for beauty students.",
+  },
+  {
+    title: "High-Intent Lead Filtering",
+    text: "Qualification questions help identify serious students.",
+  },
+  {
+    title: "Landing Pages That Convert",
+    text: "Clear course details and a simple admission enquiry form.",
+  },
+  {
+    title: "Instant Lead Delivery",
+    text: "Enquiries go straight to your team for quick follow-up.",
+  },
+  {
+    title: "Continuous Optimization",
+    text: "Daily refinements help improve quality and reduce wasted spend.",
+  },
 ];
+/* Approach data is disabled together with its section.
 const approach = [
   { icon: "pin", title: "Reach Local Students", text: "Focus on students who can attend your institute." },
   { icon: "course", title: "Promote the Right Course", text: "Give every program its own audience and message." },
   { icon: "filter", title: "Qualify Each Enquiry", text: "Learn what students need before your first call." },
   { icon: "arrow", title: "Follow Up Faster", text: "Send enquiries directly to your admissions team." },
 ];
+*/
 const styles = `
 .s1{
   --ink:#2d2038;
@@ -179,16 +220,46 @@ function Icon({ name = "check", className = "" }) {
     cross: <path d="m7 7 10 10M17 7 7 17" />,
     chevron: <path d="m6 9 6 6 6-6" />,
     arrow: <path d="M4 12h16m-6-6 6 6-6 6" />,
-    target: <><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="4" /><path d="m12 12 8-8M17 4h3v3" /></>,
-    warning: <><path d="m12 3 10 18H2L12 3Z" /><path d="M12 9v5M12 17h.01" /></>,
-    pin: <><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 0 1 14 0Z" /><circle cx="12" cy="10" r="2.5" /></>,
-    course: <><path d="m2 8 10-5 10 5-10 5-10-5ZM6 10v7c4 3 8 3 12 0v-7M22 8v7" /></>,
+    target: (
+      <>
+        <circle cx="12" cy="12" r="8" />
+        <circle cx="12" cy="12" r="4" />
+        <path d="m12 12 8-8M17 4h3v3" />
+      </>
+    ),
+    warning: (
+      <>
+        <path d="m12 3 10 18H2L12 3Z" />
+        <path d="M12 9v5M12 17h.01" />
+      </>
+    ),
+    pin: (
+      <>
+        <path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 0 1 14 0Z" />
+        <circle cx="12" cy="10" r="2.5" />
+      </>
+    ),
+    course: (
+      <>
+        <path d="m2 8 10-5 10 5-10 5-10-5ZM6 10v7c4 3 8 3 12 0v-7M22 8v7" />
+      </>
+    ),
     filter: <path d="M4 5h16l-6 7v6l-4 2v-8L4 5Z" />,
   };
-  return <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">{paths[name] || paths.check}</svg>;
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      {paths[name] || paths.check}
+    </svg>
+  );
 }
 function BatchCta() {
-  return <div className="s1-cta"><Button href={bookingHref} external={bookingIsExternal}>Yes, I Want to Fill My Next Batch</Button></div>;
+  return (
+    <div className="s1-cta">
+      <Button href={bookingHref} external={bookingIsExternal}>
+        Yes, I Want to Fill My Next Batch
+      </Button>
+    </div>
+  );
 }
 export function Intro() {
   return (
@@ -197,19 +268,34 @@ export function Intro() {
       <div className="s1-wrap s1-intro-grid">
         <Reveal className="s1-intro-title">
           <span className="s1-kicker">Student acquisition for institutes</span>
-          <h2>You’re Not Struggling to Get Students. <span>You’re Struggling to Reach the Right Students.</span></h2>
+          <h2>
+            You’re Not Struggling to Get Students.{" "}
+            <span>You’re Struggling to Reach the Right Students.</span>
+          </h2>
         </Reveal>
         <Reveal delay={80} className="s1-intro-copy">
-          <p>Wrong locations, mismatched courses and low-intent enquiries make it harder to fill your batches.</p>
-          <p><strong>Let’s fix that.</strong> At <strong>{site.brandName}</strong>, we build student acquisition systems for beauty, fashion designing and skill-based institutes.</p>
-          <p>Local targeting, course-specific ads and qualified enquiries help your team turn student interest into admission conversations.</p>
+          <p>
+            Wrong locations, mismatched courses and low-intent enquiries make it harder to
+            fill your batches.
+          </p>
+          <p>
+            <strong>Let’s fix that.</strong> At <strong>{site.brandName}</strong>, we
+            build student acquisition systems for beauty, fashion designing and
+            skill-based institutes.
+          </p>
+          <p>
+            Local targeting, course-specific ads and qualified enquiries help your team
+            turn student interest into admission conversations.
+          </p>
           <BatchCta />
         </Reveal>
       </div>
     </section>
   );
 }
+// This section is intentionally disabled. Keep the export for existing App imports.
 export function Approach() {
+  /*
   return (
     <section className="s1 s1-approach">
       <SectionStyles />
@@ -230,39 +316,80 @@ export function Approach() {
       </div>
     </section>
   );
+  */
+  return null;
 }
 function ComparisonCard({ positive = false, items, title, summary }) {
   const id = useId();
   const [openItems, setOpenItems] = useState(() => items.map(() => positive));
   const allOpen = openItems.every(Boolean);
   const toggleAll = () => setOpenItems(items.map(() => !allOpen));
-  const toggleItem = index => setOpenItems(current => current.map((open, i) => i === index ? !open : open));
+  const toggleItem = (index) =>
+    setOpenItems((current) => current.map((open, i) => (i === index ? !open : open)));
   return (
-    <Reveal delay={positive ? 80 : 0} className={`s1-panel${positive ? " s1-panel--green" : ""}`}>
+    <Reveal
+      delay={positive ? 80 : 0}
+      className={`s1-panel${positive ? " s1-panel--green" : ""}`}
+    >
       {positive && <span id="solution" aria-hidden="true" />}
       <div className="s1-panel-top">
-        <span className="s1-panel-label">{positive ? "How We Fix This" : "Common Challenges"}</span>
-        <span className="s1-panel-symbol"><Icon name={positive ? "target" : "warning"} /></span>
+        <span className="s1-panel-label">
+          {positive ? "How We Fix This" : "Common Challenges"}
+        </span>
+        <span className="s1-panel-symbol">
+          <Icon name={positive ? "target" : "warning"} />
+        </span>
       </div>
       <h3>{title}</h3>
       <p className="s1-panel-desc">{summary}</p>
       <div className="s1-toolbar">
-        <span>{items.length} {positive ? "focused solutions" : "common problems"}</span>
-        <button type="button" className="s1-text-button" aria-controls={`${id}-list`} onClick={toggleAll}>{allOpen ? "Collapse all" : "Expand all"}</button>
+        <span>
+          {items.length} {positive ? "focused solutions" : "common problems"}
+        </span>
+        <button
+          type="button"
+          className="s1-text-button"
+          aria-controls={`${id}-list`}
+          onClick={toggleAll}
+        >
+          {allOpen ? "Collapse all" : "Expand all"}
+        </button>
       </div>
       <ul id={`${id}-list`} className="s1-list">
         {items.map((item, index) => (
           <li key={item.title} className="s1-item" data-open={openItems[index]}>
-            <button type="button" id={`${id}-trigger-${index}`} className="s1-row-button" aria-expanded={openItems[index]} aria-controls={`${id}-detail-${index}`} onClick={() => toggleItem(index)}>
-              <span className="s1-status"><Icon name={positive ? "check" : "cross"} /></span>
+            <button
+              type="button"
+              id={`${id}-trigger-${index}`}
+              className="s1-row-button"
+              aria-expanded={openItems[index]}
+              aria-controls={`${id}-detail-${index}`}
+              onClick={() => toggleItem(index)}
+            >
+              <span className="s1-status">
+                <Icon name={positive ? "check" : "cross"} />
+              </span>
               <span className="s1-row-title">{item.title}</span>
               <Icon name="chevron" className="s1-chevron" />
             </button>
-            <div id={`${id}-detail-${index}`} hidden={!openItems[index]} className="s1-item-description">{item.text}</div>
+            <div
+              id={`${id}-detail-${index}`}
+              hidden={!openItems[index]}
+              className="s1-item-description"
+            >
+              {item.text}
+            </div>
           </li>
         ))}
       </ul>
-      <div className="s1-panel-foot"><Icon name={positive ? "check" : "warning"} /><span>{positive ? "Built around your courses, location and batches." : "Tap a problem to view its details."}</span></div>
+      <div className="s1-panel-foot">
+        <Icon name={positive ? "check" : "warning"} />
+        <span>
+          {positive
+            ? "Built around your courses, location and batches."
+            : "Tap a problem to view its details."}
+        </span>
+      </div>
     </Reveal>
   );
 }
@@ -273,29 +400,54 @@ export function Problems() {
       <div className="s1-wrap">
         <Reveal className="s1-heading">
           <span className="s1-kicker">Better targeting. Better admissions.</span>
-          <h2>Stop Wasting Your Ad Budget. <span>Reach the Right Students.</span></h2>
-          <p>Most institutes don’t have an ad problem. They have a targeting, funnel and lead-quality problem.</p>
+          <h2>
+            Stop Wasting Your Ad Budget. <span>Reach the Right Students.</span>
+          </h2>
+          <p>
+            Most institutes don’t have an ad problem. They have a targeting, funnel and
+            lead-quality problem.
+          </p>
         </Reveal>
         <div className="s1-compare-grid">
-          <ComparisonCard items={problems} title="Common Advertising Problems We Fix" summary="What’s holding back your admissions?" />
-          <ComparisonCard positive items={solutions} title="A Student Acquisition System for Institutes" summary="The right students. The right courses. A clear path to admission." />
+          <ComparisonCard
+            items={problems}
+            title="Common Advertising Problems We Fix"
+            summary="What’s holding back your admissions?"
+          />
+          <ComparisonCard
+            positive
+            items={solutions}
+            title="A Student Acquisition System for Institutes"
+            summary="The right students. The right courses. A clear path to admission."
+          />
         </div>
         <Reveal className="s1-bottom">
           <span className="s1-kicker">Let’s fill your next batch</span>
           <h3>Your Courses Deserve the Right Students.</h3>
-          <p>We build the targeting, enquiry funnel and lead delivery around your institute. Your team focuses on admission conversations.</p>
+          <p>
+            We build the targeting, enquiry funnel and lead delivery around your
+            institute. Your team focuses on admission conversations.
+          </p>
           <BatchCta />
           <div className="s1-notes">
-            <span><Icon />Local targeting</span>
-            <span><Icon />Course-specific ads</span>
-            <span><Icon />Fast lead delivery</span>
+            <span>
+              <Icon />
+              Local targeting
+            </span>
+            <span>
+              <Icon />
+              Course-specific ads
+            </span>
+            <span>
+              <Icon />
+              Fast lead delivery
+            </span>
           </div>
         </Reveal>
       </div>
     </section>
   );
 }
-
 // Solutions render beside Problems; this export keeps existing App imports valid.
 export function Solution() {
   return null;
