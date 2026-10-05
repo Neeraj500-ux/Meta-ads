@@ -1,164 +1,172 @@
-import { useState, useId } from "react";
+import { useId, useState } from "react";
 import { Reveal, Button } from "./ui.jsx";
 import { bookingHref, bookingIsExternal, site } from "../config/site.js";
-// Campaign copy lives in this file, so existing content.js exports remain compatible.
-const benefits = [
-  {
-    "title": "Hyper-Local Targeting",
-    "text": "We focus your campaigns on the locations that matter to your institute, so your team connects with students who can attend your classes."
-  },
-  {
-    "title": "Course-Specific Campaigns",
-    "text": "Fashion designing students see fashion designing ads. Beauty students see beauty ads. Every campaign is built around the course being promoted."
-  },
-  {
-    "title": "High-Intent Lead Filtering",
-    "text": "Qualification questions help identify students interested in your course, location and upcoming batch before their enquiry reaches your team."
-  },
-  {
-    "title": "Landing Pages That Convert",
-    "text": "A dedicated admission funnel gives students clear course information and a simple way to request details."
-  },
-  {
-    "title": "Instant Lead Delivery",
-    "text": "Student enquiries go directly to your admissions team, helping counsellors follow up while interest is still fresh."
-  },
-  {
-    "title": "Continuous Optimization",
-    "text": "We monitor campaigns daily and refine targeting, creatives and the enquiry journey to improve lead quality and reduce wasted spend."
-  }
-];
+// Complete replacement for Sections1.jsx. No additional packages required.
 const problems = [
-  {
-    "title": "Ads shown in the wrong locations",
-    "text": "Your budget reaches people outside the areas your institute serves."
-  },
-  {
-    "title": "Leads from cities where you do not operate",
-    "text": "Your counsellors receive enquiries from students who cannot attend your classes."
-  },
-  {
-    "title": "Students interested in the wrong course",
-    "text": "Generic ads attract enquiries that do not match the programs you want to fill."
-  },
-  {
-    "title": "Low-intent enquiries that never answer calls",
-    "text": "Your team spends time following up with people who show little interest."
-  },
-  {
-    "title": "Counsellors wasting hours on unqualified prospects",
-    "text": "Repeated calls leave less time for students who are ready to discuss admission."
-  },
-  {
-    "title": "High lead volume but low admissions",
-    "text": "More form submissions do not necessarily mean more students joining your batches."
-  },
-  {
-    "title": "Money wasted on broad targeting",
-    "text": "Irrelevant audiences use up the budget that should reach suitable students."
-  }
+  { title: "Ads in the wrong locations", text: "Your budget reaches students outside your service area." },
+  { title: "Leads from cities you don’t serve", text: "Enquiries come from students who cannot attend your classes." },
+  { title: "Students asking about the wrong course", text: "Generic ads attract interest in programs you don’t offer." },
+  { title: "Enquiries that never answer calls", text: "Low-intent leads leave your team chasing responses." },
+  { title: "Hours spent on unqualified leads", text: "Repeated calls take time away from admission-ready students." },
+  { title: "More leads, fewer admissions", text: "Form submissions grow, but your batches stay unfilled." },
+  { title: "Budget lost to broad targeting", text: "Irrelevant audiences use up your advertising spend." },
+];
+const solutions = [
+  { title: "Hyper-Local Targeting", text: "Reach students in the locations your institute serves." },
+  { title: "Course-Specific Campaigns", text: "Fashion ads for fashion students. Beauty ads for beauty students." },
+  { title: "High-Intent Lead Filtering", text: "Qualification questions help identify serious students." },
+  { title: "Landing Pages That Convert", text: "Clear course details and a simple admission enquiry form." },
+  { title: "Instant Lead Delivery", text: "Enquiries go straight to your team for quick follow-up." },
+  { title: "Continuous Optimization", text: "Daily refinements help improve quality and reduce wasted spend." },
 ];
 const approach = [
-  {
-    "title": "Reach Students Near Your Institute",
-    "text": "Focus on your service area and make your course offer relevant to students who can realistically join."
-  },
-  {
-    "title": "Match Every Ad to the Right Course",
-    "text": "Connect each program with its own audience, message and admission enquiry journey."
-  },
-  {
-    "title": "Filter for Meaningful Enquiries",
-    "text": "Ask useful qualification questions so your team has context before the first conversation."
-  },
-  {
-    "title": "Give Your Team a Clear Next Step",
-    "text": "Deliver enquiries quickly and use follow-up feedback to keep improving campaign quality."
-  }
+  { icon: "pin", title: "Reach Local Students", text: "Focus on students who can attend your institute." },
+  { icon: "course", title: "Promote the Right Course", text: "Give every program its own audience and message." },
+  { icon: "filter", title: "Qualify Each Enquiry", text: "Learn what students need before your first call." },
+  { icon: "arrow", title: "Follow Up Faster", text: "Send enquiries directly to your admissions team." },
 ];
-/* All styling is scoped to these sections; no extra dependencies are required. */
 const styles = `
-.s1{--ink:#2d2038;--muted:#74677e;--plum:#805297;--coral:#ef8165;color:var(--ink);padding:clamp(60px,7vw,104px) 0;background:#fffcfa;position:relative;isolation:isolate}
+.s1{
+  --ink:#2d2038;
+  --muted:#74677e;
+  --plum:#805297;
+  --coral:#ef8165;
+  position:relative;
+  isolation:isolate;
+  padding:clamp(52px,7vw,96px) 0;
+  background:#fffcfa;
+  color:var(--ink);
+}
 .s1,.s1 *,.s1 *::before,.s1 *::after{box-sizing:border-box}
-.s1 .s1-wrap{width:min(1180px,100%);padding:0 clamp(18px,4vw,36px);margin:auto}
-.s1 h2,.s1 h3,.s1 h4,.s1 p{margin:0}
-.s1 h2{font-size:clamp(29px,3.6vw,46px);font-weight:800;line-height:1.19;letter-spacing:-.045em;text-wrap:balance}
-.s1 p{font-size:15px;line-height:1.85;color:var(--muted)}
-.s1-kicker{display:inline-flex;align-items:center;gap:8px;color:var(--plum);font-size:11px;font-weight:750;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
-.s1-kicker::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 0 4px #8052970a}
-.s1-heading{max-width:800px;margin:0 auto 36px;text-align:center}
-.s1-heading h2 span{display:block;color:var(--coral);margin-top:6px}
-.s1-heading>p{max-width:665px;margin:18px auto 0}
-.s1 a{max-width:100%;white-space:normal;text-align:center}
-.s1-cta{margin-top:26px;display:flex;justify-content:center}
-.s1-intro-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(30px,5vw,64px);align-items:start}
-.s1-intro-title{position:sticky;top:110px}
-.s1-intro-title h2{font-size:clamp(30px,3.3vw,43px)}
+.s1 .s1-wrap{width:min(1180px,100%);margin:auto;padding:0 clamp(16px,4vw,36px)}
+.s1 h2,.s1 h3,.s1 p{margin:0}
+.s1 h2{font-size:clamp(28px,3.7vw,46px);line-height:1.18;font-weight:800;letter-spacing:-.045em;text-wrap:balance}
+.s1 p{font-size:15px;line-height:1.75;color:var(--muted)}
+.s1 svg{display:block;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.s1 a{max-width:100%;white-space:normal;text-align:center;overflow-wrap:anywhere}
+.s1 button{font:inherit;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.s1 button:focus-visible,.s1 a:focus-visible{outline:3px solid var(--plum);outline-offset:4px}
+.s1 [id],.s1[id]{scroll-margin-top:100px}
+.s1-heading{max-width:820px;margin:0 auto 32px;text-align:center}
+.s1-heading h2 span{color:var(--coral)}
+.s1-heading p{max-width:620px;margin:16px auto 0}
+.s1-kicker{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;color:var(--plum);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.s1-kicker::before{content:'';width:6px;height:6px;flex:0 0 6px;border-radius:50%;background:currentColor;box-shadow:0 0 0 4px #8052970a}
+.s1-cta{display:flex;justify-content:center;margin-top:24px}
+.s1-intro-grid{display:grid;grid-template-columns:1fr 1.08fr;gap:40px;align-items:center}
+.s1-intro-title{min-width:0}
 .s1-intro-title h2 span{color:var(--plum)}
-.s1-intro-copy{padding:clamp(24px,3vw,38px);border:1px solid #e9deed;border-radius:26px;background:linear-gradient(135deg,#fff,#fcf8ff);box-shadow:0 18px 55px #53326006}
-.s1-intro-copy p+p{margin-top:18px}
+.s1-intro-copy{min-width:0;padding:clamp(24px,3vw,36px);border:1px solid #e9deed;border-radius:26px;background:linear-gradient(135deg,#fff,#fcf8ff);box-shadow:0 18px 50px #53326008}
+.s1-intro-copy p+p{margin-top:16px}
 .s1-intro-copy strong{color:var(--ink)}
 .s1-intro-copy .s1-cta{justify-content:flex-start}
 .s1-approach{background:linear-gradient(130deg,#fcf7f3,#faf5fc)}
 .s1-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-.s1-step{padding:25px 22px;border:1px solid #e8dceb;border-radius:24px;background:#ffffffc9;box-shadow:0 10px 28px #53326004;min-width:0;transition:transform .25s,box-shadow .25s}
+.s1-step{min-width:0;padding:24px 22px;border:1px solid #e8dceb;border-radius:24px;background:#ffffffd9;box-shadow:0 10px 28px #53326005;transition:transform .25s,box-shadow .25s}
 .s1-step:nth-child(even){background:#fffaf6;border-color:#f0e0d7}
-.s1-step-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
-.s1-step-number{font-size:11px;font-weight:700;letter-spacing:.08em;color:#ab97b4}
-.s1-step h3{font-size:18px;line-height:1.4;font-weight:750;letter-spacing:-.025em;margin-bottom:12px}
-.s1-step p{font-size:13px;line-height:1.85}
-.s1-mini-icon{display:grid;place-items:center;width:42px;height:42px;flex:0 0 42px;border-radius:14px;color:var(--plum);background:linear-gradient(145deg,#fff,#f3eaf9);border:1px solid #e7daee;box-shadow:0 3px 0 #e8dcec,inset 0 1px 0 #fff}
-.s1 svg{display:block;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
-.s1-compare{background:radial-gradient(ellipse at 0 25%,#fceae570,transparent 42%),radial-gradient(ellipse at 100% 75%,#efe4f570,transparent 42%),#fffcfa}
+.s1-step-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.s1-step-number{font-size:11px;font-weight:800;color:#a58dae;letter-spacing:.08em}
+.s1-step h3{margin-bottom:10px;font-size:18px;line-height:1.35;font-weight:750;letter-spacing:-.025em}
+.s1-step p{font-size:13px}
+.s1-mini-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;color:var(--plum);background:linear-gradient(145deg,#fff,#f3eaf9);border:1px solid #e7daee;box-shadow:0 4px 0 #e8dcec}
+.s1-compare{background:radial-gradient(ellipse at 0 20%,#fceae580,transparent 45%),radial-gradient(ellipse at 100% 80%,#efe4f580,transparent 45%),#fffcfa}
 .s1-compare-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:stretch}
-.s1-panel{--icon-light:#ff8fa0;--icon-face:#ec4e6b;--icon-dark:#cc2f50;--icon-base:#a82340;--icon-glow:#ec4e6b28;--tone:#c84e67;--tint:#fff1f4;--line:#f1dce2;--shadow:#ecd2db;--soft:#fffafb;min-width:0;border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,#fff,var(--soft));box-shadow:0 24px 60px #442c3b07,inset 0 1px 0 #fff;position:relative;padding:clamp(22px,3vw,34px);display:flex;flex-direction:column}
-.s1-panel--green{--icon-light:#63db9c;--icon-face:#25ad68;--icon-dark:#19844e;--icon-base:#12673b;--icon-glow:#25ad6828;--tone:#267852;--tint:#eaf7ef;--line:#d5e9dc;--shadow:#d2e6da;--soft:#f8fdfa}
-.s1-panel::before{content:'';position:absolute;left:34px;right:34px;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--tone),transparent);opacity:.4}
-.s1-panel-top{display:flex;align-items:center;gap:12px;justify-content:space-between;margin-bottom:22px}
-.s1-panel-label{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:800;color:var(--tone);letter-spacing:.09em;text-transform:uppercase}
-.s1-panel-label::before{content:'';width:5px;height:5px;background:currentColor;border-radius:50%}
-.s1 .s1-panel-icon{appearance:none;font:inherit;padding:0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;width:44px;height:44px;flex-basis:44px;color:#fff;background:linear-gradient(145deg,var(--icon-light),var(--icon-face) 55%,var(--icon-dark));border:1px solid var(--icon-face);box-shadow:0 5px 0 var(--icon-base),0 10px 20px var(--icon-glow),inset 0 2px 2px #ffffff65,inset 0 -2px 3px #0000000d;transition:transform .18s,box-shadow .18s;position:relative;isolation:isolate}
-.s1-panel-icon svg{width:21px;height:21px;stroke:#fff;stroke-width:2;filter:drop-shadow(0 1px 1px #00000018);animation:s1-float 5s ease-in-out infinite}
-.s1-panel-icon::before{content:'';position:absolute;inset:2px 4px auto;height:15px;border-radius:10px;background:linear-gradient(#ffffff24,transparent);pointer-events:none}
-.s1-panel--green .s1 .s1-panel-icon{appearance:none;font:inherit;padding:0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;width:44px;height:44px;flex-basis:44px;color:#fff;background:linear-gradient(145deg,var(--icon-light),var(--icon-face) 55%,var(--icon-dark));border:1px solid var(--icon-face);box-shadow:0 5px 0 var(--icon-base),0 10px 20px var(--icon-glow),inset 0 2px 2px #ffffff65,inset 0 -2px 3px #0000000d;transition:transform .18s,box-shadow .18s;position:relative;isolation:isolate}
-.s1-panel-icon svg{width:21px;height:21px;stroke:#fff;stroke-width:2;filter:drop-shadow(0 1px 1px #00000018);animation:s1-float 5s ease-in-out infinite}
-.s1-panel-icon::before{content:'';position:absolute;inset:2px 4px auto;height:15px;border-radius:10px;background:linear-gradient(#ffffff24,transparent);pointer-events:none}
-.s1-panel h3{font-size:clamp(23px,2.15vw,28px);line-height:1.28;letter-spacing:-.035em;font-weight:800;max-width:440px;text-wrap:balance}
-.s1-panel-desc{margin-top:13px!important;font-size:13px!important;line-height:1.85!important}
-.s1-list-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:24px 0 12px;padding-top:18px;border-top:1px solid var(--line)}
-.s1-list-toolbar>span{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700}
-.s1 .s1-text-button{font-family:inherit;cursor:pointer;background:transparent;border:0;padding:8px 0 8px 10px;min-height:44px;color:var(--tone);font-size:11px;font-weight:750;border-radius:6px}
-.s1-list{list-style:none;margin:0;padding:0;display:grid;gap:9px}
-.s1-item{border:1px solid transparent;border-radius:15px;background:#ffffff80;transition:background .25s,border-color .25s,box-shadow .25s;min-width:0}
-.s1-item[data-open="true"]{background:#fff;border-color:var(--line);box-shadow:0 5px 16px #30213b03}
-.s1 .s1-row-button{appearance:none;font:inherit;text-align:left;border:0;background:transparent;color:var(--ink);width:100%;min-height:54px;display:flex;gap:11px;align-items:flex-start;padding:14px;cursor:pointer;border-radius:14px;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-.s1-row-title{font-size:14px;font-weight:700;line-height:1.55;flex:1;min-width:0}
-.s1-status{display:grid;place-items:center;width:24px;height:24px;flex:0 0 24px;border-radius:8px;color:#fff;background:linear-gradient(145deg,var(--icon-light),var(--icon-face) 55%,var(--icon-dark));border:1px solid var(--icon-face);box-shadow:0 3px 0 var(--icon-base),0 6px 10px var(--icon-glow),inset 0 1px 1px #ffffff70; margin-top:1px;transition:transform .18s,box-shadow .18s;position:relative}
-.s1-status svg{width:13px;height:13px;stroke:#fff;stroke-width:2.7;filter:drop-shadow(0 1px 1px #00000015)}
-.s1-chevron{flex:0 0 14px;width:14px!important;height:14px!important;color:#ae9db4;margin-top:4px;transition:transform .22s}
+.s1-panel{
+  --tone:#c84e67;
+  --light:#ff94a5;
+  --face:#ec4e6b;
+  --base:#a82340;
+  --glow:#ec4e6b25;
+  --line:#f1dce2;
+  --soft:#fff5f7;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  padding:clamp(22px,3vw,32px);
+  border:1px solid var(--line);
+  border-radius:28px;
+  background:linear-gradient(145deg,#fff,var(--soft));
+  box-shadow:0 22px 55px #442c3b08,inset 0 1px 0 #fff;
+}
+.s1-panel--green{
+  --tone:#267852;
+  --light:#63db9c;
+  --face:#25ad68;
+  --base:#12673b;
+  --glow:#25ad6825;
+  --line:#d5e9dc;
+  --soft:#f3fbf6;
+}
+.s1-panel::before{content:'';position:absolute;left:28px;right:28px;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--tone),transparent);opacity:.5}
+.s1-panel-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
+.s1-panel-label{color:var(--tone);font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.s1-panel-symbol{display:grid;place-items:center;width:46px;height:46px;flex:0 0 46px;border-radius:15px;color:white;background:linear-gradient(145deg,var(--light),var(--face));border:1px solid var(--face);box-shadow:0 5px 0 var(--base),0 12px 22px var(--glow),inset 0 2px 2px #ffffff65}
+.s1-panel-symbol svg{width:23px;height:23px;animation:s1-float 5s ease-in-out infinite}
+.s1-panel--green .s1-panel-symbol svg{animation-delay:-2s}
+.s1-panel h3{font-size:clamp(23px,2.3vw,29px);line-height:1.25;font-weight:800;letter-spacing:-.035em;text-wrap:balance}
+.s1-panel-desc{margin-top:12px!important;font-size:13px!important}
+.s1-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:20px 0 12px;padding-top:14px;border-top:1px solid var(--line)}
+.s1-toolbar>span{color:var(--tone);font-size:11px;font-weight:750}
+.s1-text-button{min-height:44px;padding:8px 4px;border:0;border-radius:6px;background:transparent;color:var(--tone);font-size:12px!important;font-weight:750!important;cursor:pointer}
+.s1-list{display:grid;gap:8px;list-style:none;margin:0;padding:0}
+.s1-item{min-width:0;border:1px solid var(--line);border-radius:15px;background:#ffffffb5;transition:box-shadow .2s,background .2s}
+.s1-item[data-open="true"]{background:#fff;box-shadow:0 6px 16px #30213b05}
+.s1-row-button{display:flex;align-items:center;gap:11px;width:100%;min-height:58px;padding:13px 12px;border:0;border-radius:14px;background:transparent;color:var(--ink);text-align:left;cursor:pointer}
+.s1-status{display:grid;place-items:center;width:26px;height:26px;flex:0 0 26px;border-radius:9px;color:#fff;background:linear-gradient(145deg,var(--light),var(--face));box-shadow:0 3px 0 var(--base),0 5px 10px var(--glow),inset 0 1px 1px #ffffff70;transition:transform .18s,box-shadow .18s}
+.s1-status svg{width:15px;height:15px;stroke-width:2.8}
+.s1-row-title{flex:1;min-width:0;font-size:14px;font-weight:700;line-height:1.45;overflow-wrap:break-word}
+.s1-chevron{width:15px!important;height:15px!important;flex:0 0 15px;color:var(--tone);transition:transform .2s}
 .s1-item[data-open="true"] .s1-chevron{transform:rotate(180deg)}
-.s1-row-button:active .s1-status{display:grid;place-items:center;width:24px;height:24px;flex:0 0 24px;border-radius:8px;color:#fff;background:linear-gradient(145deg,var(--icon-light),var(--icon-face) 55%,var(--icon-dark));border:1px solid var(--icon-face);box-shadow:0 3px 0 var(--icon-base),0 6px 10px var(--icon-glow),inset 0 1px 1px #ffffff70; margin-top:1px;transition:transform .18s,box-shadow .18s;position:relative}
-.s1-item-description{padding:0 39px 16px 49px;color:var(--muted);font-size:12px;line-height:1.85;overflow-wrap:break-word;animation:s1-detail .24s ease-out}
+.s1-item-description{padding:0 36px 15px 49px;color:var(--muted);font-size:12px;line-height:1.7;overflow-wrap:break-word;animation:s1-detail .2s ease-out}
 .s1-item-description[hidden]{display:none}
-.s1-panel-foot{margin-top:auto;padding-top:22px;font-size:11px;color:var(--tone);display:flex;align-items:center;gap:8px;line-height:1.6}
-.s1-panel-foot svg{width:15px;height:15px;flex:0 0 15px}
-.s1-bottom{margin-top:28px;padding:clamp(25px,4vw,44px);border:1px solid #e8ddec;border-radius:28px;background:linear-gradient(135deg,#fff,#fbf6fe);text-align:center;box-shadow:0 16px 40px #55346104}
-.s1-bottom h3{font-size:clamp(23px,2.5vw,31px);line-height:1.3;letter-spacing:-.035em;font-weight:800;max-width:730px;margin:auto;text-wrap:balance}
-.s1-bottom p{max-width:790px;margin:15px auto 0;font-size:14px}
-.s1-notes{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 20px;margin-top:19px;color:var(--muted);font-size:11px}
+.s1-row-button:active .s1-status{transform:translateY(2px) scale(.94);box-shadow:0 1px 0 var(--base),0 2px 5px var(--glow)}
+.s1-panel-foot{display:flex;align-items:flex-start;gap:8px;margin-top:auto;padding-top:20px;color:var(--tone);font-size:11px;line-height:1.6}
+.s1-panel-foot svg{width:15px;height:15px;flex:0 0 15px;margin-top:1px}
+.s1-bottom{margin-top:26px;padding:clamp(26px,4vw,42px);border:1px solid #e8ddec;border-radius:28px;background:linear-gradient(135deg,#fff,#fbf6fe);text-align:center;box-shadow:0 16px 40px #55346106}
+.s1-bottom h3{max-width:690px;margin:auto;font-size:clamp(23px,2.7vw,32px);font-weight:800;line-height:1.25;letter-spacing:-.035em;text-wrap:balance}
+.s1-bottom p{max-width:650px;margin:14px auto 0;font-size:14px}
+.s1-notes{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 20px;margin-top:20px;color:var(--muted);font-size:11px}
 .s1-notes span{display:flex;align-items:center;gap:6px}
-.s1-notes svg{width:13px;height:13px;color:var(--plum)}
-.s1 [id],.s1[id]{scroll-margin-top:100px}
-.s1 button:focus-visible,.s1 a:focus-visible{outline:3px solid #805297;outline-offset:4px}
-@keyframes s1-float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-4px) rotate(3deg)}}
-@keyframes s1-detail{from{opacity:.45;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
-@media(hover:hover) and (pointer:fine){.s1-step:hover{transform:translateY(-4px);box-shadow:0 15px 32px #53326009}.s1-row-button:hover .s1-status{display:grid;place-items:center;width:24px;height:24px;flex:0 0 24px;border-radius:8px;color:#fff;background:linear-gradient(145deg,var(--icon-light),var(--icon-face) 55%,var(--icon-dark));border:1px solid var(--icon-face);box-shadow:0 3px 0 var(--icon-base),0 6px 10px var(--icon-glow),inset 0 1px 1px #ffffff70; margin-top:1px;transition:transform .18s,box-shadow .18s;position:relative}
-@media(max-width:1023px){.s1-steps{grid-template-columns:repeat(2,minmax(0,1fr))}.s1-intro-grid{gap:28px}}
-@media(max-width:767px){.s1-intro-grid,.s1-compare-grid{grid-template-columns:minmax(0,1fr)}.s1-intro-title{position:static;text-align:center}.s1-intro-title h2{max-width:580px;margin:auto}.s1-panel{border-radius:24px}.s1-panel h3{max-width:100%}.s1-heading{margin-bottom:28px}.s1-panel-top{margin-bottom:18px}.s1-bottom{border-radius:24px;margin-top:22px}.s1-intro-copy .s1-cta{justify-content:center}}
-@media(max-width:480px){.s1-steps{grid-template-columns:minmax(0,1fr);gap:13px}.s1-step{padding:23px}.s1-step-top{margin-bottom:17px}.s1-step h3{font-size:19px}.s1-panel{padding:23px 18px}.s1-row-button{padding:13px 10px!important;gap:9px!important}.s1-row-title{font-size:13px}.s1-item-description{padding:0 29px 15px 43px}.s1-intro-copy{padding:24px 20px}.s1-cta>a{width:100%}.s1-bottom{padding:27px 20px}.s1-notes{gap:9px 14px}.s1 p{font-size:14px}}
-.s1 .s1-panel-icon:active{transform:translateY(4px) scale(.97);box-shadow:0 1px 0 var(--icon-base),0 3px 8px var(--icon-glow),inset 0 1px 2px #ffffff40}
-.s1 .s1-row-button:active .s1-status{transform:translateY(2px) scale(.94);box-shadow:0 1px 0 var(--icon-base),0 2px 5px var(--icon-glow),inset 0 1px 1px #ffffff50}
-@media(prefers-reduced-motion:reduce){.s1 *, .s1 *::before,.s1 *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.s1-step:hover{transform:none}}
+.s1-notes svg{width:14px;height:14px;color:var(--plum)}
+@keyframes s1-float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-3px) rotate(3deg)}}
+@keyframes s1-detail{from{opacity:.5;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
+@media(hover:hover) and (pointer:fine){
+  .s1-step:hover{transform:translateY(-4px);box-shadow:0 16px 32px #5332600d}
+  .s1-item:hover{background:#fff;box-shadow:0 7px 18px var(--glow)}
+  .s1-row-button:hover .s1-status{transform:translateY(-1px)}
+}
+@media(max-width:1023px){
+  .s1-steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .s1-intro-grid{gap:26px}
+}
+@media(max-width:767px){
+  .s1-intro-grid,.s1-compare-grid{grid-template-columns:minmax(0,1fr)}
+  .s1-intro-title{text-align:center}
+  .s1-intro-title h2{max-width:580px;margin:auto}
+  .s1-intro-copy .s1-cta{justify-content:center}
+  .s1-heading{margin-bottom:26px}
+  .s1-panel,.s1-bottom{border-radius:24px}
+  .s1-compare-grid{gap:18px}
+}
+@media(max-width:480px){
+  .s1-steps{grid-template-columns:minmax(0,1fr);gap:13px}
+  .s1-step{padding:23px}
+  .s1-panel{padding:24px 16px}
+  .s1-panel-top{margin-bottom:20px}
+  .s1-row-button{gap:9px;padding:13px 10px}
+  .s1-row-title{font-size:13px}
+  .s1-item-description{padding:0 31px 14px 45px}
+  .s1-intro-copy{padding:24px 20px}
+  .s1-bottom{padding:28px 19px}
+  .s1-cta>a{width:100%;min-height:48px}
+  .s1 p{font-size:14px}
+  .s1-notes{gap:10px 14px}
+}
+@media(prefers-reduced-motion:reduce){
+  .s1 *,.s1 *::before,.s1 *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .s1-step:hover,.s1-row-button:hover .s1-status{transform:none}
+}
 `;
 function SectionStyles() {
   return <style>{styles}</style>;
@@ -166,16 +174,19 @@ function SectionStyles() {
 function Icon({ name = "check", className = "" }) {
   const paths = {
     check: <path d="m5 12 4 4L19 6" />,
-    cross: <path d="m8 8 8 8M16 8l-8 8" />,
+    cross: <path d="m7 7 10 10M17 7 7 17" />,
     chevron: <path d="m6 9 6 6 6-6" />,
+    arrow: <path d="M4 12h16m-6-6 6 6-6 6" />,
     target: <><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="4" /><path d="m12 12 8-8M17 4h3v3" /></>,
-    warning: <><path d="M10.3 4 2.6 17.5A2.3 2.3 0 0 0 4.6 21h14.8a2.3 2.3 0 0 0 2-3.5L13.7 4a2 2 0 0 0-3.4 0Z" /><path d="M12 9v5M12 17h.01" /></>,
+    warning: <><path d="m12 3 10 18H2L12 3Z" /><path d="M12 9v5M12 17h.01" /></>,
     pin: <><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 0 1 14 0Z" /><circle cx="12" cy="10" r="2.5" /></>,
     course: <><path d="m2 8 10-5 10 5-10 5-10-5ZM6 10v7c4 3 8 3 12 0v-7M22 8v7" /></>,
-    filter: <><path d="M4 5h16l-6 7v6l-4 2v-8L4 5Z" /></>,
-    arrow: <path d="M4 12h16m-6-6 6 6-6 6" />,
+    filter: <path d="M4 5h16l-6 7v6l-4 2v-8L4 5Z" />,
   };
-  return <svg className={className} viewBox="0 0 24 24" aria-hidden="true">{paths[name] || paths.check}</svg>;
+  return <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">{paths[name] || paths.check}</svg>;
+}
+function BatchCta() {
+  return <div className="s1-cta"><Button href={bookingHref} external={bookingIsExternal}>Yes, I Want to Fill My Next Batch</Button></div>;
 }
 export function Intro() {
   return (
@@ -183,63 +194,59 @@ export function Intro() {
       <SectionStyles />
       <div className="s1-wrap s1-intro-grid">
         <Reveal className="s1-intro-title">
-          <span className="s1-kicker">Student acquisition for your institute</span>
+          <span className="s1-kicker">Student acquisition for institutes</span>
           <h2>You’re Not Struggling to Get Students. <span>You’re Struggling to Reach the Right Students.</span></h2>
         </Reveal>
         <Reveal delay={80} className="s1-intro-copy">
-          <p>Every month, institutes spend thousands on advertising but still struggle to fill their batches. Their campaigns reach the wrong locations, attract students interested in different courses or generate enquiries that never turn into meaningful conversations.</p>
-          <p><strong>Let’s fix that.</strong> At <strong>{site.brandName}</strong>, we build and manage student acquisition systems for beauty, fashion designing and other skill-based institutes.</p>
-          <p>We combine course-specific messaging, local targeting, lead qualification and fast delivery to help your team attract qualified students, generate 300+ quality leads every month and fill upcoming batches without wasting your advertising budget.</p>
-          <div className="s1-cta"><Button href={bookingHref} external={bookingIsExternal}>Yes, I Want to Fill My Next Batch</Button></div>
+          <p>Wrong locations, mismatched courses and low-intent enquiries make it harder to fill your batches.</p>
+          <p><strong>Let’s fix that.</strong> At <strong>{site.brandName}</strong>, we build student acquisition systems for beauty, fashion designing and skill-based institutes.</p>
+          <p>Local targeting, course-specific ads and qualified enquiries help your team turn student interest into admission conversations.</p>
+          <BatchCta />
         </Reveal>
       </div>
     </section>
   );
 }
 export function Approach() {
-  const icons = ["pin", "course", "filter", "arrow"];
   return (
     <section className="s1 s1-approach">
       <SectionStyles />
       <div className="s1-wrap">
         <Reveal className="s1-heading">
           <span className="s1-kicker">Our approach</span>
-          <h2>How We Help Institutes Get Better Leads, Not Just More Leads</h2>
-          <p>Most institutes don’t have an ad problem. They have a targeting, funnel and lead-quality problem. We bring those pieces together into one focused admission journey.</p>
+          <h2>Better Leads. <span>Not Just More Leads.</span></h2>
+          <p>Better targeting, a clear admission funnel and faster follow-up.</p>
         </Reveal>
         <div className="s1-steps">
           {approach.map((item, index) => (
             <Reveal key={item.title} delay={index * 60} className="s1-step">
-              <div className="s1-step-top"><span className="s1-mini-icon"><Icon name={icons[index]} /></span><span className="s1-step-number">0{index + 1}</span></div>
+              <div className="s1-step-top"><span className="s1-mini-icon"><Icon name={item.icon} /></span><span className="s1-step-number">0{index + 1}</span></div>
               <h3>{item.title}</h3><p>{item.text}</p>
             </Reveal>
           ))}
         </div>
-        <div className="s1-cta"><Button href={bookingHref} external={bookingIsExternal}>Improve My Student Lead Quality</Button></div>
       </div>
     </section>
   );
 }
-/* Descriptions are visible initially. Tap a row to fold or reopen its detail. */
 function ComparisonCard({ positive = false, items, title, summary }) {
   const id = useId();
-  const [openItems, setOpenItems] = useState(() => items.map(() => true));
+  const [openItems, setOpenItems] = useState(() => items.map(() => positive));
   const allOpen = openItems.every(Boolean);
-  function toggleItem(index) {
-    setOpenItems(current => current.map((value, i) => i === index ? !value : value));
-  }
+  const toggleAll = () => setOpenItems(items.map(() => !allOpen));
+  const toggleItem = index => setOpenItems(current => current.map((open, i) => i === index ? !open : open));
   return (
-    <Reveal delay={positive ? 90 : 0} className={`s1-panel ${positive ? "s1-panel--green" : ""}`}>
-      {positive && <div id="solution" />}
+    <Reveal delay={positive ? 80 : 0} className={`s1-panel${positive ? " s1-panel--green" : ""}`}>
+      {positive && <span id="solution" aria-hidden="true" />}
       <div className="s1-panel-top">
         <span className="s1-panel-label">{positive ? "How We Fix This" : "Common Challenges"}</span>
-        <button type="button" className="s1-mini-icon s1-panel-icon" aria-controls={`${id}-list`} aria-label={`${allOpen ? "Collapse" : "Expand"} all ${positive ? "solution" : "problem"} details`} onClick={() => setOpenItems(items.map(() => !allOpen))}><Icon name={positive ? "target" : "warning"} /></button>
+        <span className="s1-panel-symbol"><Icon name={positive ? "target" : "warning"} /></span>
       </div>
       <h3>{title}</h3>
       <p className="s1-panel-desc">{summary}</p>
-      <div className="s1-list-toolbar">
+      <div className="s1-toolbar">
         <span>{items.length} {positive ? "focused solutions" : "common problems"}</span>
-        <button type="button" className="s1-text-button" aria-controls={`${id}-list`} aria-label={`${allOpen ? "Collapse" : "Expand"} all ${positive ? "solution" : "problem"} details`} onClick={() => setOpenItems(items.map(() => !allOpen))}>{allOpen ? "Collapse details" : "Expand details"}</button>
+        <button type="button" className="s1-text-button" aria-controls={`${id}-list`} onClick={toggleAll}>{allOpen ? "Collapse all" : "Expand all"}</button>
       </div>
       <ul id={`${id}-list`} className="s1-list">
         {items.map((item, index) => (
@@ -253,7 +260,7 @@ function ComparisonCard({ positive = false, items, title, summary }) {
           </li>
         ))}
       </ul>
-      <div className="s1-panel-foot"><Icon name={positive ? "check" : "warning"} /><span>{positive ? "Built around your courses, location and upcoming batches." : "Tap any row to collapse or view its details."}</span></div>
+      <div className="s1-panel-foot"><Icon name={positive ? "check" : "warning"} /><span>{positive ? "Built around your courses, location and batches." : "Tap a problem to view its details."}</span></div>
     </Reveal>
   );
 }
@@ -263,28 +270,31 @@ export function Problems() {
       <SectionStyles />
       <div className="s1-wrap">
         <Reveal className="s1-heading">
-          <span className="s1-kicker">Better Targeting. Better Leads.</span>
-          <h2>Stop Wasting Your Ad Budget.<span>Start Reaching the Right Students.</span></h2>
-          <p>Most institutes don’t have an ad problem. They have a targeting, funnel and lead-quality problem. Here’s what we fix—and how we fix it.</p>
+          <span className="s1-kicker">Better targeting. Better admissions.</span>
+          <h2>Stop Wasting Your Ad Budget. <span>Reach the Right Students.</span></h2>
+          <p>Most institutes don’t have an ad problem. They have a targeting, funnel and lead-quality problem.</p>
         </Reveal>
         <div className="s1-compare-grid">
-          <ComparisonCard items={problems} title="Common Advertising Problems We Fix" summary="Do these challenges sound familiar? These are the issues that can hold back your institute’s admissions." />
-          <ComparisonCard positive items={benefits} title="We Build a Student Acquisition System Designed for Institutes" summary="The right students. The right courses. A clear path to admission." />
+          <ComparisonCard items={problems} title="Common Advertising Problems We Fix" summary="What’s holding back your admissions?" />
+          <ComparisonCard positive items={solutions} title="A Student Acquisition System for Institutes" summary="The right students. The right courses. A clear path to admission." />
         </div>
         <Reveal className="s1-bottom">
-          <span className="s1-kicker">A more focused path forward</span>
-          <h3>The Right Students. The Right Courses. A Clear Path to Admission.</h3>
-          <p>More leads are useful when they give your admissions team more relevant conversations. Our system connects your courses with students looking for their next skill.</p>
-          <p>We start with the programs you want to promote, the locations you serve and the batches you want to fill. Then we build the targeting, enquiry funnel and delivery process around those priorities.</p>
-          <p>Your team receives the enquiries. We keep improving the campaigns using performance data and feedback from your counsellors.</p>
-          <div className="s1-cta"><Button href={bookingHref} external={bookingIsExternal}>Yes, I Want to Fill My Next Batch</Button></div>
-          <div className="s1-notes"><span><Icon />Course-specific campaigns</span><span><Icon />Local student targeting</span><span><Icon />Clear enquiry delivery</span></div>
+          <span className="s1-kicker">Let’s fill your next batch</span>
+          <h3>Your Courses Deserve the Right Students.</h3>
+          <p>We build the targeting, enquiry funnel and lead delivery around your institute. Your team focuses on admission conversations.</p>
+          <BatchCta />
+          <div className="s1-notes">
+            <span><Icon />Local targeting</span>
+            <span><Icon />Course-specific ads</span>
+            <span><Icon />Fast lead delivery</span>
+          </div>
         </Reveal>
       </div>
     </section>
   );
 }
-// The solution is included beside Problems. Keep the existing App export compatible.
+
+// Solutions render beside Problems; this export keeps existing App imports valid.
 export function Solution() {
   return null;
 }
