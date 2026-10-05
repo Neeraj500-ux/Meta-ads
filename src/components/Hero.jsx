@@ -825,6 +825,9 @@ export default function Hero() {
                 +
               </span>
             </p>
+             <span className="hero-lead-quality">
+                Better Leads. Not Just More Leads.
+              </span>
             <p className="mt-3 text-base font-bold text-ink">
               Quality Student Leads Every Month
               <span className="hero-lead-quality">
