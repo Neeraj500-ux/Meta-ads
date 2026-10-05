@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   audiences,
   processDetails,
@@ -288,50 +288,373 @@ export function Audience() {
     </section>
   );
 }
-export function Process() {
+const processStyles = `
+  #process.edu-process {
+    --ep-plum: #4b2467;
+    --ep-coral: #ff7c53;
+    --ep-sun: #f8cc62;
+    --ep-ink: #30223e;
+    --ep-muted: #776982;
+    position: relative;
+    isolation: isolate;
+    background: linear-gradient(155deg, #fff 0%, #fbf6fd 48%, #fffaf0 100%);
+  }
+  .edu-process *, .edu-process *::before, .edu-process *::after {
+    box-sizing: border-box;
+  }
+  .ep-timeline {
+    --ep-progress: 0;
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 8px 0;
+    list-style: none;
+  }
+  .ep-rail {
+    position: absolute;
+    z-index: -1;
+    top: 38px;
+    bottom: 38px;
+    left: 50%;
+    width: 3px;
+    transform: translateX(-50%);
+    overflow: hidden;
+    border-radius: 10px;
+    background: #e8daef;
+    pointer-events: none;
+  }
+  .ep-rail-fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform: scaleY(var(--ep-progress));
+    transform-origin: top;
+    background: linear-gradient(180deg, var(--ep-plum), var(--ep-coral) 65%, var(--ep-sun));
+    box-shadow: 0 0 12px rgba(255,124,83,.4);
+  }
+  .ep-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr);
+    align-items: start;
+    gap: 26px;
+    padding: 0 0 42px;
+    min-width: 0;
+  }
+  .ep-row:last-child { padding-bottom: 0; }
+  .ep-node {
+    position: relative;
+    z-index: 2;
+    grid-column: 2;
+    grid-row: 1;
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    border: 2px solid #dbc5e7;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--ep-plum);
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1;
+    box-shadow: 0 0 0 7px #fbf6fd, 0 8px 18px -10px rgba(75,36,103,.3);
+    transition: background .35s ease, color .35s ease, border-color .35s ease, box-shadow .35s ease;
+  }
+  .ep-row.is-reached .ep-node {
+    border-color: #fff;
+    background: linear-gradient(145deg, #65417f, var(--ep-plum));
+    color: #fff;
+    box-shadow: 0 0 0 5px #eee1f5, 0 8px 22px -7px rgba(75,36,103,.45);
+  }
+  .ep-row:nth-child(even).is-reached .ep-node {
+    background: linear-gradient(145deg, #ff996e, var(--ep-coral));
+    box-shadow: 0 0 0 5px #ffeadf, 0 8px 22px -7px rgba(255,124,83,.4);
+  }
+  .ep-row.is-current .ep-node::after {
+    content: "";
+    position: absolute;
+    inset: -7px;
+    border: 1px solid rgba(75,36,103,.25);
+    border-radius: inherit;
+    animation: ep-node-pulse 2.8s ease-out infinite;
+    pointer-events: none;
+  }
+  .ep-card {
+    --ep-enter-x: -18px;
+    position: relative;
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+    padding: 25px;
+    border: 1px solid #e7d6ef;
+    border-radius: 23px;
+    background: linear-gradient(145deg, rgba(255,255,255,.97), rgba(249,243,253,.92));
+    box-shadow: inset 0 1px 0 #fff, 0 5px 0 rgba(227,212,235,.24), 0 18px 36px -25px rgba(75,36,103,.32);
+    transition: opacity .65s ease, transform .65s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease, border-color .3s ease;
+  }
+  .ep-row:nth-child(even) .ep-card {
+    --ep-enter-x: 18px;
+    grid-column: 3;
+    background: linear-gradient(145deg, #fff, #fff8ee);
+    border-color: #efddcc;
+  }
+  .ep-card::after {
+    content: "";
+    position: absolute;
+    top: 29px;
+    right: -25px;
+    width: 25px;
+    height: 2px;
+    background: #dac4e7;
+    pointer-events: none;
+  }
+  .ep-row:nth-child(even) .ep-card::after {
+    right: auto;
+    left: -25px;
+    background: #efcfb8;
+  }
+  .ep-card-header { display: flex; align-items: center; gap: 13px; }
+  .ep-icon {
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border: 1px solid #fff;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #fff, #eadaf5);
+    color: var(--ep-plum);
+    box-shadow: inset 0 1px 0 #fff, 0 4px 0 #e3d4eb;
+  }
+  .ep-row:nth-child(even) .ep-icon {
+    color: #c75d37;
+    background: linear-gradient(145deg, #fff, #ffe5d1);
+    box-shadow: inset 0 1px 0 #fff, 0 4px 0 #efdbc9;
+  }
+  .ep-row:last-child .ep-icon {
+    color: var(--ep-plum);
+    background: linear-gradient(145deg, #fff, #fff0b3);
+    box-shadow: inset 0 1px 0 #fff, 0 4px 0 #e9dfb5;
+  }
+  .ep-icon svg { width: 23px; height: 23px; }
+  .ep-step-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #8b719b;
+    font-size: 10px;
+    font-weight: 750;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+  }
+  .ep-card h3 {
+    margin: 0;
+    color: var(--ep-ink);
+    font-size: clamp(18px, 1.65vw, 22px);
+    font-weight: 750;
+    line-height: 1.35;
+    overflow-wrap: break-word;
+  }
+  .ep-card p {
+    margin: 16px 0 0;
+    color: var(--ep-muted);
+    font-size: 15px;
+    line-height: 1.75;
+    overflow-wrap: break-word;
+  }
+  .ep-timeline.is-enhanced .ep-row:not(.is-visible) .ep-card {
+    opacity: 0;
+    transform: translate(var(--ep-enter-x), 14px);
+  }
+  .ep-timeline.is-enhanced .ep-row.is-visible .ep-card { opacity: 1; transform: none; }
+  .ep-details {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 940px;
+    margin: 44px auto 0;
+    padding: 24px;
+    border: 1px solid #e7d6ef;
+    border-radius: 23px;
+    background: rgba(255,255,255,.8);
+    box-shadow: 0 15px 35px -25px rgba(75,36,103,.25);
+  }
+  .ep-details p { min-width: 0; margin: 0; color: var(--ep-muted); font-size: 14px; line-height: 1.7; }
+  .ep-details strong { display: block; margin-bottom: 5px; color: var(--ep-plum); }
+  @media (hover: hover) and (pointer: fine) {
+    .ep-timeline .ep-row.is-visible .ep-card:hover,
+    .ep-timeline:not(.is-enhanced) .ep-card:hover {
+      transform: translateY(-4px);
+      border-color: #c8a5db;
+      box-shadow: inset 0 1px 0 #fff, 0 6px 0 rgba(227,212,235,.24), 0 24px 40px -24px rgba(75,36,103,.36);
+    }
+  }
+  @media (max-width: 767px) {
+    .ep-timeline { max-width: 560px; }
+    .ep-rail { left: 24px; }
+    .ep-row { grid-template-columns: 48px minmax(0, 1fr); gap: 17px; padding-bottom: 27px; }
+    .ep-node { grid-column: 1; width: 48px; height: 48px; font-size: 15px; }
+    .ep-card, .ep-row:nth-child(even) .ep-card { --ep-enter-x: 0px; grid-column: 2; padding: 20px; border-radius: 20px; }
+    .ep-card::after, .ep-row:nth-child(even) .ep-card::after { top: 23px; left: -17px; right: auto; width: 17px; }
+    .ep-icon { width: 39px; height: 39px; border-radius: 13px; }
+    .ep-icon svg { width: 20px; height: 20px; }
+    .ep-card-header { gap: 11px; }
+    .ep-card h3 { font-size: 18px; }
+    .ep-card p { margin-top: 14px; font-size: 14px; line-height: 1.7; }
+    .ep-details { grid-template-columns: 1fr; margin-top: 32px; padding: 21px; gap: 16px; }
+    .ep-details p + p { padding-top: 16px; border-top: 1px solid #eee3f4; }
+  }
+  @media (max-width: 379px) {
+    .ep-row { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; }
+    .ep-node { width: 40px; height: 40px; font-size: 13px; }
+    .ep-rail { left: 20px; }
+    .ep-card, .ep-row:nth-child(even) .ep-card { padding: 16px; }
+    .ep-card::after, .ep-row:nth-child(even) .ep-card::after { top: 19px; left: -12px; width: 12px; }
+    .ep-card-header { align-items: flex-start; gap: 9px; }
+    .ep-icon { width: 32px; height: 32px; border-radius: 10px; }
+    .ep-icon svg { width: 18px; height: 18px; }
+    .ep-card h3 { font-size: 16px; }
+    .ep-card p { font-size: 13px; }
+    .ep-step-label { font-size: 9px; }
+  }
+  @keyframes ep-node-pulse {
+    0% { transform: scale(1); opacity: .65; }
+    100% { transform: scale(1.3); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .edu-process .ep-card, .edu-process .ep-node { transition: none; }
+    .edu-process .ep-node::after { animation: none; }
+    .edu-process .ep-timeline .ep-row .ep-card { opacity: 1; transform: none; }
+  }
+`;
+
+function ProcessIcon({ index }) {
+  const paths = [
+    <><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" /><path d="m15 9 6-6M17 3h4v4" /></>,
+    <><rect x="3" y="4" width="18" height="15" rx="3" /><path d="M3 9h18M7 6.5h.01M10 6.5h.01m-2 6 3 3 5-5" /></>,
+    <><path d="M4 4h16l-6 7v6l-4 3v-9L4 4Z" /><path d="M8 7h8" /></>,
+    <><path d="m3 11 18-8-8 18-3-8-7-2Zm7 2 11-10" /></>,
+    <><path d="M8 3h8v6a4 4 0 0 1-8 0V3ZM8 5H4v3a4 4 0 0 0 4 4m8-7h4v3a4 4 0 0 1-4 4M12 13v6m-4 2h8m-6-2h4" /></>,
+  ];
   return (
-    <section id="process" className="section-y">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"
+      strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {paths[index % paths.length]}
+    </svg>
+  );
+}
+
+function useProcessTimeline() {
+  const timelineRef = useRef(null);
+
+  useEffect(() => {
+    const timeline = timelineRef.current;
+    if (!timeline) return;
+    const rows = Array.from(timeline.querySelectorAll(".ep-row"));
+    const nodes = rows.map((row) => row.querySelector(".ep-node"));
+    const rail = timeline.querySelector(".ep-rail");
+    if (!nodes.length || !rail) return;
+    let frame = 0;
+    let disposed = false;
+    const update = () => {
+      frame = 0;
+      if (disposed) return;
+      const bounds = timeline.getBoundingClientRect();
+      const centres = nodes.map((node) => {
+        const box = node.getBoundingClientRect();
+        return box.top + box.height / 2;
+      });
+      const first = centres[0];
+      const distance = Math.max(0, centres[centres.length - 1] - first);
+      rail.style.top = `${first - bounds.top}px`;
+      rail.style.height = `${distance}px`;
+      rail.style.bottom = "auto";
+      const trigger = window.innerHeight * 0.68;
+      const progress = distance ? Math.max(0, Math.min(1, (trigger - first) / distance)) : 0;
+      timeline.style.setProperty("--ep-progress", String(progress));
+      let current = -1;
+      centres.forEach((centre, index) => { if (centre <= trigger) current = index; });
+      rows.forEach((row, index) => {
+        row.classList.toggle("is-reached", index <= current);
+        row.classList.toggle("is-current", index === current);
+      });
+    };
+    const schedule = () => {
+      if (!frame && !disposed) frame = window.requestAnimationFrame(update);
+    };
+    let observer;
+    if ("IntersectionObserver" in window) {
+      // Content stays readable if enhancement is unavailable.
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0, rootMargin: "0px 0px -24px 0px" });
+      rows.forEach((row) => {
+        const box = row.getBoundingClientRect();
+        if (box.top < window.innerHeight && box.bottom > 0) row.classList.add("is-visible");
+        observer.observe(row);
+      });
+      timeline.classList.add("is-enhanced");
+    }
+    const resizeObserver = "ResizeObserver" in window ? new ResizeObserver(schedule) : null;
+    resizeObserver?.observe(timeline);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    update();
+    document.fonts?.ready.then(schedule);
+    return () => {
+      disposed = true;
+      window.cancelAnimationFrame(frame);
+      observer?.disconnect();
+      resizeObserver?.disconnect();
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      timeline.classList.remove("is-enhanced");
+    };
+  }, []);
+
+  return timelineRef;
+}
+
+export function Process() {
+  const timelineRef = useProcessTimeline();
+  return (
+    <section id="process" className="section-y edu-process">
+      <style>{processStyles}</style>
       <div className="container-x">
         <SectionHead title="How Our System Works">
           <p>A simple process to reach the right students and help fill your upcoming batches.</p>
         </SectionHead>
-        <ol className="mx-auto max-w-3xl">
-          {steps.map((step, index) => (
-            <Reveal
-              as="li"
-              key={step.title}
-              className="relative flex gap-5 pb-10 last:pb-0 sm:gap-7"
-            >
-              {index < steps.length - 1 && (
-                <span
-                  aria-hidden="true"
-                  className="absolute bottom-0 left-[22px] top-14 w-0.5 bg-gradient-to-b from-plum-200 to-coral-300 sm:left-[28px] sm:top-16"
-                />
-              )}
-              <span
-                className={`relative z-10 grid h-11 w-11 shrink-0 place-items-center rounded-2xl font-display text-base font-extrabold shadow-soft sm:h-14 sm:w-14 sm:text-lg ${
-                  index % 2
-                    ? "bg-sun-400 text-plum-800"
-                    : "bg-gradient-to-br from-plum-800 to-plum-600 text-white"
-                }`}
-              >
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <div className="min-w-0 pt-1">
-                <h3 className="text-xl font-bold">{step.title}</h3>
-                <p className="mt-2 text-[15px] sm:text-base">
-                  {step.text}
-                </p>
-              </div>
-            </Reveal>
-          ))}
-        </ol>
-        <Reveal className="mx-auto mt-12 grid max-w-3xl gap-4 rounded-2xl border border-plum-200/80 bg-plum-50 p-6 text-sm sm:grid-cols-3">
+        <div className="ep-timeline" ref={timelineRef}>
+          <span className="ep-rail" aria-hidden="true"><span className="ep-rail-fill" /></span>
+          <ol className="m-0 list-none p-0">
+            {steps.map((step, index) => (
+              <li className="ep-row" key={step.title}>
+                <span className="ep-node" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                <article className="ep-card">
+                  <div className="ep-card-header">
+                    <span className="ep-icon"><ProcessIcon index={index} /></span>
+                    <div className="min-w-0">
+                      <span className="ep-step-label">Step {String(index + 1).padStart(2, "0")}</span>
+                      <h3>{step.title}</h3>
+                    </div>
+                  </div>
+                  <p>{step.text}</p>
+                </article>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <Reveal className="ep-details">
           {processDetails.map((detail) => (
-            <p key={detail.label}>
-              <strong className="block">{detail.label}</strong>
-              {detail.text}
-            </p>
+            <p key={detail.label}><strong>{detail.label}</strong>{detail.text}</p>
           ))}
         </Reveal>
         <SectionCta href={bookingHref} external={bookingIsExternal}>
@@ -341,6 +664,7 @@ export function Process() {
     </section>
   );
 }
+
 export function Results() {
   const campaign = featuredCampaign;
   const rows = campaign
