@@ -528,7 +528,7 @@ const styles = `
     letter-spacing: -.03em;
     text-wrap: balance;
   }
-  .institute-hero .hero-lead-quality > span { color: #ef896b; }
+  .institute-hero .hero-lead-quality > span { color: #e96849; }
   .institute-hero .hero-visual-frame { min-width: 0; width: 100%; }
   .institute-hero .hero-visual-frame > * { width: 100%; max-width: 100%; min-width: 0; }
   .institute-hero .hero-actions { min-width: 0; }
@@ -543,7 +543,12 @@ const styles = `
     .institute-hero .hero-eyebrow { max-width: 560px; padding: 10px 16px; border-radius: 22px; }
     .institute-hero .hero-image-wrap { margin-top: 26px; }
     .institute-hero .hero-target { grid-template-columns: minmax(0, 1fr); gap: 26px; }
-    .institute-hero .hero-lead-quality { font-size: clamp(20px, 5.4vw, 25px); line-height: 1.25; }
+    .institute-hero .hero-lead-quality {
+      font-size: clamp(13.5px, 4.4vw, 20px);
+      line-height: 1.3;
+      white-space: nowrap;
+      text-wrap: nowrap;
+    }
     .institute-hero .hero-stat-value { font-size: clamp(32px, 6.5vw, 44px); }
   }
   @media (max-width: 479px) {
@@ -720,7 +725,8 @@ const styles = `
   .institute-hero .hero-guarantee-number,
   .institute-hero .hero-guarantee-icon { color: #ef896b; }
   .institute-hero .hero-image-copy { max-width: 780px; line-height: 1.7; }
-  .institute-hero .hero-title-keep { white-space: nowrap; }
+  .institute-hero .hero-title-keep,
+  .institute-hero .hero-title-tail { white-space: nowrap; }
   .institute-hero .hero-primary-cta {
     display: inline-flex;
     align-items: center;
@@ -741,9 +747,8 @@ const styles = `
     .institute-hero { padding-top: 24px; }
     .institute-hero .hero-title { font-size: clamp(22px, 6.7vw, 40px); line-height: 1.22; }
     .institute-hero .hero-title-line { display: block; }
-    .institute-hero .hero-title-keep { display: block; white-space: nowrap; }
-    .institute-hero .hero-title-tail { display: block; margin-top: 3px; }
-    .institute-hero .hero-title-guarantee { margin-top: 5px; }
+    .institute-hero .hero-title-line { white-space: nowrap; }
+    .institute-hero .hero-title-guarantee { color: #e96849; font-size: 1em; }
     .institute-hero .hero-promise { font-size: clamp(15px, 3.7vw, 19px); }
     .institute-hero .hero-actions { margin-top: 24px; }
     .institute-hero .hero-actions .hero-primary-cta { width: 100%; min-height: 60px; font-size: 18px !important; padding: 17px 18px !important; border-radius: 16px; }
@@ -779,11 +784,15 @@ export default function Hero() {
             <span>for fashion, beauty and skill-based institutes</span>
           </p>
           <h1 id="institute-hero-title" className="hero-title hero-enter" style={{ "--delay": "80ms" }}>
-            <span className="hero-title-line">
-              <span className="hero-title-keep">Get <span className="hero-title-accent">Qualified Student</span></span>{" "}<span className="hero-title-tail"><span className="hero-title-accent">Leads</span> &amp;</span>
+            <span className="hero-title-line hero-title-keep">
+              Get <span className="hero-title-accent">Qualified Student</span>
             </span>{" "}
-            <span className="hero-title-line">Fill Your Next Batch Faster.</span>{" "}
-            <span className="hero-title-line hero-title-guarantee">Guaranteed.</span>
+            <span className="hero-title-line hero-title-tail">
+              <span className="hero-title-accent">Leads</span> &amp; Fill Your Next
+            </span>{" "}
+            <span className="hero-title-line">
+              Batch Faster. <span className="hero-title-guarantee">Guaranteed.</span>
+            </span>
           </h1>
           <p className="hero-promise hero-enter" style={{ "--delay": "120ms" }}>
             Stop depending on referrals, walk-ins and random enquiries. We put your
@@ -894,7 +903,7 @@ export default function Hero() {
             </p>
             <span className="hero-lead-quality">
               Better Leads.{" "}
-              <span style={{ color: "#ef896b" }}>Not Just More Leads.</span>
+              <span>Not Just More Leads.</span>
             </span>
             <p className="mt-3 text-base font-bold text-ink">
               Quality Student Leads Every Month
