@@ -606,7 +606,7 @@ export default function Hero() {
         <header className="hero-heading">
           <p className="hero-eyebrow hero-enter">
             <span className="hero-eyebrow-dot" aria-hidden="true" />
-            <span>Meta Ads for fashion, beauty and skill-based institutes</span>
+            <span> fashion, beauty and skill-based institutes</span>
           </p>
           <h1 id="institute-hero-title" className="hero-title hero-enter" style={{ "--delay": "80ms" }}>
             <span className="hero-title-line">
