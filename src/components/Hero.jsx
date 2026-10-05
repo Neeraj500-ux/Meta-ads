@@ -682,7 +682,10 @@ const styles = `
 
   /* Soft light replaces the decorative circles. */
   .institute-hero {
-    background: #fffcf9;
+    background:
+      radial-gradient(ellipse at 0% 12%, rgba(255,222,133,.27), transparent 52%),
+      radial-gradient(ellipse at 100% 20%, rgba(196,158,224,.23), transparent 52%),
+      linear-gradient(180deg, #fffcf9, #fcf8fd 58%, #fffaf4);
     padding-top: clamp(28px, 4vw, 56px);
     padding-bottom: 28px;
   }
@@ -692,8 +695,8 @@ const styles = `
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background: radial-gradient(ellipse at 16% 0%, rgba(255,211,179,.2), transparent 48%),
-      radial-gradient(ellipse at 88% 12%, rgba(224,208,244,.23), transparent 48%);
+    background: radial-gradient(ellipse at 16% 0%, rgba(255,222,133,.2), transparent 48%),
+      radial-gradient(ellipse at 88% 12%, rgba(177,129,211,.16), transparent 48%);
   }
   .institute-hero .hero-guarantee-wrap {
     width: min(100%, 992px);
@@ -752,8 +755,10 @@ const styles = `
   }
   @media (max-width: 767px) {
     .institute-hero { padding-top: 24px; }
-    .institute-hero .hero-title { font-size: clamp(20px, 6.1vw, 40px); line-height: 1.22; }
+    .institute-hero .hero-title { font-size: clamp(22px, 6.7vw, 40px); line-height: 1.22; }
     .institute-hero .hero-title-line { display: block; }
+    .institute-hero .hero-title-keep { display: block; white-space: nowrap; }
+    .institute-hero .hero-title-tail { display: block; margin-top: 3px; }
     .institute-hero .hero-title-guarantee { margin-top: 5px; }
     .institute-hero .hero-promise { font-size: clamp(15px, 3.7vw, 19px); }
     .institute-hero .hero-lead-quality { font-size: clamp(24px, 6.4vw, 32px); line-height: 1.25; margin-top: 14px; }
@@ -795,7 +800,7 @@ export default function Hero() {
           </p>
           <h1 id="institute-hero-title" className="hero-title hero-enter" style={{ "--delay": "80ms" }}>
             <span className="hero-title-line">
-              <span className="hero-title-keep">Get <span className="hero-title-accent">Qualified Student</span></span>{" "}<span className="hero-title-accent">Leads</span> &amp;
+              <span className="hero-title-keep">Get <span className="hero-title-accent">Qualified Student</span></span>{" "}<span className="hero-title-tail"><span className="hero-title-accent">Leads</span> &amp;</span>
             </span>{" "}
             <span className="hero-title-line">Fill Your Next Batch Faster.</span>{" "}
             <span className="hero-title-line hero-title-guarantee">Guaranteed.</span>
