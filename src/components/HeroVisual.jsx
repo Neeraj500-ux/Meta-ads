@@ -185,10 +185,6 @@ const visualStyles = `
     background: linear-gradient(#e4d4eb, #baa0c8);
   }
   .hv-connector svg { width: 20px; height: 20px; transform: rotate(90deg); }
-  .hv-caption {
-    padding: 15px 12px 0; text-align: center;
-    color: var(--hv-mute); font-size: 11px; line-height: 1.5;
-  }
   @container (max-width: 359px) {
     .hv-stage { gap: 12px; padding: 14px; min-height: 354px; }
     .hv-card-header { flex-direction: column; align-items: flex-start; gap: 9px; }
@@ -271,7 +267,6 @@ export default function HeroVisual() {
           </div>
         </div>
       </div>
-      <figcaption className="hv-caption">Sample layout for illustration</figcaption>
     </figure>
   );
 }

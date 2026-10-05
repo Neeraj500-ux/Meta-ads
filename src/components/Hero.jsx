@@ -762,17 +762,6 @@ const styles = `
 
 `;
 export default function Hero() {
-  const visualRef = useRef(null);
-  useEffect(() => {
-    const frame = visualRef.current;
-    if (!frame) return;
-    frame.querySelectorAll("p, span, small, div").forEach((element) => {
-      if (element.textContent.trim() === "Sample layout for illustration" &&
-          !Array.from(element.children).some((child) => child.textContent.trim() === "Sample layout for illustration")) {
-        element.classList.add("hero-sample-caption");
-      }
-    });
-  }, []);
   return (
     <section aria-labelledby="institute-hero-title" className="institute-hero">
       <style>{styles}</style>
@@ -889,12 +878,9 @@ export default function Hero() {
         </div>
         <div className="hero-target mx-auto mt-11 grid max-w-5xl items-center gap-8 overflow-hidden rounded-[26px] border border-plum-200/80 p-5 sm:mt-14 sm:rounded-[32px] sm:p-9 lg:grid-cols-[1fr_1.1fr] lg:gap-10">
           <div className="min-w-0">
-            <div ref={visualRef} className="hero-visual-frame rounded-[22px] border border-white/90 bg-white/55 p-3 sm:p-4">
+            <div className="hero-visual-frame rounded-[22px] border border-white/90 bg-white/55 p-3 sm:p-4">
               <HeroVisual />
             </div>
-            <p className="hero-sample-caption mt-3 text-center text-xs text-mute">
-              Sample layout for illustration
-            </p>
           </div>
           <div className="min-w-0">
             <p className="hero-target-number font-display font-extrabold text-plum-700">
