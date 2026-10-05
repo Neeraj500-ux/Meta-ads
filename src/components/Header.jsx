@@ -382,15 +382,15 @@ const headerStyles = `
       transform: none;
     }
   }
-  /* Show only the real image beside Creative Crew, without a frame. */
+  /* Dark violet backing keeps the transparent logo visible. */
   .brand-mark-icon.brand-mark-photo,
   .premium-header .header-brand .brand-mark-icon.brand-mark-photo {
-    padding: 0;
+    padding: 6px;
     border: 0;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    overflow: visible;
+    border-radius: 12px;
+    background: #341947;
+    box-shadow: 0 4px 12px rgba(52,25,71,.16);
+    overflow: hidden;
   }
   .brand-mark-icon.brand-mark-photo::before { content: none; }
   .brand-logo-image { display: block; width: 100%; height: 100%; object-fit: contain; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
@@ -399,7 +399,7 @@ const headerStyles = `
   .premium-header .brand-name { overflow-wrap: anywhere; }
   .premium-header .container-x { width: min(100%, 1200px); margin-inline: auto; padding-inline: clamp(16px, 4vw, 40px); }
   @media (hover: hover) and (pointer: fine) {
-    .premium-header .header-brand:hover .brand-mark-icon.brand-mark-photo { transform: none; background: transparent; box-shadow: none; }
+    .premium-header .header-brand:hover .brand-mark-icon.brand-mark-photo { transform: none; background: #341947; box-shadow: 0 4px 12px rgba(52,25,71,.16); }
   }
   @media (max-width: 359px) {
     .premium-header .header-row { gap: 10px; }

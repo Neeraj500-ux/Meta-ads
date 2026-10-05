@@ -826,13 +826,14 @@ export default function Hero() {
               </span>
             </p>
              <span className="hero-lead-quality">
-                Better Leads. Not Just More Leads.
-              </span>
+  Better Leads.{" "}
+  <span style={{ color: "#ef896b" }}>
+    Not Just More Leads.
+  </span>
+</span>
             <p className="mt-3 text-base font-bold text-ink">
               Quality Student Leads Every Month
-              <span className="hero-lead-quality">
-                Better Leads. Not Just More Leads.
-              </span>
+              
             </p>
             <p className="mt-1 text-sm leading-relaxed text-[#62536e]">
               A student acquisition system built around your courses and admission goals.
