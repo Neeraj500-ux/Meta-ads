@@ -4,12 +4,10 @@ import {
   bookingHref,
   bookingIsExternal,
 } from "../config/site.js";
-import { Button } from "./ui.jsx";
 import HeroVisual from "./HeroVisual.jsx";
 // Vite resolves this file from public/images/Neeraj.png, including subpath deployments.
 const heroImageBase = import.meta.env.BASE_URL || "/";
 const heroImage = `${heroImageBase.endsWith("/") ? heroImageBase : `${heroImageBase}/`}images/${encodeURIComponent("Neeraj.png")}`;
-
 const journey = [
   {
     "title": "Reach the Right Students",
@@ -621,7 +619,6 @@ const styles = `
     .institute-hero .hero-guarantee-item { white-space: normal; }
     .institute-hero .hero-guarantee-item > span:last-child { min-width: 0; }
   }
-
   /* Restore the course badge and keep the guarantee close to the video. */
   .institute-hero .hero-eyebrow {
     padding: 10px 20px;
@@ -646,7 +643,6 @@ const styles = `
     .institute-hero .hero-eyebrow { padding: 9px 14px; font-size: 12px; line-height: 1.65; border-radius: 20px; }
     .institute-hero .hero-guarantee-ticker { padding-block: 3px; }
   }
-
   /* Wide image with its original proportions on every screen. */
   .institute-hero .hero-image-wrap {
     max-width: 960px;
@@ -673,7 +669,6 @@ const styles = `
     .institute-hero .hero-image-shell { padding: 4px; border-radius: 18px; }
     .institute-hero .hero-image-screen { border-radius: 13px; }
   }
-
   .institute-hero .hero-lead-quality {
     display: block;
     margin-top: 7px;
@@ -685,21 +680,112 @@ const styles = `
     text-wrap: balance;
   }
 
+  /* Soft light replaces the decorative circles. */
+  .institute-hero {
+    background: #fffcf9;
+    padding-top: clamp(28px, 4vw, 56px);
+    padding-bottom: 28px;
+  }
+  .institute-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 16% 0%, rgba(255,211,179,.2), transparent 48%),
+      radial-gradient(ellipse at 88% 12%, rgba(224,208,244,.23), transparent 48%);
+  }
+  .institute-hero .hero-guarantee-wrap {
+    width: min(100%, 992px);
+    margin-inline: auto;
+    padding-inline: 16px;
+  }
+  .institute-hero .hero-guarantee-ticker {
+    position: relative;
+    isolation: isolate;
+    border-radius: 10px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  }
+  .institute-hero .hero-guarantee-ticker::before,
+  .institute-hero .hero-guarantee-ticker::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: clamp(24px, 5vw, 64px);
+    z-index: 2;
+    pointer-events: none;
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+  }
+  .institute-hero .hero-guarantee-ticker::before {
+    left: 0;
+    -webkit-mask-image: linear-gradient(90deg, #000, transparent);
+    mask-image: linear-gradient(90deg, #000, transparent);
+  }
+  .institute-hero .hero-guarantee-ticker::after {
+    right: 0;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000);
+    mask-image: linear-gradient(90deg, transparent, #000);
+  }
+  .institute-hero .hero-guarantee-item,
+  .institute-hero .hero-guarantee-number,
+  .institute-hero .hero-guarantee-icon { color: #ef896b; }
+  .institute-hero .hero-image-copy { max-width: 780px; line-height: 1.7; }
+  .institute-hero .hero-title-keep { white-space: nowrap; }
+  .institute-hero .hero-primary-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 62px;
+    padding: 18px 28px;
+    background: linear-gradient(135deg, #60317d, #4b266a);
+    border: 1px solid rgba(255,255,255,.2);
+    color: #fff;
+    text-decoration: none;
+    font-size: clamp(17px, 2vw, 21px);
+    font-weight: 800;
+    line-height: 1.4;
+    overflow-wrap: normal;
+    text-wrap: balance;
+  }
+  @media (max-width: 767px) {
+    .institute-hero { padding-top: 24px; }
+    .institute-hero .hero-title { font-size: clamp(20px, 6.1vw, 40px); line-height: 1.22; }
+    .institute-hero .hero-title-line { display: block; }
+    .institute-hero .hero-title-guarantee { margin-top: 5px; }
+    .institute-hero .hero-promise { font-size: clamp(15px, 3.7vw, 19px); }
+    .institute-hero .hero-lead-quality { font-size: clamp(24px, 6.4vw, 32px); line-height: 1.25; margin-top: 14px; }
+    .institute-hero .hero-lead-quality > span { display: block; margin-top: 5px; }
+    .institute-hero .hero-sample-caption { display: none !important; }
+    .institute-hero .hero-actions { margin-top: 24px; }
+    .institute-hero .hero-actions .hero-primary-cta { width: 100%; min-height: 60px; font-size: 18px !important; padding: 17px 18px !important; border-radius: 16px; }
+    .institute-hero .hero-guarantee-item { font-size: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .institute-hero .hero-guarantee-ticker::before,
+    .institute-hero .hero-guarantee-ticker::after { display: none; }
+    .institute-hero .hero-guarantee-ticker { -webkit-mask-image: none; mask-image: none; }
+  }
+
 `;
 export default function Hero() {
+  const visualRef = useRef(null);
+  useEffect(() => {
+    // Hide only the illustration caption on mobile, including the imported visual's copy.
+    const frame = visualRef.current;
+    if (!frame) return;
+    frame.querySelectorAll("p, span, small, div").forEach((element) => {
+      if (element.textContent.trim() === "Sample layout for illustration" &&
+          !Array.from(element.children).some((child) => child.textContent.trim() === "Sample layout for illustration")) {
+        element.classList.add("hero-sample-caption");
+      }
+    });
+  }, []);
   return (
     <section aria-labelledby="institute-hero-title" className="institute-hero">
       <style>{styles}</style>
-      {/* Background */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10"
-      >
-        <div className="grain absolute inset-0 opacity-30 [mask-image:radial-gradient(ellipse_at_top,black,transparent_75%)]" />
-        <div className="absolute -left-28 top-32 h-72 w-72 rounded-full bg-sun-400/15 blur-3xl" />
-        <div className="absolute -right-32 top-72 h-80 w-80 rounded-full bg-plum-200/30 blur-3xl" />
-        <div className="absolute -right-24 top-10 h-72 w-72 rounded-full border border-plum-700/10 [background:repeating-radial-gradient(circle,transparent_0_35px,rgba(75,38,106,.05)_36px_37px,transparent_38px_72px)]" />
-      </div>
       {/* Headline */}
       <div className="container-x">
         <header className="hero-heading">
@@ -709,7 +795,7 @@ export default function Hero() {
           </p>
           <h1 id="institute-hero-title" className="hero-title hero-enter" style={{ "--delay": "80ms" }}>
             <span className="hero-title-line">
-              Get <span className="hero-title-accent">Qualified Student Leads</span> &amp;
+              <span className="hero-title-keep">Get <span className="hero-title-accent">Qualified Student</span></span>{" "}<span className="hero-title-accent">Leads</span> &amp;
             </span>{" "}
             <span className="hero-title-line">Fill Your Next Batch Faster.</span>{" "}
             <span className="hero-title-line hero-title-guarantee">Guaranteed.</span>
@@ -785,23 +871,21 @@ export default function Hero() {
           className="hero-image-copy hero-enter"
           style={{ "--delay": "260ms" }}
         >
-          Whether you offer fashion designing, makeup, beauty or other
-          skill-based programs, make it easier for interested students to
-          discover your courses, request details and connect with your
-          admissions team.
+          Make your courses easier to discover, enquire about, and join—whether it’s fashion, beauty, makeup, or other skill-based programs.
         </p>
       </div>
       <div className="container-x">
         {/* Calls to action */}
         <div className="mx-auto max-w-4xl text-center">
           <div className="hero-actions mt-8 flex flex-col items-stretch justify-center gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-4">
-            <Button
+            <a
               href={bookingHref}
-              external={bookingIsExternal}
-              className="!px-6 !text-base sm:min-w-[320px]"
+              target={bookingIsExternal ? "_blank" : undefined}
+              rel={bookingIsExternal ? "noopener noreferrer" : undefined}
+              className="hero-primary-cta"
             >
               Yes, I Want to Fill My Next Batch
-            </Button>
+            </a>
           </div>
         </div>
         <div className="hero-stats-grid mx-auto mt-10 grid max-w-5xl grid-cols-2 gap-3 sm:mt-12 sm:gap-5 lg:grid-cols-4">
@@ -812,10 +896,10 @@ export default function Hero() {
         {/* Target panel */}
         <div className="hero-target mx-auto mt-11 grid max-w-5xl items-center gap-8 overflow-hidden rounded-[26px] border border-plum-200/80 p-5 sm:mt-14 sm:rounded-[32px] sm:p-9 lg:grid-cols-[1fr_1.1fr] lg:gap-10">
           <div className="min-w-0">
-            <div className="hero-visual-frame rounded-[22px] border border-white/90 bg-white/55 p-3 sm:p-4">
+            <div ref={visualRef} className="hero-visual-frame rounded-[22px] border border-white/90 bg-white/55 p-3 sm:p-4">
               <HeroVisual />
             </div>
-            <p className="mt-3 text-center text-xs text-mute">
+            <p className="hero-sample-caption mt-3 text-center text-xs text-mute">
               Sample layout for illustration
             </p>
           </div>
@@ -834,7 +918,6 @@ export default function Hero() {
 </span>
             <p className="mt-3 text-base font-bold text-ink">
               Quality Student Leads Every Month
-              
             </p>
             <p className="mt-1 text-sm leading-relaxed text-[#62536e]">
               A student acquisition system built around your courses and admission goals.
