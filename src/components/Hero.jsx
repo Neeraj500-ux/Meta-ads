@@ -1,4 +1,12 @@
+// Complete Hero.jsx replacement. Keep your existing Tailwind theme and imported components.
 import { useEffect, useRef, useState } from "react";
+import {
+  bookingHref,
+  bookingIsExternal,
+} from "../config/site.js";
+import { Button } from "./ui.jsx";
+import HeroVisual from "./HeroVisual.jsx";
+import VideoEmbed from "./VideoEmbed.jsx";
 const journey = [
   {
     "title": "Reach the Right Students",
@@ -14,13 +22,6 @@ const journey = [
   }
 ];
 const marquee = ["Hyper-Local Targeting", "Course-Specific Campaigns", "High-Intent Lead Filtering", "Instant Lead Delivery"];
-import {
-  bookingHref,
-  bookingIsExternal,
-} from "../config/site.js";
-import { Button } from "./ui.jsx";
-import HeroVisual from "./HeroVisual.jsx";
-import VideoEmbed from "./VideoEmbed.jsx";
 const benefits = ["Guaranteed 300+ Quality Student Leads Every Month."];
 const stats = [
   { value: "300+", count: 300, label: "Quality leads every month", icon: "target", tone: "coral" },
@@ -33,7 +34,6 @@ const journeyTones = [
   "border-coral-100 bg-coral-50 text-coral-700",
   "border-sun-200 bg-sun-50 text-sun-700",
 ];
-
 function HeroIcon({ name, className = "" }) {
   const icons = {
     target: (
@@ -62,7 +62,6 @@ function HeroIcon({ name, className = "" }) {
     growth: <path d="M3 17 9 11l4 4 8-10M15 5h6v6M3 21h18" />,
     spark: <path d="m12 3 2.3 6.7L21 12l-6.7 2.3L12 21l-2.3-6.7L3 12l6.7-2.3L12 3Z" />,
   };
-
   return (
     <svg
       className={className}
@@ -78,15 +77,12 @@ function HeroIcon({ name, className = "" }) {
     </svg>
   );
 }
-
 function GlassStatCard({ stat, index }) {
   const cardRef = useRef(null);
   const [count, setCount] = useState(stat.count);
-
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (reduceMotion.matches || !window.IntersectionObserver) return;
-
     let frame = 0;
     const observer = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
@@ -100,16 +96,14 @@ function GlassStatCard({ stat, index }) {
       };
       frame = requestAnimationFrame(animate);
     }, { threshold: 0.3 });
-
     if (cardRef.current) observer.observe(cardRef.current);
     return () => {
       observer.disconnect();
       cancelAnimationFrame(frame);
     };
   }, [stat.count]);
-
   const handlePointerMove = (event) => {
-    if (event.pointerType !== "mouse") return;
+    if (event.pointerType !== "mouse" || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const card = event.currentTarget;
     const rect = card.getBoundingClientRect();
@@ -120,12 +114,10 @@ function GlassStatCard({ stat, index }) {
     card.style.setProperty("--rotate-x", `${(0.5 - y) * 6}deg`);
     card.style.setProperty("--rotate-y", `${(x - 0.5) * 6}deg`);
   };
-
   const resetTilt = (event) => {
     event.currentTarget.style.setProperty("--rotate-x", "0deg");
     event.currentTarget.style.setProperty("--rotate-y", "0deg");
   };
-
   return (
     <div
       ref={cardRef}
@@ -139,14 +131,13 @@ function GlassStatCard({ stat, index }) {
       <span className={`hero-icon-3d hero-icon-3d--${stat.tone}`}>
         <HeroIcon name={stat.icon} />
       </span>
-      <p className="hero-stat-value" aria-label={stat.value}>
+      <p className="hero-stat-value" aria-label={`${stat.value} ${stat.label}`}>
         <span aria-hidden="true">{count.toLocaleString("en-IN")}<span>+</span></span>
       </p>
-      <p className="hero-stat-label">{stat.label}</p>
+      <p className="hero-stat-label" aria-hidden="true">{stat.label}</p>
     </div>
   );
 }
-
 const styles = `
   .institute-hero {
     position: relative;
@@ -159,9 +150,7 @@ const styles = `
   .institute-hero,
   .institute-hero *,
   .institute-hero *::before,
-  .institute-hero *::after {
-    box-sizing: border-box;
-  }
+  .institute-hero *::after { box-sizing: border-box; }
   .institute-hero .hero-enter {
     animation: ihReveal .8s cubic-bezier(.22,1,.36,1) both;
     animation-delay: var(--delay, 0ms);
@@ -170,105 +159,39 @@ const styles = `
     position: relative;
     isolation: isolate;
     width: 100%;
-    max-width: 760px;
-    min-width: 0;
-    margin: 36px auto 0;
+    max-width: 760px; min-width: 0; margin: 36px auto 0;
   }
   .institute-hero .hero-video-glow {
-    position: absolute;
-    inset: 16px 24px -12px;
-    z-index: -1;
-    border-radius: 32px;
-    pointer-events: none;
+    position: absolute; inset: 16px 24px -12px; z-index: -1; border-radius: 32px; pointer-events: none;
     background: linear-gradient(
       115deg,
       rgba(116,68,148,.22),
       rgba(245,133,98,.2),
       rgba(255,210,91,.24)
-    );
-    filter: blur(28px);
-    animation: ihGlow 6s ease-in-out infinite;
+    ); filter: blur(28px); animation: ihGlow 6s ease-in-out infinite;
   }
   .institute-hero .hero-video-shell {
-    position: relative;
-    width: 100%;
-    padding: 6px;
-    overflow: hidden;
-    border: 1px solid rgba(75,38,106,.13);
-    border-radius: 25px;
-    background: linear-gradient(145deg, #fff, #faf4fc 55%, #fff5e9);
+    position: relative; width: 100%; padding: 6px; overflow: hidden; border: 1px solid rgba(75,38,106,.13); border-radius: 25px; background: linear-gradient(145deg, #fff, #faf4fc 55%, #fff5e9);
     box-shadow:
       0 20px 48px rgba(75,38,106,.1),
       0 5px 15px rgba(75,38,106,.04),
-      inset 0 1px 0 #fff;
-    transition: border-color .35s ease, box-shadow .35s ease;
+      inset 0 1px 0 #fff; transition: border-color .35s ease, box-shadow .35s ease;
   }
-  .institute-hero .hero-video-screen {
-    position: relative;
-    width: 100%;
-    min-width: 0;
-    overflow: hidden;
-    border-radius: 19px;
-    background: transparent;
-  }
+  .institute-hero .hero-video-screen { position: relative; width: 100%; min-width: 0; overflow: hidden; border-radius: 19px; background: transparent; }
   /* Let VideoEmbed fill the frame instead of sitting inside side panels. */
-  .institute-hero .hero-video-screen > * {
-    width: 100% !important;
-    max-width: none !important;
-    min-width: 0 !important;
-    margin: 0 !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-  }
-  .institute-hero .hero-video-screen > div {
-    padding: 0 !important;
-  }
+  .institute-hero .hero-video-screen > * { width: 100% !important; max-width: none !important; min-width: 0 !important; margin: 0 !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+  .institute-hero .hero-video-screen > div { padding: 0 !important; }
   .institute-hero .hero-video-screen iframe,
-  .institute-hero .hero-video-screen video {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    border: 0;
-  }
-  .institute-hero .hero-video-screen iframe {
-    aspect-ratio: 16 / 9;
-  }
-  .institute-hero .hero-video-screen video {
-    height: auto;
-  }
-  .institute-hero .hero-video-screen img {
-    max-width: 100%;
-  }
-  .institute-hero .hero-video-screen button {
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .institute-hero .hero-video-screen button:focus-visible {
-    outline: 3px solid #ffd45b;
-    outline-offset: -5px;
-  }
-  .institute-hero .hero-video-shell:focus-within {
-    border-color: rgba(75,38,106,.4);
-  }
-  .institute-hero .hero-caption {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 15px;
-    color: #786882;
-    font-size: 12px;
-    line-height: 1.6;
-    text-align: center;
-  }
+  .institute-hero .hero-video-screen video { display: block; width: 100%; max-width: 100%; border: 0; }
+  .institute-hero .hero-video-screen iframe { aspect-ratio: 16 / 9; }
+  .institute-hero .hero-video-screen video { height: auto; }
+  .institute-hero .hero-video-screen img { max-width: 100%; }
+  .institute-hero .hero-video-screen button { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  .institute-hero .hero-video-screen button:focus-visible { outline: 3px solid #ffd45b; outline-offset: -5px; }
+  .institute-hero .hero-video-shell:focus-within { border-color: rgba(75,38,106,.4); }
+  .institute-hero .hero-caption { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px; color: #786882; font-size: 12px; line-height: 1.6; text-align: center; }
   .institute-hero .hero-caption::before,
-  .institute-hero .hero-caption::after {
-    content: "";
-    width: 28px;
-    height: 1px;
-    background: rgba(75,38,106,.16);
-  }
+  .institute-hero .hero-caption::after { content: ""; width: 28px; height: 1px; background: rgba(75,38,106,.16); }
   .institute-hero .hero-ticker {
     overflow: hidden;
     -webkit-mask-image: linear-gradient(
@@ -279,13 +202,10 @@ const styles = `
     );
   }
   .institute-hero .hero-track {
-    display: flex;
-    width: max-content;
+    display: flex; width: max-content;
     animation: ihMarquee 36s linear infinite;
   }
-  .institute-hero .hero-ticker:hover .hero-track {
-    animation-play-state: paused;
-  }
+  .institute-hero .hero-ticker:hover .hero-track { animation-play-state: paused; }
   .institute-hero .hero-target {
     background:
       radial-gradient(ellipse at top left, rgba(235,222,244,.4), transparent 55%),
@@ -297,9 +217,7 @@ const styles = `
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
   }
-  .institute-hero .hero-step {
-    transition: background-color .3s ease, transform .3s ease;
-  }
+  .institute-hero .hero-step { transition: background-color .3s ease, transform .3s ease; }
   .institute-hero .hero-actions a,
   .institute-hero .hero-actions button {
     max-width: 100%;
@@ -328,26 +246,20 @@ const styles = `
       padding: 5px;
       border-radius: 21px;
     }
-    .institute-hero .hero-video-screen {
-      border-radius: 15px;
-    }
+    .institute-hero .hero-video-screen { border-radius: 15px; }
     .institute-hero .hero-video-glow {
       inset: 12px 16px -8px;
       filter: blur(22px);
     }
   }
   @media (max-width: 480px) {
-    .institute-hero .hero-video-wrap {
-      margin-top: 25px;
-    }
+    .institute-hero .hero-video-wrap { margin-top: 25px; }
     .institute-hero .hero-video-shell {
       padding: 4px;
       border-radius: 17px;
       box-shadow: 0 12px 28px rgba(75,38,106,.09);
     }
-    .institute-hero .hero-video-screen {
-      border-radius: 12px;
-    }
+    .institute-hero .hero-video-screen { border-radius: 12px; }
     .institute-hero .hero-caption {
       margin-top: 12px;
       font-size: 11px;
@@ -380,23 +292,16 @@ const styles = `
       -webkit-mask-image: none;
       mask-image: none;
     }
-    .institute-hero .hero-track {
-      width: 100%;
-    }
+    .institute-hero .hero-track { width: 100%; }
     .institute-hero .hero-copy {
       width: 100%;
       flex-wrap: wrap;
       justify-content: center;
       padding-right: 0;
     }
-    .institute-hero .hero-duplicate {
-      display: none;
-    }
-    .institute-hero .hero-step:hover {
-      transform: none;
-    }
+    .institute-hero .hero-duplicate { display: none; }
+    .institute-hero .hero-step:hover { transform: none; }
   }
-
   /* Liquid glass finish, layered surfaces and local SVG icons. */
   .institute-hero {
     background:
@@ -404,9 +309,7 @@ const styles = `
       radial-gradient(ellipse at 96% 20%, #f1e6fa 0, transparent 44%),
       linear-gradient(180deg, #fffcf9, #fcf8fd 58%, #fffaf4);
   }
-  .institute-hero h1 {
-    text-shadow: 0 2px 0 rgba(255,255,255,.8);
-  }
+  .institute-hero h1 { text-shadow: 0 2px 0 rgba(255,255,255,.8); }
   .institute-hero .hero-video-shell {
     padding: 9px;
     border: 1px solid rgba(255,255,255,.95);
@@ -555,7 +458,6 @@ const styles = `
     .institute-hero .hero-stat-shine { display: none; }
     .institute-hero .hero-actions a:hover { transform: none; }
   }
-
   .institute-hero .hero-actions a:focus-visible {
     outline: 3px solid #f58562;
     outline-offset: 6px;
@@ -567,23 +469,127 @@ const styles = `
   @supports not (backdrop-filter: blur(24px)) {
     .institute-hero .hero-stat-glass,
     .institute-hero .hero-target,
-    .institute-hero .hero-video-shell {
-      background-color: #fffcfe;
-    }
+    .institute-hero .hero-video-shell { background-color: #fffcfe; }
   }
   @media (max-width:359px) {
-    .institute-hero .hero-stat-glass {
-      padding-inline: 10px;
-    }
+    .institute-hero .hero-stat-glass { padding-inline: 10px; }
     .institute-hero .hero-stat-label {
       font-size: 10px;
       overflow-wrap: anywhere;
     }
   }
+  /* Heading and layout: sizes are scoped to this hero. */
+  .institute-hero { padding-block: clamp(26px, 4vw, 56px) clamp(44px, 6vw, 80px); }
+  .institute-hero .container-x {
+    width: min(100%, 1200px);
+    padding-inline: clamp(16px, 4vw, 40px);
+    margin-inline: auto;
+    min-width: 0;
+  }
+  .institute-hero .hero-heading { width: 100%; max-width: 1080px; margin-inline: auto; text-align: center; }
+  .institute-hero .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    max-width: 100%;
+    margin: 0;
+    padding: 11px 20px;
+    border: 1px solid #ffffff40;
+    border-radius: 999px;
+    background: linear-gradient(120deg, #351d4e, #4b266a);
+    color: #fff;
+    font-size: clamp(11px, 1.2vw, 14px);
+    font-weight: 650;
+    line-height: 1.6;
+    box-shadow: inset 0 1px 0 #ffffff20, 0 10px 24px #4b266a10;
+  }
+  .institute-hero .hero-eyebrow > span:last-child { min-width: 0; text-wrap: balance; }
+  .institute-hero .hero-eyebrow-dot { width: 8px; height: 8px; flex: 0 0 8px; border-radius: 50%; background: #ffd45b; }
+  .institute-hero .hero-title {
+    max-width: 1060px;
+    margin: clamp(23px, 3vw, 34px) auto 0;
+    color: #30223e;
+    font-size: clamp(28px, 4.8vw, 62px);
+    font-weight: 800;
+    line-height: 1.16;
+    letter-spacing: -.035em;
+    text-wrap: balance;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+  }
+  .institute-hero .hero-title-accent { color: #f58562; }
+  .institute-hero .hero-title-line { display: block; }
+  .institute-hero .hero-promise {
+    max-width: 760px;
+    margin: clamp(17px, 2.4vw, 25px) auto 0;
+    color: #4b266a;
+    font-size: clamp(16px, 2.2vw, 26px);
+    font-weight: 750;
+    line-height: 1.5;
+    letter-spacing: -.015em;
+    text-wrap: balance;
+  }
+  .institute-hero .hero-description, .institute-hero .hero-post-video {
+    max-width: 730px;
+    margin: clamp(17px, 2.4vw, 26px) auto 0;
+    color: #62536e;
+    font-size: clamp(14px, 1.6vw, 18px);
+    line-height: 1.8;
+    text-align: center;
+    text-wrap: pretty;
+  }
+  .institute-hero .hero-stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .institute-hero .hero-target { min-width: 0; }
+  .institute-hero .hero-target-number { margin: 0; font-size: clamp(58px, 7vw, 96px); line-height: 1; letter-spacing: -.045em; }
+  .institute-hero .hero-visual-frame { min-width: 0; width: 100%; }
+  .institute-hero .hero-visual-frame > * { width: 100%; max-width: 100%; min-width: 0; }
+  .institute-hero .hero-actions { min-width: 0; }
+  .institute-hero .hero-actions a { display: inline-flex; align-items: center; justify-content: center; gap: 10px; overflow-wrap: anywhere; }
+  .institute-hero .hero-stat-label, .institute-hero .hero-step p { overflow-wrap: anywhere; }
+  .institute-hero .hero-step > span { flex-shrink: 0; }
+  .institute-hero .hero-ticker { width: 100%; max-width: 100%; }
+  .institute-hero .hero-caption::before, .institute-hero .hero-caption::after { flex-shrink: 0; }
+  .institute-hero .hero-video-screen iframe { height: auto; }
+  @media (min-width: 1024px) { .institute-hero .hero-stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  @media (max-width: 767px) {
+    .institute-hero .hero-title { font-size: clamp(27px, 5.5vw, 40px); line-height: 1.19; letter-spacing: -.03em; }
+    .institute-hero .hero-title-line { display: inline; }
+    .institute-hero .hero-eyebrow { max-width: 560px; padding: 10px 16px; border-radius: 22px; }
+    .institute-hero .hero-video-wrap { margin-top: 26px; }
+    .institute-hero .hero-target { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+    .institute-hero .hero-stat-value { font-size: clamp(32px, 6.5vw, 44px); }
+  }
+  @media (max-width: 479px) {
+    .institute-hero .hero-title { font-size: clamp(26px, 7.1vw, 32px); margin-top: 23px; }
+    .institute-hero .hero-eyebrow { font-size: 11px; gap: 9px; padding: 10px 14px; border-radius: 20px; }
+    .institute-hero .hero-promise { font-size: 17px; margin-top: 18px; }
+    .institute-hero .hero-description, .institute-hero .hero-post-video { font-size: 14px; line-height: 1.8; }
+    .institute-hero .hero-actions a { min-width: 0; width: 100%; min-height: 54px; padding: 15px 18px !important; font-size: 14px !important; }
+    .institute-hero .hero-target { padding: 18px; border-radius: 24px; }
+    .institute-hero .hero-visual-frame { padding: 8px; }
+    .institute-hero .hero-stat-glass { padding: 21px 12px; }
+    .institute-hero .hero-stat-label { font-size: 11px; line-height: 1.6; }
+  }
+  @media (max-width: 359px) {
+    .institute-hero .container-x { padding-inline: 14px; }
+    .institute-hero .hero-title { font-size: 26px; letter-spacing: -.03em; }
+    .institute-hero .hero-target { padding: 15px; }
+    .institute-hero .hero-step { padding: 10px 0; gap: 10px; }
+    .institute-hero .hero-step h3 { font-size: 14px; }
+    .institute-hero .hero-step p { font-size: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .institute-hero .hero-copy > span { white-space: normal; text-align: center; justify-content: center; max-width: 100%; }
+    .institute-hero .hero-copy { gap: 12px; padding: 0 16px; }
+    .institute-hero .hero-icon-3d { transform: none; }
+  }
+
 `;
 export default function Hero() {
   return (
-    <section className="institute-hero pb-12 pt-9 sm:pb-20 sm:pt-14">
+    <section aria-labelledby="institute-hero-title" className="institute-hero">
       <style>{styles}</style>
       {/* Background */}
       <div
@@ -597,32 +603,26 @@ export default function Hero() {
       </div>
       {/* Headline */}
       <div className="container-x">
-        <div className="mx-auto max-w-5xl text-center">
-          <p className="hero-enter inline-flex max-w-full items-center justify-center gap-3 rounded-full border border-white/20 bg-gradient-to-r from-plum-800 to-plum-700 px-4 py-2.5 text-center text-xs font-semibold leading-relaxed text-white shadow-soft sm:justify-start sm:px-6 sm:text-left sm:text-sm">
-            <span
-              aria-hidden="true"
-              className="h-2.5 w-2.5 shrink-0 rounded-full bg-sun-400"
-            />
-            Meta Ads for fashion, beauty and skill-based institutes
+        <header className="hero-heading">
+          <p className="hero-eyebrow hero-enter">
+            <span className="hero-eyebrow-dot" aria-hidden="true" />
+            <span>Meta Ads for fashion, beauty and skill-based institutes</span>
           </p>
-          <h1
-            className="hero-enter mx-auto mt-7 max-w-[980px] text-[clamp(2rem,5.3vw,4.5rem)] font-extrabold leading-[1.12] tracking-[-0.045em] text-ink [text-wrap:balance] sm:mt-8"
-            style={{ "--delay": "80ms" }}
-          >
-            Get More <span className="text-coral-500">Student Admissions,</span>{" "}
-            Lower Your Cost Per Lead &amp; Fill Your Upcoming Batches Faster
-            <span className="mt-5 block text-[clamp(1.15rem,2.7vw,2rem)] leading-snug tracking-[-0.025em] text-plum-700">
-              Without Spending an Extra Rupee on Advertising.
-            </span>
+          <h1 id="institute-hero-title" className="hero-title hero-enter" style={{ "--delay": "80ms" }}>
+            <span className="hero-title-line">
+              Get More <span className="hero-title-accent">Student Admissions,</span>
+            </span>{" "}
+            <span className="hero-title-line">Lower Your Cost Per Lead &amp;</span>{" "}
+            <span className="hero-title-line">Fill Your Upcoming Batches Faster</span>
           </h1>
-          <p
-            className="hero-enter mx-auto mt-5 max-w-[730px] text-base leading-[1.8] text-[#62536e] sm:mt-6 sm:text-lg lg:text-xl"
-            style={{ "--delay": "140ms" }}
-          >
+          <p className="hero-promise hero-enter" style={{ "--delay": "120ms" }}>
+            Without Spending an Extra Rupee on Advertising.
+          </p>
+          <p className="hero-description hero-enter" style={{ "--delay": "160ms" }}>
             Stop depending on referrals, walk-ins and random enquiries. We put your
             courses directly in front of prospective students in your target locations.
           </p>
-        </div>
+        </header>
         {/* Video */}
         <div
           className="hero-video-wrap hero-enter"
@@ -637,7 +637,7 @@ export default function Hero() {
           <p className="hero-caption">Watch the video</p>
         </div>
         <p
-          className="hero-enter mx-auto mt-7 max-w-[740px] text-center text-base leading-[1.85] text-[#62536e] sm:mt-9 sm:text-lg"
+          className="hero-post-video hero-enter"
           style={{ "--delay": "260ms" }}
         >
           Whether you offer fashion designing, makeup, beauty or other
@@ -706,7 +706,7 @@ export default function Hero() {
         {/* Target panel */}
         <div className="hero-target mx-auto mt-11 grid max-w-5xl items-center gap-8 overflow-hidden rounded-[26px] border border-plum-200/80 p-5 sm:mt-14 sm:rounded-[32px] sm:p-9 lg:grid-cols-[1fr_1.1fr] lg:gap-10">
           <div className="min-w-0">
-            <div className="rounded-[22px] border border-white/90 bg-white/55 p-3 sm:p-4">
+            <div className="hero-visual-frame rounded-[22px] border border-white/90 bg-white/55 p-3 sm:p-4">
               <HeroVisual />
             </div>
             <p className="mt-3 text-center text-xs text-mute">
@@ -714,7 +714,7 @@ export default function Hero() {
             </p>
           </div>
           <div className="min-w-0">
-            <p className="font-display text-7xl font-extrabold leading-none tracking-tighter text-plum-700 sm:text-8xl">
+            <p className="hero-target-number font-display font-extrabold text-plum-700">
               300
               <span className="align-top text-[.55em] text-coral-500">
                 +

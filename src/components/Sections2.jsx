@@ -1,3 +1,5 @@
+// Complete replacement for src/components/Sections2.jsx.
+// Keep your existing content.js, ui.jsx, site.js and Tailwind theme.
 import { useEffect, useRef, useState } from "react";
 import {
   audiences,
@@ -16,6 +18,157 @@ import {
   bookingHref,
   bookingIsExternal,
 } from "../config/site.js";
+
+const sectionStyles = `
+  .edu-sections {
+    --edu-plum: #4b2467;
+    --edu-ink: #30223e;
+    --edu-muted: #776982;
+    position: relative;
+    padding-block: clamp(48px, 7vw, 100px);
+    color: var(--edu-ink);
+    scroll-margin-top: 90px;
+  }
+  .edu-sections, .edu-sections *, .edu-sections *::before,
+  .edu-sections *::after { box-sizing: border-box; }
+  .edu-sections .container-x {
+    width: min(100%, 1200px);
+    margin-inline: auto;
+    padding-inline: clamp(16px, 4vw, 40px);
+    min-width: 0;
+  }
+  .edu-sections h2 {
+    font-size: clamp(27px, 3.5vw, 44px);
+    line-height: 1.18;
+    letter-spacing: -.025em;
+    text-wrap: balance;
+  }
+  .edu-sections h3 { line-height: 1.35; text-wrap: balance; }
+  .edu-sections p, .edu-sections dd, .edu-sections blockquote {
+    line-height: 1.75;
+    overflow-wrap: anywhere;
+  }
+  .edu-sections p, .edu-sections dd { color: var(--edu-muted); }
+  .edu-sections h2, .edu-sections h3, .edu-sections dt {
+    overflow-wrap: anywhere;
+  }
+  .edu-sections .grid > *, .edu-sections figure,
+  .edu-sections blockquote, .edu-sections dl { min-width: 0; }
+  .edu-sections figure, .edu-sections blockquote,
+  .edu-sections dd { margin-inline: 0; }
+  .edu-sections img { max-width: 100%; }
+  .edu-sections .card {
+    min-width: 0;
+    height: 100%;
+    padding: clamp(21px, 2.6vw, 32px);
+    border: 1px solid #e7d6ef;
+    border-radius: 24px;
+    background: linear-gradient(145deg, #fff, #fcf8ff);
+    box-shadow: inset 0 1px 0 #fff, 0 16px 38px -28px rgba(75,36,103,.28);
+  }
+  .edu-sections a {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+  }
+  .edu-sections a:focus-visible {
+    outline: 3px solid #ff7c53;
+    outline-offset: 5px;
+  }
+  .edu-sections .edu-service-icon {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 25px;
+    flex-shrink: 0;
+  }
+  .edu-service-icon svg { width: 25px; height: 25px; }
+  .edu-service-number {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    display: grid;
+    place-items: center;
+    width: 25px;
+    height: 25px;
+    border: 1px solid #e7d6ef;
+    border-radius: 9px;
+    background: #fff;
+    color: #4b2467;
+    font-size: 10px;
+    box-shadow: 0 3px 9px rgba(75,36,103,.08);
+  }
+  .edu-sections .edu-report { gap: 28px; padding: clamp(22px, 3vw, 36px); }
+  .edu-sections .edu-pricing { padding: clamp(24px, 4vw, 40px); }
+  .edu-sections .edu-result-card { padding: clamp(21px, 4vw, 40px) !important; }
+  .edu-sections .edu-result-item { min-width: 0; padding: clamp(16px, 2vw, 22px); }
+  .edu-sections .edu-audience-copy { padding: clamp(22px, 2.6vw, 30px); }
+  .edu-sections .edu-testimonial { display: flex; flex-direction: column; }
+  .edu-sections .edu-testimonial blockquote { font-size: clamp(17px, 2vw, 21px); }
+  .edu-sections .edu-testimonial figcaption { margin-top: auto; padding-top: 22px; }
+  .edu-image-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 24px;
+    text-align: center;
+    color: #4b2467;
+    background: radial-gradient(circle at 25% 25%, #eadbf3, transparent 65%),
+      linear-gradient(135deg, #faf3fb, #fff4df);
+  }
+  .edu-image-placeholder svg { width: 44px; height: 44px; opacity: .7; }
+  @media (max-width: 900px) and (min-width: 768px) {
+    .edu-process .ep-row { gap: 18px; grid-template-columns: minmax(0,1fr) 56px minmax(0,1fr); }
+    .edu-process .ep-node { width: 52px; height: 52px; }
+    .edu-process .ep-card { padding: 20px; }
+    .edu-process .ep-card::after { width: 18px; right: -18px; top: 25px; }
+    .edu-process .ep-row:nth-child(even) .ep-card::after { left: -18px; }
+    .edu-process .ep-card-header { align-items: flex-start; gap: 10px; }
+    .edu-process .ep-icon { width: 38px; height: 38px; }
+  }
+  @media (max-width: 639px) {
+    .edu-sections .edu-report { grid-template-columns: minmax(0,1fr); gap: 22px; }
+    .edu-sections .edu-report > div + div { padding-top: 22px; border-top: 1px solid #e7d6ef; }
+    .edu-sections .edu-pricing a { width: 100%; min-height: 48px; }
+    .edu-sections .edu-cta a { width: 100%; min-height: 48px; }
+    .edu-sections .edu-audience-grid { gap: 22px; }
+    .edu-sections .edu-testimonial figcaption { padding-top: 18px; }
+    .edu-process .ep-card-header { align-items: flex-start; }
+  }
+  @media (max-width: 379px) {
+    .edu-sections .container-x { padding-inline: 14px; }
+    .edu-sections .card { padding: 20px; border-radius: 20px; }
+    .edu-process .ep-card-header { flex-wrap: wrap; }
+    .edu-process .ep-card-header > .min-w-0 { flex: 1 1 110px; }
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .edu-sections .card:hover { border-color: #cfb1de; box-shadow: 0 22px 45px -28px rgba(75,36,103,.32); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .edu-sections *, .edu-sections *::before, .edu-sections *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+    .edu-sections .group:hover, .edu-sections .group:hover img,
+    .edu-sections .card:hover { transform: none !important; }
+  }
+`;
+
+// Each export can be mounted independently with its responsive styles.
+function SectionFrame({ className = "", children, ...props }) {
+  return (
+    <section {...props} className={`edu-sections ${className}`}>
+      <style>{sectionStyles}</style>
+      {children}
+    </section>
+  );
+}
+
 const services = [
   {
     "title": "Hyper-Local Targeting",
@@ -82,7 +235,6 @@ const whyChoose = [
     "text": "We handle strategy, creatives, campaign management, optimization and reporting, while your team focuses on counselling and admissions."
   }
 ];
-
 const iconTone = [
   "from-white to-plum-100 text-plum-700 shadow-[0_6px_0_#e3d4eb]",
   "from-white to-coral-100 text-coral-700 shadow-[0_6px_0_#efdbc9]",
@@ -128,13 +280,11 @@ function AudienceImage({ image }) {
   const filename = image.files[fileIndex];
   if (!filename) {
     return (
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-5 text-center">
-        <p className="text-sm font-semibold text-plum-700">
-          Image unavailable
-        </p>
-        <p className="text-xs text-mute">
-          Please check the image file.
-        </p>
+      <div className="edu-image-placeholder" role="img" aria-label={image.alt}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+          <path d="m3 9 9-5 9 5-9 5-9-5Zm4 3v5c3 3 7 3 10 0v-5M21 9v7" />
+        </svg>
+        <span className="text-sm font-semibold">{image.alt}</span>
       </div>
     );
   }
@@ -154,7 +304,7 @@ function AudienceImage({ image }) {
 }
 export function Services() {
   return (
-    <section id="services" className="section-y">
+    <SectionFrame id="services" className="section-y">
       <div className="container-x">
         <SectionHead title="We Build a Student Acquisition System Designed for Institutes.">
           <p>
@@ -170,11 +320,14 @@ export function Services() {
               className="card group flex flex-col transition duration-300 hover:-translate-y-1 hover:border-plum-300 hover:shadow-lift"
             >
               <span
-                className={`mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br font-display text-sm font-extrabold transition duration-300 group-hover:-rotate-3 ${
+                className={`edu-service-icon mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br font-display text-sm font-extrabold transition duration-300 group-hover:-rotate-3 ${
                   iconTone[index % iconTone.length]
                 }`}
               >
-                {String(index + 1).padStart(2, "0")}
+                <ProcessIcon index={index} />
+                <span className="edu-service-number" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
               </span>
               <h3 className="text-xl font-bold">{service.title}</h3>
               <p className="mt-3 text-[15px]">{service.text}</p>
@@ -186,7 +339,7 @@ export function Services() {
             </Reveal>
           ))}
         </div>
-        <Reveal className="mt-6 grid gap-8 rounded-3xl border border-plum-200/80 bg-gradient-to-br from-plum-50 to-sun-50 p-7 sm:grid-cols-2 sm:p-9">
+        <Reveal className="edu-report mt-6 grid gap-8 rounded-3xl border border-plum-200/80 bg-gradient-to-br from-plum-50 to-sun-50 p-7 sm:grid-cols-2 sm:p-9">
           <div>
             <h3 className="text-xl font-bold">Performance reporting</h3>
             <p className="mt-3 text-[15px]">
@@ -209,7 +362,7 @@ export function Services() {
             </p>
           </div>
         </Reveal>
-        <Reveal className="mx-auto mt-6 max-w-3xl rounded-[28px] border border-[#e8d6c0] bg-gradient-to-br from-[#fff8ef] to-sun-50 p-8 text-center sm:p-10">
+        <Reveal className="edu-pricing mx-auto mt-6 max-w-3xl rounded-[28px] border border-[#e8d6c0] bg-gradient-to-br from-[#fff8ef] to-sun-50 p-8 text-center sm:p-10">
           <h3 className="text-xl font-bold">Fees and advertising budget</h3>
           <p className="mx-auto mt-3 max-w-xl text-[15px]">
             Your service fee, recommended advertising budget and whether ad
@@ -220,21 +373,21 @@ export function Services() {
           <Button
             href={bookingHref}
             external={bookingIsExternal}
-            className="mt-6"
+            className="mt-6 min-h-12"
           >
             Request My Campaign Proposal
           </Button>
         </Reveal>
       </div>
-    </section>
+    </SectionFrame>
   );
 }
 export function Audience() {
   return (
-    <section className="section-y bg-gradient-to-br from-[#fbf7f2] to-[#faf3fb]">
+    <SectionFrame className="section-y bg-gradient-to-br from-[#fbf7f2] to-[#faf3fb]">
       <div className="container-x">
         <SectionHead title="Marketing that reflects the skills you teach." />
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="edu-audience-grid grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {audiences.map((audience, index) => {
             const audienceKey = String(audience.key).trim().toLowerCase();
             const image = audienceImages[audienceKey];
@@ -256,7 +409,7 @@ export function Audience() {
                     </div>
                   )}
                 </div>
-                <div className="flex flex-1 flex-col p-6 sm:p-7">
+                <div className="edu-audience-copy flex flex-1 flex-col p-6 sm:p-7">
                   <span
                     className={`inline-block self-start rounded-lg px-2.5 py-1 text-xs font-bold ${
                       audienceTint[index % audienceTint.length]
@@ -281,11 +434,11 @@ export function Audience() {
           This service is suited to institutes with a clear course offering and
           a team ready to respond to student enquiries.
         </Reveal>
-        <SectionCta href={bookingHref} external={bookingIsExternal}>
+        <div className="edu-cta"><SectionCta href={bookingHref} external={bookingIsExternal}>
           Discuss My Courses
-        </SectionCta>
+        </SectionCta></div>
       </div>
-    </section>
+    </SectionFrame>
   );
 }
 const processStyles = `
@@ -530,7 +683,6 @@ const processStyles = `
     .edu-process .ep-timeline .ep-row .ep-card { opacity: 1; transform: none; }
   }
 `;
-
 function ProcessIcon({ index }) {
   const paths = [
     <><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" /><path d="m15 9 6-6M17 3h4v4" /></>,
@@ -546,10 +698,8 @@ function ProcessIcon({ index }) {
     </svg>
   );
 }
-
 function useProcessTimeline() {
   const timelineRef = useRef(null);
-
   useEffect(() => {
     const timeline = timelineRef.current;
     if (!timeline) return;
@@ -586,7 +736,7 @@ function useProcessTimeline() {
       if (!frame && !disposed) frame = window.requestAnimationFrame(update);
     };
     let observer;
-    if ("IntersectionObserver" in window) {
+    if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       // Content stays readable if enhancement is unavailable.
       observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -619,14 +769,12 @@ function useProcessTimeline() {
       timeline.classList.remove("is-enhanced");
     };
   }, []);
-
   return timelineRef;
 }
-
 export function Process() {
   const timelineRef = useProcessTimeline();
   return (
-    <section id="process" className="section-y edu-process">
+    <SectionFrame id="process" className="section-y edu-process">
       <style>{processStyles}</style>
       <div className="container-x">
         <SectionHead title="How Our System Works">
@@ -657,14 +805,13 @@ export function Process() {
             <p key={detail.label}><strong>{detail.label}</strong>{detail.text}</p>
           ))}
         </Reveal>
-        <SectionCta href={bookingHref} external={bookingIsExternal}>
+        <div className="edu-cta"><SectionCta href={bookingHref} external={bookingIsExternal}>
           Discuss My Campaign Strategy
-        </SectionCta>
+        </SectionCta></div>
       </div>
-    </section>
+    </SectionFrame>
   );
 }
-
 export function Results() {
   const campaign = featuredCampaign;
   const rows = campaign
@@ -685,7 +832,7 @@ export function Results() {
       )
     : reportMeasures.map((measure) => [measure.term, measure.desc]);
   return (
-    <section
+    <SectionFrame
       id="results"
       className="section-y bg-gradient-to-br from-[#fbf7f2] to-[#faf3fb]"
     >
@@ -703,7 +850,7 @@ export function Results() {
               : "Leads, counselling bookings and admissions are different things. Your reports keep them separate, so you can see what the campaign contributed."}
           </p>
         </SectionHead>
-        <Reveal className="card mx-auto max-w-4xl !p-7 sm:!p-10">
+        <Reveal className="edu-result-card card mx-auto max-w-4xl !p-7 sm:!p-10">
           <h3 className="text-xl font-bold">
             {campaign
               ? "Featured campaign"
@@ -713,7 +860,7 @@ export function Results() {
             {rows.map(([term, description], index) => (
               <div
                 key={term}
-                className={`rounded-2xl border border-plum-100 p-5 ${
+                className={`edu-result-item rounded-2xl border border-plum-100 p-5 ${
                   index % 4 === 1 || index % 4 === 2
                     ? "bg-sun-50"
                     : "bg-white"
@@ -735,13 +882,13 @@ export function Results() {
           </p>
         </Reveal>
       </div>
-    </section>
+    </SectionFrame>
   );
 }
 export function Testimonials() {
   if (!testimonials.length) return null;
   return (
-    <section id="testimonials" className="section-y">
+    <SectionFrame id="testimonials" className="section-y">
       <div className="container-x">
         <SectionHead title="Hear from the Institutes We’ve Worked With." />
         <div className="grid gap-6 md:grid-cols-2">
@@ -750,7 +897,7 @@ export function Testimonials() {
               as="figure"
               key={testimonial.name}
               delay={index * 80}
-              className="card"
+              className="edu-testimonial card"
             >
               <blockquote className="font-display text-xl leading-relaxed text-ink">
                 “{testimonial.quote}”
@@ -764,7 +911,7 @@ export function Testimonials() {
           ))}
         </div>
       </div>
-    </section>
+    </SectionFrame>
   );
 }
 export function WhyChoose() {
@@ -774,7 +921,7 @@ export function WhyChoose() {
     "bg-sun-400",
   ];
   return (
-    <section className="section-y">
+    <SectionFrame className="section-y">
       <div className="container-x">
         <SectionHead title="Why Institutes Choose Us" />
         <div className="grid gap-5 md:grid-cols-2 lg:gap-6">
@@ -795,10 +942,10 @@ export function WhyChoose() {
             </Reveal>
           ))}
         </div>
-        <SectionCta href={bookingHref} external={bookingIsExternal}>
+        <div className="edu-cta"><SectionCta href={bookingHref} external={bookingIsExternal}>
           Let’s Discuss Your Admission Goals
-        </SectionCta>
+        </SectionCta></div>
       </div>
-    </section>
+    </SectionFrame>
   );
 }
