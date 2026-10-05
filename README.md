@@ -19,7 +19,7 @@ Copy `.env.example` to `.env` and fill in what you have. Anything left blank is 
 
 | Variable | What it does |
 | --- | --- |
-| `VITE_BRAND_NAME` | Brand name in header, intro, footer and legal lines. Defaults to "Your Brand Name". |
+| `VITE_BRAND_NAME` | Brand name in header, intro, footer and legal lines. Defaults to "Creative Crew". |
 | `VITE_CONTACT_EMAIL` | Shown in the footer. Also used by the form as an email-draft fallback. |
 | `VITE_WHATSAPP` | Country code + number, digits only (e.g. `919876543210`). Powers every "Chat on WhatsApp" button and the footer number. |
 | `VITE_FORM_ENDPOINT` | URL that accepts a JSON `POST`. See below. |

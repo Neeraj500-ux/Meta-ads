@@ -4,7 +4,7 @@ const env = import.meta.env;
 const digits = (v = "") => v.replace(/\D/g, "");
 
 export const site = {
-  brandName: env.VITE_BRAND_NAME || "Your Brand Name",
+  brandName: env.VITE_BRAND_NAME || "Creative Crew",
   email: env.VITE_CONTACT_EMAIL || "",
   whatsapp: digits(env.VITE_WHATSAPP),
   formEndpoint: env.VITE_FORM_ENDPOINT || "",

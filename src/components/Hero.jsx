@@ -6,7 +6,10 @@ import {
 } from "../config/site.js";
 import { Button } from "./ui.jsx";
 import HeroVisual from "./HeroVisual.jsx";
-import VideoEmbed from "./VideoEmbed.jsx";
+// Vite resolves this file from public/images/Neeraj.png, including subpath deployments.
+const heroImageBase = import.meta.env.BASE_URL || "/";
+const heroImage = `${heroImageBase.endsWith("/") ? heroImageBase : `${heroImageBase}/`}images/${encodeURIComponent("Neeraj.png")}`;
+
 const journey = [
   {
     "title": "Reach the Right Students",
@@ -155,13 +158,13 @@ const styles = `
     animation: ihReveal .8s cubic-bezier(.22,1,.36,1) both;
     animation-delay: var(--delay, 0ms);
   }
-  .institute-hero .hero-video-wrap {
+  .institute-hero .hero-image-wrap {
     position: relative;
     isolation: isolate;
     width: 100%;
     max-width: 760px; min-width: 0; margin: 36px auto 0;
   }
-  .institute-hero .hero-video-glow {
+  .institute-hero .hero-image-glow {
     position: absolute; inset: 16px 24px -12px; z-index: -1; border-radius: 32px; pointer-events: none;
     background: linear-gradient(
       115deg,
@@ -170,28 +173,22 @@ const styles = `
       rgba(255,210,91,.24)
     ); filter: blur(28px); animation: ihGlow 6s ease-in-out infinite;
   }
-  .institute-hero .hero-video-shell {
+  .institute-hero .hero-image-shell {
     position: relative; width: 100%; padding: 6px; overflow: hidden; border: 1px solid rgba(75,38,106,.13); border-radius: 25px; background: linear-gradient(145deg, #fff, #faf4fc 55%, #fff5e9);
     box-shadow:
       0 20px 48px rgba(75,38,106,.1),
       0 5px 15px rgba(75,38,106,.04),
       inset 0 1px 0 #fff; transition: border-color .35s ease, box-shadow .35s ease;
   }
-  .institute-hero .hero-video-screen { position: relative; width: 100%; min-width: 0; overflow: hidden; border-radius: 19px; background: transparent; }
-  /* Let VideoEmbed fill the frame instead of sitting inside side panels. */
-  .institute-hero .hero-video-screen > * { width: 100% !important; max-width: none !important; min-width: 0 !important; margin: 0 !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
-  .institute-hero .hero-video-screen > div { padding: 0 !important; }
-  .institute-hero .hero-video-screen iframe,
-  .institute-hero .hero-video-screen video { display: block; width: 100%; max-width: 100%; border: 0; }
-  .institute-hero .hero-video-screen iframe { aspect-ratio: 16 / 9; }
-  .institute-hero .hero-video-screen video { height: auto; }
-  .institute-hero .hero-video-screen img { max-width: 100%; }
-  .institute-hero .hero-video-screen button { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-  .institute-hero .hero-video-screen button:focus-visible { outline: 3px solid #ffd45b; outline-offset: -5px; }
-  .institute-hero .hero-video-shell:focus-within { border-color: rgba(75,38,106,.4); }
-  .institute-hero .hero-caption { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px; color: #786882; font-size: 12px; line-height: 1.6; text-align: center; }
-  .institute-hero .hero-caption::before,
-  .institute-hero .hero-caption::after { content: ""; width: 28px; height: 1px; background: rgba(75,38,106,.16); }
+  .institute-hero .hero-image-screen { position: relative; width: 100%; min-width: 0; overflow: hidden; border-radius: 19px; background: transparent; }
+  .institute-hero .hero-image-asset {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: inherit;
+  }
   .institute-hero .hero-ticker {
     overflow: hidden;
     -webkit-mask-image: linear-gradient(
@@ -226,7 +223,7 @@ const styles = `
     text-align: center;
   }
   @media (hover: hover) and (pointer: fine) {
-    .institute-hero .hero-video-shell:hover {
+    .institute-hero .hero-image-shell:hover {
       border-color: rgba(75,38,106,.25);
       box-shadow:
         0 24px 55px rgba(75,38,106,.14),
@@ -238,32 +235,28 @@ const styles = `
     }
   }
   @media (max-width: 767px) {
-    .institute-hero .hero-video-wrap {
+    .institute-hero .hero-image-wrap {
       max-width: 620px;
       margin-top: 28px;
     }
-    .institute-hero .hero-video-shell {
+    .institute-hero .hero-image-shell {
       padding: 5px;
       border-radius: 21px;
     }
-    .institute-hero .hero-video-screen { border-radius: 15px; }
-    .institute-hero .hero-video-glow {
+    .institute-hero .hero-image-screen { border-radius: 15px; }
+    .institute-hero .hero-image-glow {
       inset: 12px 16px -8px;
       filter: blur(22px);
     }
   }
   @media (max-width: 480px) {
-    .institute-hero .hero-video-wrap { margin-top: 25px; }
-    .institute-hero .hero-video-shell {
+    .institute-hero .hero-image-wrap { margin-top: 25px; }
+    .institute-hero .hero-image-shell {
       padding: 4px;
       border-radius: 17px;
       box-shadow: 0 12px 28px rgba(75,38,106,.09);
     }
-    .institute-hero .hero-video-screen { border-radius: 12px; }
-    .institute-hero .hero-caption {
-      margin-top: 12px;
-      font-size: 11px;
-    }
+    .institute-hero .hero-image-screen { border-radius: 12px; }
   }
   @keyframes ihReveal {
     from { opacity: 0; transform: translateY(18px); }
@@ -310,7 +303,7 @@ const styles = `
       linear-gradient(180deg, #fffcf9, #fcf8fd 58%, #fffaf4);
   }
   .institute-hero h1 { text-shadow: 0 2px 0 rgba(255,255,255,.8); }
-  .institute-hero .hero-video-shell {
+  .institute-hero .hero-image-shell {
     padding: 9px;
     border: 1px solid rgba(255,255,255,.95);
     border-radius: 30px;
@@ -319,8 +312,8 @@ const styles = `
     -webkit-backdrop-filter: blur(24px);
     box-shadow: 0 25px 65px #4b266a18, 0 5px 0 #e8d9ef, inset 0 2px 0 #fff;
   }
-  .institute-hero .hero-video-screen { border-radius: 23px; }
-  .institute-hero .hero-video-glow { animation: ihGlow 6s ease-in-out infinite; }
+  .institute-hero .hero-image-screen { border-radius: 23px; }
+  .institute-hero .hero-image-glow { animation: ihGlow 6s ease-in-out infinite; }
   .institute-hero .hero-actions a {
     position: relative;
     border-radius: 19px;
@@ -447,8 +440,8 @@ const styles = `
     .institute-hero .hero-icon-3d svg { width: 23px; height: 23px; }
     .institute-hero .hero-stat-value { font-size: 36px; }
     .institute-hero .hero-stat-label { font-size: 11px; }
-    .institute-hero .hero-video-shell { padding: 5px; border-radius: 22px; }
-    .institute-hero .hero-video-screen { border-radius: 17px; }
+    .institute-hero .hero-image-shell { padding: 5px; border-radius: 22px; }
+    .institute-hero .hero-image-screen { border-radius: 17px; }
     .institute-hero .hero-actions a { width: 100%; }
   }
   @keyframes ihIconFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
@@ -462,14 +455,14 @@ const styles = `
     outline: 3px solid #f58562;
     outline-offset: 6px;
   }
-  .institute-hero .hero-video-shell:focus-within {
+  .institute-hero .hero-image-shell:focus-within {
     border-color: #b892cc;
     box-shadow: 0 25px 65px #4b266a18, 0 0 0 3px #ead9f1;
   }
   @supports not (backdrop-filter: blur(24px)) {
     .institute-hero .hero-stat-glass,
     .institute-hero .hero-target,
-    .institute-hero .hero-video-shell { background-color: #fffcfe; }
+    .institute-hero .hero-image-shell { background-color: #fffcfe; }
   }
   @media (max-width:359px) {
     .institute-hero .hero-stat-glass { padding-inline: 10px; }
@@ -531,7 +524,7 @@ const styles = `
     letter-spacing: -.015em;
     text-wrap: balance;
   }
-  .institute-hero .hero-description, .institute-hero .hero-post-video {
+  .institute-hero .hero-description, .institute-hero .hero-image-copy {
     max-width: 730px;
     margin: clamp(17px, 2.4vw, 26px) auto 0;
     color: #62536e;
@@ -550,14 +543,12 @@ const styles = `
   .institute-hero .hero-stat-label, .institute-hero .hero-step p { overflow-wrap: anywhere; }
   .institute-hero .hero-step > span { flex-shrink: 0; }
   .institute-hero .hero-ticker { width: 100%; max-width: 100%; }
-  .institute-hero .hero-caption::before, .institute-hero .hero-caption::after { flex-shrink: 0; }
-  .institute-hero .hero-video-screen iframe { height: auto; }
   @media (min-width: 1024px) { .institute-hero .hero-stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
   @media (max-width: 767px) {
     .institute-hero .hero-title { font-size: clamp(27px, 5.5vw, 40px); line-height: 1.19; letter-spacing: -.03em; }
     .institute-hero .hero-title-line { display: inline; }
     .institute-hero .hero-eyebrow { max-width: 560px; padding: 10px 16px; border-radius: 22px; }
-    .institute-hero .hero-video-wrap { margin-top: 26px; }
+    .institute-hero .hero-image-wrap { margin-top: 26px; }
     .institute-hero .hero-target { grid-template-columns: minmax(0, 1fr); gap: 26px; }
     .institute-hero .hero-stat-value { font-size: clamp(32px, 6.5vw, 44px); }
   }
@@ -565,7 +556,7 @@ const styles = `
     .institute-hero .hero-title { font-size: clamp(26px, 7.1vw, 32px); margin-top: 23px; }
     .institute-hero .hero-eyebrow { font-size: 11px; gap: 9px; padding: 10px 14px; border-radius: 20px; }
     .institute-hero .hero-promise { font-size: 17px; margin-top: 18px; }
-    .institute-hero .hero-description, .institute-hero .hero-post-video { font-size: 14px; line-height: 1.8; }
+    .institute-hero .hero-description, .institute-hero .hero-image-copy { font-size: 14px; line-height: 1.8; }
     .institute-hero .hero-actions a { min-width: 0; width: 100%; min-height: 54px; padding: 15px 18px !important; font-size: 14px !important; }
     .institute-hero .hero-target { padding: 18px; border-radius: 24px; }
     .institute-hero .hero-visual-frame { padding: 8px; }
@@ -585,6 +576,114 @@ const styles = `
     .institute-hero .hero-copy { gap: 12px; padding: 0 16px; }
     .institute-hero .hero-icon-3d { transform: none; }
   }
+  /* Clear typography with no background, pill, border or shadow. */
+  .institute-hero .hero-guarantee-ticker {
+    padding-block: 12px;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  .institute-hero .hero-guarantee-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    padding: 5px 16px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    color: #4b266a;
+    font-size: clamp(15px, 1.8vw, 21px);
+    font-weight: 750;
+    line-height: 1.5;
+    letter-spacing: -.015em;
+    white-space: nowrap;
+  }
+  .institute-hero .hero-guarantee-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 22px;
+    color: #f58562;
+    background: transparent;
+  }
+  .institute-hero .hero-guarantee-icon svg { width: 22px; height: 22px; }
+  .institute-hero .hero-guarantee-number { color: #f58562; font-weight: 850; }
+  .institute-hero .hero-image-copy { color: #000; }
+  @media (max-width: 479px) {
+    .institute-hero .hero-guarantee-item { padding-inline: 10px; gap: 9px; font-size: 15px; }
+    .institute-hero .hero-guarantee-icon { flex-basis: 18px; }
+    .institute-hero .hero-guarantee-icon svg { width: 18px; height: 18px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .institute-hero .hero-guarantee-item { white-space: normal; }
+    .institute-hero .hero-guarantee-item > span:last-child { min-width: 0; }
+  }
+
+  /* Restore the course badge and keep the guarantee close to the video. */
+  .institute-hero .hero-eyebrow {
+    padding: 10px 20px;
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 999px;
+    background: linear-gradient(120deg, #351d4e, #4b266a);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 8px 20px rgba(75,38,106,.09);
+    color: #fff;
+    font-weight: 700;
+  }
+  .institute-hero .hero-eyebrow-dot { background: #ffd45b; }
+  .institute-hero .hero-guarantee-wrap { margin-top: 16px; }
+  .institute-hero .hero-guarantee-ticker { padding-block: 4px; }
+  .institute-hero .hero-guarantee-item { padding-block: 3px; }
+  .institute-hero .hero-image-wrap { margin-top: 16px; }
+  @media (max-width: 767px) {
+    .institute-hero .hero-eyebrow { padding: 10px 16px; border-radius: 22px; }
+    .institute-hero .hero-guarantee-wrap { margin-top: 12px; }
+    .institute-hero .hero-image-wrap { margin-top: 12px; }
+  }
+  @media (max-width: 479px) {
+    .institute-hero .hero-eyebrow { padding: 9px 14px; font-size: 12px; line-height: 1.65; border-radius: 20px; }
+    .institute-hero .hero-guarantee-ticker { padding-block: 3px; }
+  }
+
+  /* Wide image with its original proportions on every screen. */
+  .institute-hero .hero-image-wrap {
+    max-width: 960px;
+    margin-inline: auto;
+    margin-bottom: 0;
+  }
+  .institute-hero .hero-image-shell {
+    padding: 8px;
+    border-radius: 28px;
+    background: linear-gradient(145deg, rgba(255,255,255,.96), rgba(244,234,250,.8));
+    box-shadow: inset 0 1px 0 #fff, 0 5px 0 #e8d9ef, 0 20px 50px rgba(75,38,106,.12);
+  }
+  .institute-hero .hero-image-screen {
+    border-radius: 21px;
+    background: #f5ecfa;
+    aspect-ratio: 1672 / 941;
+  }
+  .institute-hero .hero-image-asset { height: auto; aspect-ratio: 1672 / 941; }
+  @media (max-width: 767px) {
+    .institute-hero .hero-image-shell { padding: 5px; border-radius: 21px; }
+    .institute-hero .hero-image-screen { border-radius: 16px; }
+  }
+  @media (max-width: 479px) {
+    .institute-hero .hero-image-shell { padding: 4px; border-radius: 18px; }
+    .institute-hero .hero-image-screen { border-radius: 13px; }
+  }
+
+  .institute-hero .hero-lead-quality {
+    display: block;
+    margin-top: 7px;
+    color: #4b266a;
+    font-size: clamp(18px, 2vw, 26px);
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: -.03em;
+    text-wrap: balance;
+  }
+
 `;
 export default function Hero() {
   return (
@@ -605,7 +704,7 @@ export default function Hero() {
         <header className="hero-heading">
           <p className="hero-eyebrow hero-enter">
             <span className="hero-eyebrow-dot" aria-hidden="true" />
-            <span> fashion, beauty and skill-based institutes</span>
+            <span>for fashion, beauty and skill-based institutes</span>
           </p>
           <h1 id="institute-hero-title" className="hero-title hero-enter" style={{ "--delay": "80ms" }}>
             <span className="hero-title-line">
@@ -615,16 +714,13 @@ export default function Hero() {
             <span className="hero-title-line">Fill Your Upcoming Batches Faster</span>
           </h1>
           <p className="hero-promise hero-enter" style={{ "--delay": "120ms" }}>
-            Without Spending an Extra Rupee on Advertising.
-          </p>
-          <p className="hero-description hero-enter" style={{ "--delay": "160ms" }}>
             Stop depending on referrals, walk-ins and random enquiries. We put your
             courses directly in front of prospective students in your target locations.
           </p>
         </header>
       </div>
       {/* Benefits */}
-      <div className="mt-8 sm:mt-10">
+      <div className="hero-guarantee-wrap">
         <ul className="sr-only">
           {benefits.map((benefit) => (
             <li key={benefit}>{benefit}</li>
@@ -632,7 +728,7 @@ export default function Hero() {
         </ul>
         <div
           aria-hidden="true"
-          className="hero-ticker border-y border-coral-500/15 bg-gradient-to-r from-coral-50/30 via-coral-50/70 to-sun-50/40 py-4 sm:py-5"
+          className="hero-ticker hero-guarantee-ticker"
         >
           <div className="hero-track">
             {[0, 1].map((copy) => (
@@ -646,14 +742,14 @@ export default function Hero() {
                   benefits.map((benefit) => (
                     <span
                       key={`${copy}-${round}-${benefit}`}
-                      className={`flex items-center gap-3 whitespace-nowrap rounded-full border border-plum-200/70 bg-white px-5 py-3 text-sm font-bold text-plum-700 shadow-soft sm:px-7 sm:text-base ${
+                      className={`hero-guarantee-item ${
                         round > 0 ? "hero-duplicate" : ""
                       }`}
                     >
-                      <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-coral-50 text-coral-500">
+                      <span className="hero-guarantee-icon">
                         <HeroIcon name="spark" />
                       </span>
-                      {benefit}
+                      <span>{benefit.split("300+")[0]}<strong className="hero-guarantee-number">300+</strong>{benefit.split("300+")[1]}</span>
                     </span>
                   ))
                 )}
@@ -663,20 +759,29 @@ export default function Hero() {
         </div>
       </div>
       <div className="container-x">
-        {/* Video */}
-        <div
-          className="hero-video-wrap hero-enter"
+        {/* Hero image: public/images/Neeraj.png */}
+        <figure
+          className="hero-image-wrap hero-enter"
           style={{ "--delay": "200ms" }}
         >
-          <div aria-hidden="true" className="hero-video-glow" />
-          <div className="hero-video-shell">
-            <div className="hero-video-screen">
-              <VideoEmbed />
+          <div aria-hidden="true" className="hero-image-glow" />
+          <div className="hero-image-shell">
+            <div className="hero-image-screen">
+              <img
+                className="hero-image-asset"
+                src={heroImage}
+                alt="Student acquisition funnel connecting fashion, beauty and skill-based institutes with prospective learners"
+                width={1672}
+                height={941}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+              />
             </div>
           </div>
-        </div>
+        </figure>
         <p
-          className="hero-post-video hero-enter"
+          className="hero-image-copy hero-enter"
           style={{ "--delay": "260ms" }}
         >
           Whether you offer fashion designing, makeup, beauty or other
@@ -722,6 +827,9 @@ export default function Hero() {
             </p>
             <p className="mt-3 text-base font-bold text-ink">
               Quality Student Leads Every Month
+              <span className="hero-lead-quality">
+                Better Leads. Not Just More Leads.
+              </span>
             </p>
             <p className="mt-1 text-sm leading-relaxed text-[#62536e]">
               A student acquisition system built around your courses and admission goals.

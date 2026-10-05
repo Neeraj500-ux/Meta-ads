@@ -1,11 +1,14 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { nav } from "../data/content.js";
 import {
-  site,
   bookingHref,
   bookingIsExternal,
 } from "../config/site.js";
 import { Button } from "./ui.jsx";
+const brandName = "Creative Crew";
+// Match the exact filename shown in public/images (capital N).
+const logoBase = import.meta.env.BASE_URL || "/";
+const brandImage = `${logoBase.endsWith("/") ? logoBase : `${logoBase}/`}images/${encodeURIComponent("Neeraj.12.webp")}`;
 
 const headerStyles = `
   .premium-header,
@@ -14,7 +17,6 @@ const headerStyles = `
   .premium-header *::after {
     box-sizing: border-box;
   }
-
   .premium-header {
     --header-height: 80px;
     position: sticky;
@@ -30,14 +32,12 @@ const headerStyles = `
       border-color .35s ease,
       box-shadow .35s ease;
   }
-
   .premium-header.is-scrolled,
   .premium-header.is-open {
     background: rgba(255,250,245,.95);
     border-bottom-color: rgba(75,38,106,.12);
     box-shadow: 0 8px 28px rgba(75,38,106,.07);
   }
-
   .premium-header .header-row {
     position: relative;
     z-index: 3;
@@ -47,7 +47,6 @@ const headerStyles = `
     justify-content: space-between;
     gap: 20px;
   }
-
   .premium-header .header-brand {
     display: inline-flex;
     min-width: 0;
@@ -55,7 +54,6 @@ const headerStyles = `
     text-decoration: none;
     border-radius: 14px;
   }
-
   /* 3D brand mark */
   .brand-mark-icon {
     position: relative;
@@ -76,7 +74,6 @@ const headerStyles = `
       transform .3s ease,
       box-shadow .3s ease;
   }
-
   .brand-mark-icon::before {
     content: "";
     position: absolute;
@@ -91,19 +88,16 @@ const headerStyles = `
     transform: translateX(-120%);
     transition: transform .65s ease;
   }
-
   .brand-mark-icon svg {
     position: relative;
     transition: transform .3s ease;
   }
-
   .premium-header .header-desktop {
     display: flex;
     flex-shrink: 0;
     align-items: center;
     gap: 8px;
   }
-
   .premium-header .header-link {
     position: relative;
     display: inline-flex;
@@ -118,7 +112,6 @@ const headerStyles = `
     text-decoration: none;
     transition: color .25s ease, background-color .25s ease;
   }
-
   .premium-header .header-link::after {
     content: "";
     position: absolute;
@@ -132,11 +125,9 @@ const headerStyles = `
     transform-origin: left;
     transition: transform .3s cubic-bezier(.22,1,.36,1);
   }
-
   .premium-header .header-booking {
     margin-left: 12px;
   }
-
   .premium-header .header-booking a,
   .premium-header .header-booking button {
     box-shadow:
@@ -144,7 +135,6 @@ const headerStyles = `
       0 9px 20px rgba(75,38,106,.15);
     transition: transform .25s ease, box-shadow .25s ease;
   }
-
   /* Mobile toggle */
   .premium-header .header-toggle {
     position: relative;
@@ -166,14 +156,12 @@ const headerStyles = `
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
   }
-
   .premium-header .toggle-lines {
     position: relative;
     display: block;
     width: 20px;
     height: 16px;
   }
-
   .premium-header .toggle-line {
     position: absolute;
     left: 0;
@@ -187,26 +175,21 @@ const headerStyles = `
       opacity .2s ease,
       transform .3s ease;
   }
-
   .premium-header .toggle-line:nth-child(1) { top: 0; }
   .premium-header .toggle-line:nth-child(2) { top: 7px; }
   .premium-header .toggle-line:nth-child(3) { top: 14px; }
-
   .premium-header.is-open .toggle-line:nth-child(1) {
     top: 7px;
     transform: rotate(45deg);
   }
-
   .premium-header.is-open .toggle-line:nth-child(2) {
     opacity: 0;
     transform: scaleX(.3);
   }
-
   .premium-header.is-open .toggle-line:nth-child(3) {
     top: 7px;
     transform: rotate(-45deg);
   }
-
   /* Animated mobile panel */
   .premium-header .header-mobile {
     position: absolute;
@@ -224,19 +207,16 @@ const headerStyles = `
       opacity .25s ease,
       visibility .35s;
   }
-
   .premium-header.is-open .header-mobile {
     grid-template-rows: 1fr;
     visibility: visible;
     opacity: 1;
     pointer-events: auto;
   }
-
   .premium-header .mobile-clip {
     min-height: 0;
     overflow: hidden;
   }
-
   .premium-header .mobile-surface {
     border-top: 1px solid rgba(75,38,106,.08);
     border-bottom: 1px solid rgba(75,38,106,.12);
@@ -245,7 +225,6 @@ const headerStyles = `
       #fffaf5;
     box-shadow: 0 20px 35px rgba(75,38,106,.1);
   }
-
   .premium-header .mobile-nav {
     display: flex;
     max-height: calc(100dvh - var(--header-height) - 16px);
@@ -256,7 +235,6 @@ const headerStyles = `
     padding-top: 16px;
     padding-bottom: max(22px, env(safe-area-inset-bottom));
   }
-
   .premium-header .mobile-link {
     display: flex;
     align-items: center;
@@ -271,18 +249,15 @@ const headerStyles = `
     text-decoration: none;
     transition: background-color .25s ease, border-color .25s ease;
   }
-
   .premium-header .mobile-link svg {
     flex-shrink: 0;
     color: #8c709d;
   }
-
   .premium-header .mobile-booking {
     margin-top: 10px;
     padding-top: 16px;
     border-top: 1px solid rgba(75,38,106,.1);
   }
-
   .premium-header .mobile-booking a,
   .premium-header .mobile-booking button {
     width: 100%;
@@ -290,7 +265,6 @@ const headerStyles = `
     white-space: normal;
     text-align: center;
   }
-
   .premium-header .header-backdrop {
     position: fixed;
     top: var(--header-height);
@@ -307,19 +281,16 @@ const headerStyles = `
     pointer-events: none;
     transition: opacity .3s ease, visibility .3s;
   }
-
   .premium-header.is-open .header-backdrop {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
   }
-
   .premium-header a:focus-visible,
   .premium-header button:focus-visible {
     outline: 3px solid #d8b8e9;
     outline-offset: 4px;
   }
-
   @media (hover: hover) and (pointer: fine) {
     .premium-header .header-brand:hover .brand-mark-icon {
       transform: translateY(-2px) rotate(-3deg);
@@ -327,24 +298,19 @@ const headerStyles = `
         0 6px 0 #341947,
         0 12px 22px rgba(75,38,106,.23);
     }
-
     .premium-header .header-brand:hover .brand-mark-icon::before {
       transform: translateX(120%);
     }
-
     .premium-header .header-brand:hover .brand-mark-icon svg {
       transform: translate(1px,-1px);
     }
-
     .premium-header .header-link:hover {
       background: rgba(75,38,106,.04);
       color: #754792;
     }
-
     .premium-header .header-link:hover::after {
       transform: scaleX(1);
     }
-
     .premium-header .header-booking a:hover,
     .premium-header .header-booking button:hover {
       transform: translateY(-2px);
@@ -352,70 +318,56 @@ const headerStyles = `
         0 5px 0 rgba(52,25,71,.9),
         0 12px 24px rgba(75,38,106,.2);
     }
-
     .premium-header .mobile-link:hover {
       border-color: rgba(75,38,106,.08);
       background: rgba(75,38,106,.045);
     }
   }
-
   .premium-header .header-toggle:active {
     transform: translateY(2px);
   }
-
   @media (max-width: 1023px) {
     .premium-header {
       --header-height: 72px;
     }
-
     .premium-header .header-desktop {
       display: none;
     }
-
     .premium-header .header-toggle {
       display: inline-flex;
     }
-
     .premium-header .header-mobile {
       display: grid;
     }
-
     .premium-header .header-backdrop {
       display: block;
     }
   }
-
   @media (max-width: 480px) {
     .premium-header {
       --header-height: 68px;
     }
-
     .premium-header .header-row {
       gap: 12px;
     }
-
     .premium-header .header-brand .brand-mark-icon {
       width: 38px;
       height: 38px;
       border-radius: 12px;
     }
-
     .premium-header .header-brand .brand-name {
       font-size: 15px;
       line-height: 1.25;
     }
-
     .premium-header .header-brand .brand-mark {
       gap: 10px;
     }
-
     .premium-header .header-toggle {
       width: 42px;
       height: 42px;
       border-radius: 13px;
     }
   }
-
   @media (prefers-reduced-motion: reduce) {
     .premium-header *,
     .premium-header *::before,
@@ -423,7 +375,6 @@ const headerStyles = `
       animation: none !important;
       transition: none !important;
     }
-
     .premium-header .header-brand:hover .brand-mark-icon,
     .premium-header .header-brand:hover .brand-mark-icon svg,
     .premium-header .header-booking a:hover,
@@ -431,37 +382,58 @@ const headerStyles = `
       transform: none;
     }
   }
-`;
+  /* Show only the real image beside Creative Crew, without a frame. */
+  .brand-mark-icon.brand-mark-photo,
+  .premium-header .header-brand .brand-mark-icon.brand-mark-photo {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
+  }
+  .brand-mark-icon.brand-mark-photo::before { content: none; }
+  .brand-logo-image { display: block; width: 100%; height: 100%; object-fit: contain; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
+  .premium-header .header-brand { flex-shrink: 1; }
+  .premium-header .brand-mark { min-width: 0; }
+  .premium-header .brand-name { overflow-wrap: anywhere; }
+  .premium-header .container-x { width: min(100%, 1200px); margin-inline: auto; padding-inline: clamp(16px, 4vw, 40px); }
+  @media (hover: hover) and (pointer: fine) {
+    .premium-header .header-brand:hover .brand-mark-icon.brand-mark-photo { transform: none; background: transparent; box-shadow: none; }
+  }
+  @media (max-width: 359px) {
+    .premium-header .header-row { gap: 10px; }
+    .premium-header .brand-name { font-size: 14px; }
+    .premium-header .header-brand .brand-mark { gap: 8px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .premium-header .header-brand:hover .brand-mark-photo { transform: none; }
+  }
 
+`;
 export function BrandMark({ light = false }) {
   return (
     <span className="brand-mark inline-flex min-w-0 items-center gap-3">
-      <span className="brand-mark-icon">
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 24 24"
-          className="h-5 w-5 text-sun-400"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M6 18 18 6M8 6h10v10" />
-        </svg>
+      <span className="brand-mark-icon brand-mark-photo" aria-hidden="true">
+        <img
+          src={brandImage}
+          alt=""
+          width={44}
+          height={44}
+          decoding="async"
+          className="brand-logo-image"
+        />
       </span>
-
       <span
         className={`brand-name min-w-0 break-words font-display text-lg font-bold tracking-tight ${
           light ? "text-white" : "text-ink"
         }`}
       >
-        {site.brandName}
+        {brandName}
       </span>
     </span>
   );
 }
-
 function MenuArrow() {
   return (
     <svg
@@ -479,55 +451,41 @@ function MenuArrow() {
     </svg>
   );
 }
-
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
   const toggleRef = useRef(null);
   const headerRef = useRef(null);
   const menuId = useId();
-
   const closeMenu = () => setOpen(false);
-
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 8);
     };
-
     onScroll();
-
     window.addEventListener("scroll", onScroll, { passive: true });
-
     return () => {
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
-
   useEffect(() => {
     const desktopQuery = window.matchMedia("(min-width: 1024px)");
-
     const onBreakpointChange = (event) => {
       if (event.matches) setOpen(false);
     };
-
     desktopQuery.addEventListener("change", onBreakpointChange);
-
     return () => {
       desktopQuery.removeEventListener("change", onBreakpointChange);
     };
   }, []);
-
   useEffect(() => {
     if (!open) return;
-
     const onKeyDown = (event) => {
       if (event.key === "Escape") {
         setOpen(false);
         toggleRef.current?.focus();
       }
     };
-
     // Close the disclosure when keyboard focus leaves the header.
     const onFocusIn = (event) => {
       if (
@@ -537,16 +495,13 @@ export default function Header() {
         setOpen(false);
       }
     };
-
     document.addEventListener("keydown", onKeyDown);
     document.addEventListener("focusin", onFocusIn);
-
     return () => {
       document.removeEventListener("keydown", onKeyDown);
       document.removeEventListener("focusin", onFocusIn);
     };
   }, [open]);
-
   return (
     <header
       ref={headerRef}
@@ -555,18 +510,16 @@ export default function Header() {
       } ${open ? "is-open" : ""}`}
     >
       <style>{headerStyles}</style>
-
       <div className="container-x header-row">
         {/* Logo */}
         <a
           href="#top"
           className="header-brand"
-          aria-label={`${site.brandName} home`}
+          aria-label={`${brandName} home`}
           onClick={closeMenu}
         >
           <BrandMark />
         </a>
-
         {/* Desktop navigation */}
         <nav
           aria-label="Main navigation"
@@ -581,7 +534,6 @@ export default function Header() {
               {item.label}
             </a>
           ))}
-
           <div className="header-booking">
             <Button
               href={bookingHref}
@@ -592,7 +544,6 @@ export default function Header() {
             </Button>
           </div>
         </nav>
-
         {/* Mobile menu button */}
         <button
           ref={toggleRef}
@@ -610,14 +561,12 @@ export default function Header() {
           </span>
         </button>
       </div>
-
       {/* Tap outside to close */}
       <div
         aria-hidden="true"
         className="header-backdrop"
         onClick={closeMenu}
       />
-
       {/* Mobile navigation */}
       <div
         id={menuId}
@@ -643,7 +592,6 @@ export default function Header() {
                   <MenuArrow />
                 </a>
               ))}
-
               <div
                 className="mobile-booking"
                 onClickCapture={(event) => {
