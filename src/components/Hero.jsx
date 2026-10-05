@@ -514,6 +514,7 @@ const styles = `
   }
   .institute-hero .hero-title-accent { color: #f58562; }
   .institute-hero .hero-title-line { display: block; }
+  .institute-hero .hero-title-guarantee { color: #f58562; font-size: 1.12em; }
   .institute-hero .hero-promise {
     max-width: 760px;
     margin: clamp(17px, 2.4vw, 25px) auto 0;
@@ -708,10 +709,10 @@ export default function Hero() {
           </p>
           <h1 id="institute-hero-title" className="hero-title hero-enter" style={{ "--delay": "80ms" }}>
             <span className="hero-title-line">
-              Get More <span className="hero-title-accent">Student Admissions,</span>
+              Get <span className="hero-title-accent">Qualified Student Leads</span> &amp;
             </span>{" "}
-            <span className="hero-title-line">Lower Your Cost Per Lead &amp;</span>{" "}
-            <span className="hero-title-line">Fill Your Upcoming Batches Faster</span>
+            <span className="hero-title-line">Fill Your Next Batch Faster.</span>{" "}
+            <span className="hero-title-line hero-title-guarantee">Guaranteed.</span>
           </h1>
           <p className="hero-promise hero-enter" style={{ "--delay": "120ms" }}>
             Stop depending on referrals, walk-ins and random enquiries. We put your
