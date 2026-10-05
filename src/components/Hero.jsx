@@ -585,7 +585,6 @@ const styles = `
     .institute-hero .hero-copy { gap: 12px; padding: 0 16px; }
     .institute-hero .hero-icon-3d { transform: none; }
   }
-
 `;
 export default function Hero() {
   return (
@@ -623,28 +622,6 @@ export default function Hero() {
             courses directly in front of prospective students in your target locations.
           </p>
         </header>
-        {/* Video */}
-        <div
-          className="hero-video-wrap hero-enter"
-          style={{ "--delay": "200ms" }}
-        >
-          <div aria-hidden="true" className="hero-video-glow" />
-          <div className="hero-video-shell">
-            <div className="hero-video-screen">
-              <VideoEmbed />
-            </div>
-          </div>
-          <p className="hero-caption">Watch the video</p>
-        </div>
-        <p
-          className="hero-post-video hero-enter"
-          style={{ "--delay": "260ms" }}
-        >
-          Whether you offer fashion designing, makeup, beauty or other
-          skill-based programs, make it easier for interested students to
-          discover your courses, request details and connect with your
-          admissions team.
-        </p>
       </div>
       {/* Benefits */}
       <div className="mt-8 sm:mt-10">
@@ -684,6 +661,29 @@ export default function Hero() {
             ))}
           </div>
         </div>
+      </div>
+      <div className="container-x">
+        {/* Video */}
+        <div
+          className="hero-video-wrap hero-enter"
+          style={{ "--delay": "200ms" }}
+        >
+          <div aria-hidden="true" className="hero-video-glow" />
+          <div className="hero-video-shell">
+            <div className="hero-video-screen">
+              <VideoEmbed />
+            </div>
+          </div>
+        </div>
+        <p
+          className="hero-post-video hero-enter"
+          style={{ "--delay": "260ms" }}
+        >
+          Whether you offer fashion designing, makeup, beauty or other
+          skill-based programs, make it easier for interested students to
+          discover your courses, request details and connect with your
+          admissions team.
+        </p>
       </div>
       <div className="container-x">
         {/* Calls to action */}
