@@ -10,16 +10,16 @@ const heroImageBase = import.meta.env.BASE_URL || "/";
 const heroImage = `${heroImageBase.endsWith("/") ? heroImageBase : `${heroImageBase}/`}images/${encodeURIComponent("Neeraj.png")}`;
 const journey = [
   {
-    "title": "Reach the Right Students",
-    "text": "Hyper-local, course-specific Meta Ads put your institute in front of relevant learners."
+    title: "Reach the Right Students",
+    text: "Hyper-local, course-specific Meta Ads put your institute in front of relevant learners."
   },
   {
-    "title": "Capture Qualified Enquiries",
-    "text": "A focused admission funnel collects the details your counsellors need."
+    title: "Capture Qualified Enquiries",
+    text: "A focused admission funnel collects the details your counsellors need."
   },
   {
-    "title": "Follow Up and Fill Your Batches",
-    "text": "Fast lead delivery helps your team turn interest into admission conversations."
+    title: "Follow Up and Fill Your Batches",
+    text: "Fast lead delivery helps your team turn interest into admission conversations."
   }
 ];
 const marquee = ["Hyper-Local Targeting", "Course-Specific Campaigns", "High-Intent Lead Filtering", "Instant Lead Delivery"];
@@ -201,18 +201,6 @@ const styles = `
     animation: ihMarquee 36s linear infinite;
   }
   .institute-hero .hero-ticker:hover .hero-track { animation-play-state: paused; }
-  .institute-hero .hero-target {
-    background:
-      radial-gradient(ellipse at top left, rgba(235,222,244,.4), transparent 55%),
-      radial-gradient(ellipse at bottom right, rgba(255,231,180,.25), transparent 50%),
-      rgba(255,255,255,.88);
-    box-shadow:
-      0 20px 50px rgba(75,38,106,.06),
-      inset 0 1px 0 #fff;
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-  }
-  .institute-hero .hero-step { transition: background-color .3s ease, transform .3s ease; }
   .institute-hero .hero-actions a,
   .institute-hero .hero-actions button {
     max-width: 100%;
@@ -226,10 +214,6 @@ const styles = `
       box-shadow:
         0 24px 55px rgba(75,38,106,.14),
         0 6px 18px rgba(75,38,106,.05);
-    }
-    .institute-hero .hero-step:hover {
-      transform: translateX(3px);
-      background: rgba(255,255,255,.85);
     }
   }
   @media (max-width: 767px) {
@@ -291,7 +275,6 @@ const styles = `
       padding-right: 0;
     }
     .institute-hero .hero-duplicate { display: none; }
-    .institute-hero .hero-step:hover { transform: none; }
   }
   /* Liquid glass finish, layered surfaces and local SVG icons. */
   .institute-hero {
@@ -412,7 +395,7 @@ const styles = `
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
   }
-  .institute-hero .hero-step { border: 1px solid transparent; }
+  .institute-hero .hero-step { border: 1px solid transparent; transition: background-color .3s ease, transform .3s ease; }
   .institute-hero .hero-step > span {
     box-shadow: 0 4px 0 #e1d0e8, inset 0 1px 0 #fff;
     animation: ihIconFloat 6s ease-in-out infinite;
@@ -535,6 +518,17 @@ const styles = `
   .institute-hero .hero-stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .institute-hero .hero-target { min-width: 0; }
   .institute-hero .hero-target-number { margin: 0; font-size: clamp(58px, 7vw, 96px); line-height: 1; letter-spacing: -.045em; }
+  .institute-hero .hero-lead-quality {
+    display: block;
+    margin-top: 8px;
+    color: #4b266a;
+    font-size: clamp(18px, 2vw, 26px);
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: -.03em;
+    text-wrap: balance;
+  }
+  .institute-hero .hero-lead-quality > span { color: #ef896b; }
   .institute-hero .hero-visual-frame { min-width: 0; width: 100%; }
   .institute-hero .hero-visual-frame > * { width: 100%; max-width: 100%; min-width: 0; }
   .institute-hero .hero-actions { min-width: 0; }
@@ -549,6 +543,7 @@ const styles = `
     .institute-hero .hero-eyebrow { max-width: 560px; padding: 10px 16px; border-radius: 22px; }
     .institute-hero .hero-image-wrap { margin-top: 26px; }
     .institute-hero .hero-target { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+    .institute-hero .hero-lead-quality { font-size: clamp(20px, 5.4vw, 25px); line-height: 1.25; }
     .institute-hero .hero-stat-value { font-size: clamp(32px, 6.5vw, 44px); }
   }
   @media (max-width: 479px) {
@@ -669,17 +664,6 @@ const styles = `
     .institute-hero .hero-image-shell { padding: 4px; border-radius: 18px; }
     .institute-hero .hero-image-screen { border-radius: 13px; }
   }
-  .institute-hero .hero-lead-quality {
-    display: block;
-    margin-top: 7px;
-    color: #4b266a;
-    font-size: clamp(18px, 2vw, 26px);
-    font-weight: 800;
-    line-height: 1.3;
-    letter-spacing: -.03em;
-    text-wrap: balance;
-  }
-
   /* Soft light replaces the decorative circles. */
   .institute-hero {
     background:
@@ -761,9 +745,6 @@ const styles = `
     .institute-hero .hero-title-tail { display: block; margin-top: 3px; }
     .institute-hero .hero-title-guarantee { margin-top: 5px; }
     .institute-hero .hero-promise { font-size: clamp(15px, 3.7vw, 19px); }
-    .institute-hero .hero-lead-quality { font-size: clamp(24px, 6.4vw, 32px); line-height: 1.25; margin-top: 14px; }
-    .institute-hero .hero-lead-quality > span { display: block; margin-top: 5px; }
-    .institute-hero .hero-sample-caption { display: none !important; }
     .institute-hero .hero-actions { margin-top: 24px; }
     .institute-hero .hero-actions .hero-primary-cta { width: 100%; min-height: 60px; font-size: 18px !important; padding: 17px 18px !important; border-radius: 16px; }
     .institute-hero .hero-guarantee-item { font-size: 16px; }
@@ -778,7 +759,6 @@ const styles = `
 export default function Hero() {
   const visualRef = useRef(null);
   useEffect(() => {
-    // Hide only the illustration caption on mobile, including the imported visual's copy.
     const frame = visualRef.current;
     if (!frame) return;
     frame.querySelectorAll("p, span, small, div").forEach((element) => {
@@ -898,7 +878,6 @@ export default function Hero() {
             <GlassStatCard key={stat.label} stat={stat} index={index} />
           ))}
         </div>
-        {/* Target panel */}
         <div className="hero-target mx-auto mt-11 grid max-w-5xl items-center gap-8 overflow-hidden rounded-[26px] border border-plum-200/80 p-5 sm:mt-14 sm:rounded-[32px] sm:p-9 lg:grid-cols-[1fr_1.1fr] lg:gap-10">
           <div className="min-w-0">
             <div ref={visualRef} className="hero-visual-frame rounded-[22px] border border-white/90 bg-white/55 p-3 sm:p-4">
@@ -911,16 +890,12 @@ export default function Hero() {
           <div className="min-w-0">
             <p className="hero-target-number font-display font-extrabold text-plum-700">
               300
-              <span className="align-top text-[.55em] text-coral-500">
-                +
-              </span>
+              <span className="align-top text-[.55em] text-coral-500">+</span>
             </p>
-             <span className="hero-lead-quality">
-  Better Leads.{" "}
-  <span style={{ color: "#ef896b" }}>
-    Not Just More Leads.
-  </span>
-</span>
+            <span className="hero-lead-quality">
+              Better Leads.{" "}
+              <span style={{ color: "#ef896b" }}>Not Just More Leads.</span>
+            </span>
             <p className="mt-3 text-base font-bold text-ink">
               Quality Student Leads Every Month
             </p>
