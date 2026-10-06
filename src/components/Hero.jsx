@@ -758,7 +758,7 @@ const styles = `
   .institute-hero .hero-title-tail { white-space: nowrap; }
   @media (max-width: 767px) {
     .institute-hero { padding-top: 24px; }
-    .institute-hero .hero-title { font-size: clamp(24px, 6.9vw, 42px); line-height: 1.22; }
+    .institute-hero .hero-title { font-size: clamp(26px, 7.4vw, 44px); line-height: 1.22; }
     .institute-hero .hero-title-line { display: block; }
     .institute-hero .hero-title-line { white-space: nowrap; }
     .institute-hero .hero-title-guarantee { color: #e96849; font-size: 1em; }
