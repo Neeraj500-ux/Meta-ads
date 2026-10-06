@@ -199,7 +199,7 @@ const styles = `
   .s1-item-description{padding:0 31px 14px 45px}
   .s1-intro-copy{padding:24px 20px}
   .s1-bottom{padding:28px 19px}
-  .s1-cta>a{width:100%;min-height:48px}
+  .s1-cta>a{width:100%;min-height:54px}
   .s1 p{font-size:14px}
 }
 @media(prefers-reduced-motion:reduce){

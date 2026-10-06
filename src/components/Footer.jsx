@@ -1,5 +1,6 @@
 import { site, whatsappUrl } from "../config/site.js";
 import { BrandMark } from "./Header.jsx";
+import { Button } from "./ui.jsx";
 
 const links = [
   ["How It Works", "#process"], ["About", "#about"], ["FAQs", "#faqs"], ["Contact", "#enquire"],
@@ -38,7 +39,7 @@ export default function Footer() {
             {site.privacyUrl && <a className="hover:underline" href={site.privacyUrl} target="_blank" rel="noopener noreferrer">Privacy Policy</a>}
             {site.termsUrl && <a className="hover:underline" href={site.termsUrl} target="_blank" rel="noopener noreferrer">Terms of Service</a>}
           </div>
-          <a href="#enquire" className="font-bold text-plum-700">Book a Strategy Call ↗</a>
+          <Button href="#enquire">Yes, I Want to Fill My Next Batch</Button>
         </div>
 
         <div className="mt-6 space-y-3 text-[11px] leading-relaxed text-[#908398]">

@@ -225,7 +225,6 @@ const styles = `
   .institute-hero .hero-actions a,
   .institute-hero .hero-actions button {
     max-width: 100%;
-    min-height: 58px;
     white-space: normal;
     text-align: center;
   }
@@ -321,12 +320,6 @@ const styles = `
   }
   .institute-hero .hero-image-screen { border-radius: 23px; }
   .institute-hero .hero-image-glow { animation: ihGlow 6s ease-in-out infinite; }
-  .institute-hero .hero-actions a {
-    position: relative;
-    border-radius: 19px;
-    box-shadow: 0 5px 0 #3f2059, 0 17px 32px #74449424;
-    transition: transform .3s ease, box-shadow .3s ease;
-  }
   .institute-hero .hero-stats-grid {
     perspective: 1000px;
     gap: 20px;
@@ -434,7 +427,6 @@ const styles = `
   @media (hover:hover) and (pointer:fine) {
     .institute-hero .hero-stat-glass:hover { border-color: #c6a5d9; box-shadow: 0 24px 45px #4b266a13, 0 5px 0 #e6d6ed, inset 0 2px 0 #fff; }
     .institute-hero .hero-stat-glass:hover .hero-stat-shine { opacity: 1; animation: ihShine .85s ease both; }
-    .institute-hero .hero-actions a:hover { transform: translateY(-3px); box-shadow: 0 7px 0 #3f2059, 0 21px 38px #74449430; }
     .institute-hero .hero-step:hover { border-color: #ecdfef; }
   }
   @media (max-width:767px) {
@@ -457,7 +449,6 @@ const styles = `
   @media (prefers-reduced-motion:reduce) {
     .institute-hero .hero-stat-glass { transform: none!important; }
     .institute-hero .hero-stat-shine { display: none; }
-    .institute-hero .hero-actions a:hover { transform: none; }
   }
 
   .institute-hero .hero-actions a:focus-visible {
@@ -585,7 +576,7 @@ const styles = `
     .institute-hero .hero-eyebrow { font-size: 11px; gap: 9px; padding: 10px 14px; border-radius: 20px; }
     .institute-hero .hero-promise { font-size: 17px; margin-top: 18px; }
     .institute-hero .hero-description, .institute-hero .hero-image-copy { font-size: 14px; line-height: 1.8; }
-    .institute-hero .hero-actions a { min-width: 0; width: 100%; min-height: 54px; padding: 15px 18px !important; font-size: 14px !important; }
+    .institute-hero .hero-actions a { min-width: 0; width: 100%; }
     .institute-hero .hero-target { padding: 18px; border-radius: 24px; }
     .institute-hero .hero-visual-frame { padding: 8px; }
     .institute-hero .hero-stat-glass { padding: 21px 12px; }
@@ -760,22 +751,6 @@ const styles = `
   .institute-hero .hero-image-copy { max-width: 780px; line-height: 1.7; }
   .institute-hero .hero-title-keep,
   .institute-hero .hero-title-tail { white-space: nowrap; }
-  .institute-hero .hero-primary-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 62px;
-    padding: 18px 28px;
-    background: linear-gradient(135deg, #60317d, #4b266a);
-    border: 1px solid rgba(255,255,255,.2);
-    color: #fff;
-    text-decoration: none;
-    font-size: clamp(17px, 2vw, 21px);
-    font-weight: 800;
-    line-height: 1.4;
-    overflow-wrap: normal;
-    text-wrap: balance;
-  }
   @media (max-width: 767px) {
     .institute-hero { padding-top: 24px; }
     .institute-hero .hero-title { font-size: clamp(22px, 6.7vw, 40px); line-height: 1.22; }
@@ -784,7 +759,6 @@ const styles = `
     .institute-hero .hero-title-guarantee { color: #e96849; font-size: 1em; }
     .institute-hero .hero-promise { font-size: clamp(15px, 3.7vw, 19px); }
     .institute-hero .hero-actions { margin-top: 24px; }
-    .institute-hero .hero-actions .hero-primary-cta { width: 100%; min-height: 60px; font-size: 18px !important; padding: 17px 18px !important; border-radius: 16px; }
     .institute-hero .hero-guarantee-item { font-size: 16px; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -1017,43 +991,6 @@ const styles = `
     .institute-hero .hero-marquee-band::after { display: none; }
   }
 
-  /* ============================================================
-     Main CTA polish (colours unchanged)
-     ============================================================ */
-  .institute-hero .hero-primary-cta { position: relative; overflow: hidden; isolation: isolate; -webkit-tap-highlight-color: transparent; }
-  .institute-hero .hero-primary-cta::after {
-    content: "";
-    position: absolute;
-    inset: -40% auto -40% -30%;
-    width: 24%;
-    z-index: -1;
-    background: linear-gradient(100deg, transparent, rgba(255,255,255,.38), transparent);
-    transform: translateX(-120%) skewX(-18deg);
-    animation: ihCtaShine 4.2s ease-in-out 1.2s infinite;
-    pointer-events: none;
-  }
-  .institute-hero .hero-primary-cta:active { transform: translateY(2px) scale(.99); }
-  .institute-hero .hero-actions { position: relative; }
-  .institute-hero .hero-actions::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: min(420px, 78%);
-    height: 62px;
-    transform: translate(-50%, -50%);
-    border-radius: 22px;
-    background: rgba(245,133,98,.32);
-    filter: blur(22px);
-    z-index: -1;
-    animation: ihGlow 3.4s ease-in-out infinite;
-    pointer-events: none;
-  }
-  @keyframes ihCtaShine { 0%, 55% { transform: translateX(-120%) skewX(-18deg); } 100% { transform: translateX(620%) skewX(-18deg); } }
-  @media (prefers-reduced-motion: reduce) {
-    .institute-hero .hero-primary-cta::after,
-    .institute-hero .hero-actions::before { display: none; }
-  }
 `;
 
 export default function Hero() {
@@ -1170,7 +1107,7 @@ export default function Hero() {
             <Button
               href={bookingHref}
               external={bookingIsExternal}
-              className="hero-primary-cta"
+              arrow={false}
             >
               Yes, I Want to Fill My Next Batch
             </Button>
