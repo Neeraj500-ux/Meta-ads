@@ -173,7 +173,7 @@ export default function MobileBar() {
         <a
           href={chatHref}
           {...ext(chatIsExternal)}
-          className="cc-mobile-bar__button cc-mobile-bar__whatsapp pm-btn"
+          className="cc-mobile-bar__button cc-mobile-bar__whatsapp pm-btn pm-btn--whatsapp"
           aria-label="Chat On WhatsApp"
         >
           <WhatsAppIcon />

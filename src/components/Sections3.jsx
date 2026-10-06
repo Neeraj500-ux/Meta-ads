@@ -15,7 +15,7 @@ export function Consultation() {
           </div>
           <div className="grid gap-3">
             <Button href={bookingHref} external={bookingIsExternal}>Yes, I Want to Fill My Next Batch</Button>
-            <Button href={chatHref} external={chatIsExternal}>Ask on WhatsApp</Button>
+            <Button href={chatHref} external={chatIsExternal} className="pm-btn--whatsapp">Ask on WhatsApp</Button>
             <p className="text-xs text-mute">Call length and any consultation fee are confirmed when you book.</p>
           </div>
         </Reveal>

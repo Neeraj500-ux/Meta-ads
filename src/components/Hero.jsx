@@ -542,7 +542,7 @@ const styles = `
     display: block;
     margin-top: 8px;
     color: #4b266a;
-    font-size: clamp(18px, 2vw, 26px);
+    font-size: clamp(32px, 16vw, 20px);
     font-weight: 800;
     line-height: 1.3;
     letter-spacing: -.03em;
@@ -1208,11 +1208,11 @@ export default function Hero() {
               500
               <span className="align-top text-[.55em] text-coral-500">+</span>
             </p>
-            <span className="hero-lead-quality">
+            <span className="hero-lead-quality text-30xl">
               Better Leads.{" "}
               <span>Not Just More Leads.</span>
             </span>
-            <p className="mt-3 text-base font-bold text-ink">
+            <p className="mt-3 text-base font-bold text-ink ">
               Quality Student Leads Every Month
             </p>
             <p className="mt-1 text-sm leading-relaxed text-[#62536e]">

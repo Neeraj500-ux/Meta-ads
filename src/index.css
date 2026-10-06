@@ -128,6 +128,26 @@
     outline: 3px solid #f58562;
     outline-offset: 5px;
   }
+  .pm-btn.pm-btn--whatsapp {
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    box-shadow:
+      0 5px 0 #087443,
+      0 16px 30px rgba(18,140,126,.28),
+      inset 0 1px 0 rgba(255,255,255,.22);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .pm-btn.pm-btn--whatsapp:hover {
+      background: linear-gradient(135deg, #20c55d, #0f7f71);
+      box-shadow:
+        0 8px 0 #087443,
+        0 22px 38px rgba(18,140,126,.34),
+        inset 0 1px 0 rgba(255,255,255,.22);
+    }
+  }
+  .pm-btn.pm-btn--whatsapp:active {
+    background: linear-gradient(135deg, #19b953, #0d7568);
+    box-shadow: 0 2px 0 #087443, 0 8px 16px rgba(18,140,126,.25);
+  }
   @keyframes pmShine {
     0%, 55% { transform: translateX(-130%) skewX(-18deg); }
     100% { transform: translateX(720%) skewX(-18deg); }
