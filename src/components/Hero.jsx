@@ -162,7 +162,7 @@ const styles = `
     isolation: isolate;
     overflow: hidden;
     background:
-      radial-gradient(ellipse at 8% 10%, rgba(255,222,133,.16), transparent 38%),
+      radial-gradient(ellipse at 8% 10%, rgba(245,133,98,.14), transparent 38%),
       radial-gradient(ellipse at 95% 25%, rgba(116,68,148,.07), transparent 38%);
   }
   .institute-hero,
@@ -186,8 +186,8 @@ const styles = `
     background: linear-gradient(
       115deg,
       rgba(116,68,148,.22),
-      rgba(245,133,98,.2),
-      rgba(255,210,91,.24)
+      rgba(245,133,98,.26),
+      rgba(255,160,110,.24)
     ); filter: blur(28px); animation: ihGlow 6s ease-in-out infinite;
   }
   .institute-hero .hero-image-shell {
@@ -304,7 +304,7 @@ const styles = `
   /* Liquid glass finish, layered surfaces and local SVG icons. */
   .institute-hero {
     background:
-      radial-gradient(ellipse at 4% 3%, #fff0d9 0, transparent 42%),
+      radial-gradient(ellipse at 4% 3%, #ffeadd 0, transparent 42%),
       radial-gradient(ellipse at 96% 20%, #f1e6fa 0, transparent 44%),
       linear-gradient(180deg, #fffcf9, #fcf8fd 58%, #fffaf4);
   }
@@ -561,6 +561,7 @@ const styles = `
     .institute-hero .hero-title { font-size: clamp(27px, 5.5vw, 40px); line-height: 1.19; letter-spacing: -.03em; }
     .institute-hero .hero-title-line { display: inline; }
     .institute-hero .hero-eyebrow { max-width: 560px; padding: 10px 16px; border-radius: 22px; }
+    .institute-hero .hero-promise { padding-inline: 10px; margin-top: 16px; }
     .institute-hero .hero-image-wrap { margin-top: 26px; }
     .institute-hero .hero-target { grid-template-columns: minmax(0, 1fr); gap: 26px; }
     .institute-hero .hero-lead-quality {
@@ -574,7 +575,7 @@ const styles = `
   @media (max-width: 479px) {
     .institute-hero .hero-title { font-size: clamp(26px, 7.1vw, 32px); margin-top: 23px; }
     .institute-hero .hero-eyebrow { font-size: 11px; gap: 9px; padding: 10px 14px; border-radius: 20px; }
-    .institute-hero .hero-promise { font-size: 17px; margin-top: 18px; }
+    .institute-hero .hero-promise { padding-inline: 8px; font-size: 17px; margin-top: 15px; }
     .institute-hero .hero-description, .institute-hero .hero-image-copy { font-size: 14px; line-height: 1.8; }
     .institute-hero .hero-actions a { min-width: 0; width: 100%; }
     .institute-hero .hero-target { padding: 18px; border-radius: 24px; }
@@ -693,10 +694,10 @@ const styles = `
     .institute-hero .hero-image-screen { border-radius: 13px; }
   }
 
-  /* Soft light replaces the decorative circles. */
+  /* Soft, blurred orange glow replaces the yellow background light. */
   .institute-hero {
     background:
-      radial-gradient(ellipse at 0% 12%, rgba(255,222,133,.27), transparent 52%),
+      radial-gradient(ellipse at 0% 12%, rgba(245,133,98,.2), transparent 52%),
       radial-gradient(ellipse at 100% 20%, rgba(196,158,224,.23), transparent 52%),
       linear-gradient(180deg, #fffcf9, #fcf8fd 58%, #fffaf4);
     padding-top: clamp(28px, 4vw, 56px);
@@ -705,11 +706,15 @@ const styles = `
   .institute-hero::before {
     content: "";
     position: absolute;
-    inset: 0;
+    inset: -60px;
     z-index: -1;
     pointer-events: none;
-    background: radial-gradient(ellipse at 16% 0%, rgba(255,222,133,.2), transparent 48%),
-      radial-gradient(ellipse at 88% 12%, rgba(177,129,211,.16), transparent 48%);
+    background:
+      radial-gradient(ellipse 46% 34% at 14% 6%, rgba(245,133,98,.30), transparent 70%),
+      radial-gradient(ellipse 34% 26% at 50% 100%, rgba(255,150,100,.16), transparent 72%),
+      radial-gradient(ellipse at 90% 12%, rgba(177,129,211,.16), transparent 48%);
+    filter: blur(36px);
+    animation: ihGlow 8s ease-in-out infinite;
   }
   .institute-hero .hero-guarantee-wrap {
     width: min(100%, 992px);
@@ -785,7 +790,7 @@ const styles = `
     border: 1px solid #ecd9e8;
     border-radius: 22px;
     background:
-      radial-gradient(ellipse at 0 0, rgba(255,222,133,.28), transparent 55%),
+      radial-gradient(ellipse at 0 0, rgba(245,133,98,.16), transparent 55%),
       linear-gradient(135deg, rgba(255,255,255,.96), rgba(250,243,252,.9) 55%, rgba(255,245,233,.95));
     box-shadow: 0 5px 0 #eadcee, 0 18px 40px rgba(75,38,106,.1), inset 0 2px 0 #fff;
   }
@@ -817,6 +822,9 @@ const styles = `
     clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
     box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
   }
+  .institute-hero .hero-benefit-tag-text { display: block; }
+  /* Line break inside "Our Promise" is mobile-only */
+  .institute-hero .hero-promise-br { display: none; }
   .institute-hero .hero-benefit-live {
     position: relative;
     width: 10px;
@@ -837,6 +845,8 @@ const styles = `
   .institute-hero .hero-benefit-ticker {
     position: relative;
     z-index: 1;
+    display: flex;
+    align-items: center;
     flex: 1 1 auto;
     min-width: 0;
     padding-block: 12px;
@@ -894,18 +904,28 @@ const styles = `
   @media (max-width: 767px) {
     .institute-hero .hero-benefit-wrap { margin-top: 14px; padding-inline: 12px; }
     .institute-hero .hero-benefit-bar { border-radius: 18px; }
-    .institute-hero .hero-benefit-tag { padding: 0 22px 0 14px; font-size: 11px; gap: 8px; }
+    .institute-hero .hero-benefit-tag {
+      gap: 9px;
+      padding: 10px 24px 10px 14px;
+      font-size: 11px;
+      letter-spacing: .08em;
+    }
+    /* "Our" on the first line, "Promise" on the second */
+    .institute-hero .hero-promise-br { display: inline; }
+    .institute-hero .hero-benefit-tag-text { line-height: 1.25; text-align: left; white-space: normal; }
     .institute-hero .hero-benefit-ticker { padding-block: 10px; margin-left: -10px; }
     .institute-hero .hero-benefit-item { padding-inline: 12px; gap: 9px; font-size: 15px; }
     .institute-hero .hero-benefit-spark { flex-basis: 22px; width: 22px; height: 22px; margin-left: 2px; }
   }
   @media (max-width: 359px) {
-    .institute-hero .hero-benefit-tag { font-size: 10px; letter-spacing: .05em; padding-right: 18px; }
+    .institute-hero .hero-benefit-tag { font-size: 10px; letter-spacing: .05em; padding: 9px 20px 9px 12px; gap: 7px; }
     .institute-hero .hero-benefit-item { font-size: 14px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .institute-hero .hero-benefit-bar { flex-direction: column; }
     .institute-hero .hero-benefit-tag { justify-content: center; padding: 10px 16px; clip-path: none; }
+    .institute-hero .hero-benefit-tag-text { text-align: center; }
+    .institute-hero .hero-promise-br { display: none; }
     .institute-hero .hero-benefit-ticker { margin-left: 0; -webkit-mask-image: none; mask-image: none; }
     .institute-hero .hero-benefit-item { white-space: normal; flex-wrap: wrap; justify-content: center; text-align: center; }
     .institute-hero .hero-benefit-spark { display: none; }
@@ -991,6 +1011,61 @@ const styles = `
     .institute-hero .hero-marquee-band::after { display: none; }
   }
 
+  /* ============================================================
+     Full responsive pass: desktop / tablet / mobile
+     ============================================================ */
+  .institute-hero { overflow-x: clip; }
+  .institute-hero img, .institute-hero svg { max-width: 100%; }
+  .institute-hero .hero-heading, .institute-hero .hero-actions,
+  .institute-hero .hero-stats-grid, .institute-hero .hero-target { min-width: 0; }
+
+  /* Large desktop */
+  @media (min-width: 1280px) {
+    .institute-hero .container-x { width: min(100%, 1240px); }
+    .institute-hero .hero-title { font-size: clamp(54px, 4.4vw, 66px); }
+  }
+
+  /* Tablet: 768px to 1023px */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .institute-hero { padding-top: 36px; padding-bottom: 36px; }
+    .institute-hero .hero-title { font-size: clamp(36px, 5.6vw, 50px); line-height: 1.17; }
+    .institute-hero .hero-promise { font-size: clamp(18px, 2.6vw, 22px); max-width: 640px; }
+    .institute-hero .hero-image-copy { font-size: 16px; max-width: 640px; }
+    .institute-hero .hero-benefit-wrap { padding-inline: 24px; }
+    .institute-hero .hero-image-wrap { max-width: 720px; }
+    .institute-hero .hero-stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    .institute-hero .hero-stat-glass { padding: 24px 10px 22px; border-radius: 22px; }
+    .institute-hero .hero-icon-3d { width: 48px; height: 48px; margin-bottom: 18px; border-radius: 16px; }
+    .institute-hero .hero-icon-3d svg { width: 23px; height: 23px; }
+    .institute-hero .hero-stat-value { font-size: clamp(28px, 4.2vw, 36px); }
+    .institute-hero .hero-stat-label { font-size: 11px; line-height: 1.55; }
+    .institute-hero .hero-target { padding: 30px; gap: 28px; }
+    .institute-hero .hero-visual-frame { max-width: 560px; margin-inline: auto; }
+    .institute-hero .hero-target-number { font-size: 76px; }
+    .institute-hero .hero-lead-quality { font-size: 24px; }
+    .institute-hero .hero-marquee-section { margin-top: 40px; }
+  }
+
+  /* Phones */
+  @media (max-width: 479px) {
+    .institute-hero { padding-bottom: 20px; }
+    .institute-hero .hero-benefit-wrap { padding-inline: 10px; }
+    .institute-hero .hero-stats-grid { margin-top: 28px; }
+    .institute-hero .hero-target { margin-top: 32px; }
+    .institute-hero .hero-lead-quality { white-space: normal; text-wrap: balance; }
+    .institute-hero .hero-target-number { font-size: 64px; }
+  }
+  @media (max-width: 359px) {
+    .institute-hero .hero-title { font-size: 24px; }
+    .institute-hero .hero-promise { font-size: 15px; }
+    .institute-hero .hero-stats-grid { gap: 10px; }
+  }
+  /* Short landscape phones */
+  @media (max-height: 480px) and (orientation: landscape) {
+    .institute-hero { padding-top: 18px; }
+    .institute-hero .hero-title { font-size: clamp(22px, 4.4vw, 30px); }
+  }
+
 `;
 
 export default function Hero() {
@@ -1018,10 +1093,9 @@ export default function Hero() {
               Batch Faster. <span className="hero-title-guarantee">Guaranteed.</span>
             </span>
           </h1>
-
           <p className="hero-promise hero-enter" style={{ "--delay": "120ms" }}>
-            Stop depending on referrals, walk-ins and random enquiries. We put your
-            courses directly in front of prospective students in your target locations.
+            Stop Depending On Referrals, Walk-Ins And Random Enquiries. We Put Your
+            Courses Directly In Front Of Prospective Students In Your Target Locations.
           </p>
         </header>
       </div>
@@ -1037,7 +1111,9 @@ export default function Hero() {
         <div className="hero-benefit-bar" aria-hidden="true">
           <span className="hero-benefit-tag">
             <span className="hero-benefit-live" />
-            Our Promise
+            <span className="hero-benefit-tag-text">
+              Our{" "}<br className="hero-promise-br" />Promise
+            </span>
           </span>
 
           <div className="hero-ticker hero-benefit-ticker">
