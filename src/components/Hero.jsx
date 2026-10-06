@@ -504,7 +504,7 @@ const styles = `
     max-width: 1060px;
     margin: clamp(23px, 3vw, 34px) auto 0;
     color: #30223e;
-    font-size: clamp(28px, 4.8vw, 62px);
+    font-size: clamp(30px, 4.9vw, 64px);
     font-weight: 800;
     line-height: 1.16;
     letter-spacing: -.035em;
@@ -558,7 +558,7 @@ const styles = `
   .institute-hero .hero-ticker { width: 100%; max-width: 100%; }
   @media (min-width: 1024px) { .institute-hero .hero-stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
   @media (max-width: 767px) {
-    .institute-hero .hero-title { font-size: clamp(27px, 5.5vw, 40px); line-height: 1.19; letter-spacing: -.03em; }
+    .institute-hero .hero-title { font-size: clamp(29px, 5.7vw, 42px); line-height: 1.19; letter-spacing: -.03em; }
     .institute-hero .hero-title-line { display: inline; }
     .institute-hero .hero-eyebrow { max-width: 560px; padding: 10px 16px; border-radius: 22px; }
     .institute-hero .hero-promise { padding-inline: 10px; margin-top: 16px; }
@@ -573,7 +573,7 @@ const styles = `
     .institute-hero .hero-stat-value { font-size: clamp(32px, 6.5vw, 44px); }
   }
   @media (max-width: 479px) {
-    .institute-hero .hero-title { font-size: clamp(26px, 7.1vw, 32px); margin-top: 23px; }
+    .institute-hero .hero-title { font-size: clamp(28px, 7.3vw, 34px); margin-top: 23px; }
     .institute-hero .hero-eyebrow { font-size: 11px; gap: 9px; padding: 10px 14px; border-radius: 20px; }
     .institute-hero .hero-promise { padding-inline: 8px; font-size: 17px; margin-top: 15px; }
     .institute-hero .hero-description, .institute-hero .hero-image-copy { font-size: 14px; line-height: 1.8; }
@@ -585,7 +585,7 @@ const styles = `
   }
   @media (max-width: 359px) {
     .institute-hero .container-x { padding-inline: 14px; }
-    .institute-hero .hero-title { font-size: 26px; letter-spacing: -.03em; }
+    .institute-hero .hero-title { font-size: 28px; letter-spacing: -.03em; }
     .institute-hero .hero-target { padding: 15px; }
     .institute-hero .hero-step { padding: 10px 0; gap: 10px; }
     .institute-hero .hero-step h3 { font-size: 14px; }
@@ -758,7 +758,7 @@ const styles = `
   .institute-hero .hero-title-tail { white-space: nowrap; }
   @media (max-width: 767px) {
     .institute-hero { padding-top: 24px; }
-    .institute-hero .hero-title { font-size: clamp(22px, 6.7vw, 40px); line-height: 1.22; }
+    .institute-hero .hero-title { font-size: clamp(24px, 6.9vw, 42px); line-height: 1.22; }
     .institute-hero .hero-title-line { display: block; }
     .institute-hero .hero-title-line { white-space: nowrap; }
     .institute-hero .hero-title-guarantee { color: #e96849; font-size: 1em; }
@@ -1022,13 +1022,13 @@ const styles = `
   /* Large desktop */
   @media (min-width: 1280px) {
     .institute-hero .container-x { width: min(100%, 1240px); }
-    .institute-hero .hero-title { font-size: clamp(54px, 4.4vw, 66px); }
+    .institute-hero .hero-title { font-size: clamp(56px, 4.5vw, 68px); }
   }
 
   /* Tablet: 768px to 1023px */
   @media (min-width: 768px) and (max-width: 1023px) {
     .institute-hero { padding-top: 36px; padding-bottom: 36px; }
-    .institute-hero .hero-title { font-size: clamp(36px, 5.6vw, 50px); line-height: 1.17; }
+    .institute-hero .hero-title { font-size: clamp(38px, 5.8vw, 52px); line-height: 1.17; }
     .institute-hero .hero-promise { font-size: clamp(18px, 2.6vw, 22px); max-width: 640px; }
     .institute-hero .hero-image-copy { font-size: 16px; max-width: 640px; }
     .institute-hero .hero-benefit-wrap { padding-inline: 24px; }
@@ -1056,14 +1056,14 @@ const styles = `
     .institute-hero .hero-target-number { font-size: 64px; }
   }
   @media (max-width: 359px) {
-    .institute-hero .hero-title { font-size: 24px; }
+    .institute-hero .hero-title { font-size: 26px; }
     .institute-hero .hero-promise { font-size: 15px; }
     .institute-hero .hero-stats-grid { gap: 10px; }
   }
   /* Short landscape phones */
   @media (max-height: 480px) and (orientation: landscape) {
     .institute-hero { padding-top: 18px; }
-    .institute-hero .hero-title { font-size: clamp(22px, 4.4vw, 30px); }
+    .institute-hero .hero-title { font-size: clamp(24px, 4.6vw, 32px); }
   }
 
 `;
