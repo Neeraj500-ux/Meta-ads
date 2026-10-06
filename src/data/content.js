@@ -229,8 +229,8 @@ export const faqs = [
     a: ["This service is for fashion designing, beauty and other skill-based institutes looking to promote their courses and generate student enquiries. Campaign suitability depends on your course offering, location, audience and budget."],
   },
   {
-    q: "Can you guarantee 300+ leads?",
-    a: ["A fixed lead count is not guaranteed. The 300+ figure is a proposed campaign target that requires a confirmed timeframe, budget and lead definition. Actual results depend on campaign conditions and audience response."],
+    q: "Can you guarantee 500+ leads?",
+    a: ["A fixed lead count is not guaranteed. The 500+ figure is a proposed campaign target that requires a confirmed timeframe, budget and lead definition. Actual results depend on campaign conditions and audience response."],
   },
   {
     q: "Are student leads the same as admissions?",

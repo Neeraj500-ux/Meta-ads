@@ -24,9 +24,9 @@ const journey = [
   }
 ];
 const marquee = ["Hyper-Local Targeting", "Course-Specific Campaigns", "High-Intent Lead Filtering", "Instant Lead Delivery"];
-const benefits = ["Guaranteed 300+ Quality Student Leads Every Month."];
+const benefits = ["Guaranteed 500+ Quality Student Leads Every Month."];
 const stats = [
-  { value: "300+", count: 300, label: "Quality leads every month", icon: "target", tone: "coral" },
+  { value: "500+", count: 500, label: "Quality leads every month", icon: "target", tone: "coral" },
   { value: "50+", count: 50, label: "Happy clients", icon: "people", tone: "plum" },
   { value: "500+", count: 500, label: "Systems built", icon: "layers", tone: "sun" },
   { value: "20+", count: 20, label: "People in our in-house team", icon: "team", tone: "plum" },
@@ -516,6 +516,10 @@ const styles = `
     text-align: center;
     text-wrap: pretty;
   }
+  .institute-hero .hero-image-copy-actions {
+    display: flex;
+    flex-direction: column;
+  }
   .institute-hero .hero-stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .institute-hero .hero-target { min-width: 0; }
   .institute-hero .hero-target-number { margin: 0; font-size: clamp(58px, 7vw, 96px); line-height: 1; letter-spacing: -.045em; }
@@ -752,6 +756,7 @@ const styles = `
     .institute-hero .hero-title-guarantee { color: #e96849; font-size: 1em; }
     .institute-hero .hero-promise { font-size: clamp(15px, 3.7vw, 19px); }
     .institute-hero .hero-actions { margin-top: 24px; }
+    .institute-hero .hero-image-copy-actions .hero-image-action { order: -1; }
     .institute-hero .hero-actions .hero-primary-cta { width: 100%; min-height: 60px; font-size: 18px !important; padding: 17px 18px !important; border-radius: 16px; }
     .institute-hero .hero-guarantee-item { font-size: 16px; }
   }
@@ -820,7 +825,7 @@ export default function Hero() {
                       <span className="hero-guarantee-icon">
                         <HeroIcon name="spark" />
                       </span>
-                      <span>{benefit.split("300+")[0]}<strong className="hero-guarantee-number">300+</strong>{benefit.split("300+")[1]}</span>
+                      <span>{benefit.split("500+")[0]}<strong className="hero-guarantee-number">500+</strong>{benefit.split("500+")[1]}</span>
                     </span>
                   ))
                 )}
@@ -851,26 +856,28 @@ export default function Hero() {
             </div>
           </div>
         </figure>
-        <p
-          className="hero-image-copy hero-enter"
-          style={{ "--delay": "260ms" }}
-        >
-          Make your courses easier to discover, enquire about, and join—whether it’s fashion, beauty, makeup, or other skill-based programs.
-        </p>
-      </div>
-      <div className="container-x">
-        {/* Calls to action */}
-        <div className="mx-auto max-w-4xl text-center">
-          <div className="hero-actions mt-8 flex flex-col items-stretch justify-center gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-4">
-            <Button
-              href={bookingHref}
-              external={bookingIsExternal}
-              className="hero-primary-cta"
-            >
-              Yes, I Want to Fill My Next Batch
-            </Button>
+        <div className="hero-image-copy-actions">
+          <p
+            className="hero-image-copy hero-enter"
+            style={{ "--delay": "260ms" }}
+          >
+            Make your courses easier to discover, enquire about, and join—whether it’s fashion, beauty, makeup, or other skill-based programs.
+          </p>
+          <div className="hero-image-action mx-auto max-w-4xl text-center">
+            <div className="hero-actions mt-8 flex flex-col items-stretch justify-center gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-4">
+              <Button
+                href={bookingHref}
+                external={bookingIsExternal}
+                arrow={false}
+                className="hero-primary-cta"
+              >
+                Yes, I Want to Fill My Next Batch
+              </Button>
+            </div>
           </div>
         </div>
+      </div>
+      <div className="container-x">
         <div className="hero-stats-grid mx-auto mt-10 grid max-w-5xl grid-cols-2 gap-3 sm:mt-12 sm:gap-5 lg:grid-cols-4">
           {stats.map((stat, index) => (
             <GlassStatCard key={stat.label} stat={stat} index={index} />
@@ -884,7 +891,7 @@ export default function Hero() {
           </div>
           <div className="min-w-0">
             <p className="hero-target-number font-display font-extrabold text-plum-700">
-              300
+              500
               <span className="align-top text-[.55em] text-coral-500">+</span>
             </p>
             <span className="hero-lead-quality">

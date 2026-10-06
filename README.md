@@ -44,7 +44,7 @@ All copy lives in `src/data/content.js`. Nothing is invented: where your brief h
 
 - **Testimonials:** add real, approved quotes to the `testimonials` array. The section stays hidden until you do.
 - **Case study:** fill in `featuredCampaign` with one verified campaign. Until then, the Results section explains how reports are structured.
-- The **300+ leads** figure is shown only as a proposed target with a disclaimer, as in your brief.
+- The **500+ leads** figure is shown only as a proposed target with a disclaimer, as in your brief.
 
 ## 3. Images
 
