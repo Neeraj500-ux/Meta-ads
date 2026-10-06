@@ -1,7 +1,7 @@
 import Header from "./components/Header.jsx";
 import Hero from "./components/Hero.jsx";
 import { Intro, Approach, Problems, Solution } from "./components/Sections1.jsx";
-import { Services, Audience, Process, Results, Testimonials, WhyChoose } from "./components/Sections2.jsx";
+import { Audience, Process, Results, Testimonials, WhyChoose } from "./components/Sections2.jsx";
 import { Consultation, Faq } from "./components/Sections3.jsx";
 import EnquiryForm from "./components/EnquiryForm.jsx";
 import Footer from "./components/Footer.jsx";
@@ -18,7 +18,6 @@ export default function App() {
         <Approach />
         <Problems />
         <Solution />
-        <Services />
         <Audience />
         <Process />
         <Results />

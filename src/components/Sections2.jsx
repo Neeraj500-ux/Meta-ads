@@ -169,32 +169,6 @@ function SectionFrame({ className = "", children, ...props }) {
   );
 }
 
-const services = [
-  {
-    "title": "Hyper-Local Targeting",
-    "text": "We focus your campaigns on the locations that matter to your institute, so your team connects with students who can attend your classes."
-  },
-  {
-    "title": "Course-Specific Campaigns",
-    "text": "Fashion designing students see fashion designing ads. Beauty students see beauty ads. Every campaign is built around the course being promoted."
-  },
-  {
-    "title": "High-Intent Lead Filtering",
-    "text": "Qualification questions help identify students interested in your course, location and upcoming batch before their enquiry reaches your team."
-  },
-  {
-    "title": "Landing Pages That Convert",
-    "text": "A dedicated admission funnel gives students clear course information and a simple way to request details."
-  },
-  {
-    "title": "Instant Lead Delivery",
-    "text": "Student enquiries go directly to your admissions team, helping counsellors follow up while interest is still fresh."
-  },
-  {
-    "title": "Continuous Optimization",
-    "text": "We monitor campaigns daily and refine targeting, creatives and the enquiry journey to improve lead quality and reduce wasted spend."
-  }
-];
 const steps = [
   {
     "title": "Strategy Setup",
@@ -234,11 +208,6 @@ const whyChoose = [
     "title": "Complete Done-For-You Service",
     "text": "We handle strategy, creatives, campaign management, optimization and reporting, while your team focuses on counselling and admissions."
   }
-];
-const iconTone = [
-  "from-white to-plum-100 text-plum-700 shadow-[0_6px_0_#e3d4eb]",
-  "from-white to-coral-100 text-coral-700 shadow-[0_6px_0_#efdbc9]",
-  "from-white to-sun-200 text-sun-700 shadow-[0_6px_0_#e9dfb5]",
 ];
 const audienceTint = [
   "bg-plum-100 text-plum-700",
@@ -302,91 +271,15 @@ function AudienceImage({ image }) {
     />
   );
 }
-export function Services() {
-  return (
-    <SectionFrame id="services" className="section-y">
-      <div className="container-x">
-        <SectionHead title="We Build a Student Acquisition System Designed for Institutes.">
-          <p>
-            From location targeting to lead delivery, every part of the system
-            is built to help your admissions team connect with relevant students.
-          </p>
-        </SectionHead>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-          {services.map((service, index) => (
-            <Reveal
-              key={service.title}
-              delay={(index % 3) * 80}
-              className="card group flex flex-col transition duration-300 hover:-translate-y-1 hover:border-plum-300 hover:shadow-lift"
-            >
-              <span
-                className={`edu-service-icon mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br font-display text-sm font-extrabold transition duration-300 group-hover:-rotate-3 ${
-                  iconTone[index % iconTone.length]
-                }`}
-              >
-                <ProcessIcon index={index} />
-                <span className="edu-service-number" aria-hidden="true">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-              </span>
-              <h3 className="text-xl font-bold">{service.title}</h3>
-              <p className="mt-3 text-[15px]">{service.text}</p>
-              {service.note && (
-                <p className="mt-auto border-t border-plum-100 pt-3 text-xs text-mute [margin-top:1.25rem]">
-                  {service.note}
-                </p>
-              )}
-            </Reveal>
-          ))}
-        </div>
-        <Reveal className="edu-report mt-6 grid gap-8 rounded-3xl border border-plum-200/80 bg-gradient-to-br from-plum-50 to-sun-50 p-7 sm:grid-cols-2 sm:p-9">
-          <div>
-            <h3 className="text-xl font-bold">Performance reporting</h3>
-            <p className="mt-3 text-[15px]">
-              Review advertising spend, leads generated, cost per lead and
-              available feedback from your admissions team.
-            </p>
-            <p className="mt-3 text-sm">
-              <strong>Reporting schedule:</strong> agreed with you before work
-              begins.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-xl font-bold">
-              Your admission funnel and follow-up system
-            </h3>
-            <p className="mt-3 text-[15px]">
-              We connect your ads, enquiry forms and lead delivery into a clear
-              admission journey. Tracking, CRM and WhatsApp requirements are
-              planned around how your team handles student enquiries.
-            </p>
-          </div>
-        </Reveal>
-        <Reveal className="edu-pricing mx-auto mt-6 max-w-3xl rounded-[28px] border border-[#e8d6c0] bg-gradient-to-br from-[#fff8ef] to-sun-50 p-8 text-center sm:p-10">
-          <h3 className="text-xl font-bold">Fees and advertising budget</h3>
-          <p className="mx-auto mt-3 max-w-xl text-[15px]">
-            Your service fee, recommended advertising budget and whether ad
-            spend is billed separately are set out clearly in your proposal
-            after we review your courses and goals. Nothing is decided before
-            you have seen it.
-          </p>
-          <Button
-            href={bookingHref}
-            external={bookingIsExternal}
-            className="mt-6 min-h-12"
-          >
-            Request My Campaign Proposal
-          </Button>
-        </Reveal>
-      </div>
-    </SectionFrame>
-  );
-}
 export function Audience() {
   return (
     <SectionFrame className="section-y bg-gradient-to-br from-[#fbf7f2] to-[#faf3fb]">
       <div className="container-x">
         <SectionHead title="Marketing that reflects the skills you teach." />
+        <p className="mx-auto mb-8 max-w-2xl px-2 text-center text-[15px] leading-relaxed text-[#526176] sm:mb-10 sm:text-base">
+          Connect with students who want to learn your skills and turn their
+          interest into course enquiries.
+        </p>
         <div className="edu-audience-grid grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {audiences.map((audience, index) => {
             const audienceKey = String(audience.key).trim().toLowerCase();

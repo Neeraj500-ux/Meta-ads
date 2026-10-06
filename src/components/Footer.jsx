@@ -2,7 +2,7 @@ import { site, whatsappUrl } from "../config/site.js";
 import { BrandMark } from "./Header.jsx";
 
 const links = [
-  ["Services", "#services"], ["How It Works", "#process"], ["About", "#about"], ["FAQs", "#faqs"], ["Contact", "#enquire"],
+  ["How It Works", "#process"], ["About", "#about"], ["FAQs", "#faqs"], ["Contact", "#enquire"],
 ];
 
 export default function Footer() {
