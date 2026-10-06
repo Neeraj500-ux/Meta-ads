@@ -22,14 +22,75 @@ export function Arrow({ className = "" }) {
   );
 }
 
-export function Button({ href, external, variant = "primary", className = "", children, arrow = true, ...rest }) {
+export function Button({
+  href,
+  external = false,
+  variant = "primary",
+  appearance = "premium",
+  className = "",
+  children,
+  onClick,
+  type = "button",
+  arrow = true,
+  ...rest
+}) {
   const v = { primary: "btn-primary", sun: "btn-sun", soft: "btn-soft" }[variant];
   const ext = external ? { target: "_blank", rel: "noopener noreferrer" } : {};
+
+  if (appearance === "legacy") {
+    const legacyContent = (
+      <>
+        {children}
+        {arrow && <Arrow />}
+      </>
+    );
+    const legacyClassName = `btn group ${v} ${className}`;
+
+    if (href) {
+      return (
+        <a href={href} className={legacyClassName} onClick={onClick} {...ext} {...rest}>
+          {legacyContent}
+        </a>
+      );
+    }
+
+    return (
+      <button type={type} className={legacyClassName} onClick={onClick} {...rest}>
+        {legacyContent}
+      </button>
+    );
+  }
+
+  const content = (
+    <>
+      <span>{children}</span>
+      {arrow && (
+        <svg
+          className="pm-arrow"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      )}
+    </>
+  );
+
   return (
-    <a href={href} className={`btn group ${v} ${className}`} {...ext} {...rest}>
-      {children}
-      {arrow && <Arrow />}
-    </a>
+    href ? (
+      <a href={href} className={`pm-btn ${className}`.trim()} onClick={onClick} {...ext} {...rest}>
+        {content}
+      </a>
+    ) : (
+      <button type={type} className={`pm-btn ${className}`.trim()} onClick={onClick} {...rest}>
+        {content}
+      </button>
+    )
   );
 }
 

@@ -77,105 +77,24 @@ const mobileBarStyles = `
   }
 
   .cc-mobile-bar__button {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 9px;
-
     min-width: 0;
-    min-height: 54px;
-    padding: 13px 12px;
-
-    border: 1px solid rgba(255, 255, 255, .45);
-    border-radius: 16px;
-
-    color: #fff;
-    text-decoration: none;
-    text-align: center;
-    font-size: clamp(13px, 3.6vw, 16px);
-    font-weight: 750;
-    line-height: 1.25;
-    letter-spacing: -.015em;
     white-space: nowrap;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-
-    transition:
-      transform .2s ease,
-      box-shadow .2s ease,
-      filter .2s ease;
   }
 
-  .cc-mobile-bar__button::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, .16),
-      transparent 55%
-    );
-  }
-
-  .cc-mobile-bar__button svg {
+  .cc-mobile-bar__button > svg:not(.pm-arrow) {
     display: block;
     flex: 0 0 auto;
     width: 21px;
     height: 21px;
   }
 
-  .cc-mobile-bar__call {
-    background: linear-gradient(
-      125deg,
-      #744494 0%,
-      #5d327e 48%,
-      #4b266a 100%
-    );
-
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, .3),
-      0 3px 0 #3b1c56,
-      0 7px 16px rgba(75, 38, 106, .16);
-  }
-
-  .cc-mobile-bar__whatsapp {
-    background: linear-gradient(
-      125deg,
-      #169e4b 0%,
-      #10843e 55%,
-      #087735 100%
-    );
-
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, .35),
-      0 3px 0 #065c2a,
-      0 7px 18px rgba(22, 158, 75, .22);
-
-    animation: ccMobileWhatsAppPulse 5s ease-in-out infinite;
-  }
-
   .cc-mobile-bar__whatsapp svg {
     width: 23px;
     height: 23px;
+  }
+
+  .cc-mobile-bar__whatsapp > svg:not(.pm-arrow) {
     filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .1));
-  }
-
-  .cc-mobile-bar__button:focus-visible {
-    outline: 3px solid #e98568;
-    outline-offset: 5px;
-  }
-
-  .cc-mobile-bar__button:active {
-    animation: none;
-    transform: translateY(2px) scale(.98);
-    filter: brightness(.96);
   }
 
   @supports (backdrop-filter: blur(20px)) {
@@ -186,33 +105,24 @@ const mobileBarStyles = `
     }
   }
 
-  @media (hover: hover) and (pointer: fine) {
-    .cc-mobile-bar__button:hover {
-      animation-play-state: paused;
-      transform: translateY(-2px);
-      filter: brightness(1.06);
-    }
-  }
-
   @media (max-width: 359px) {
     .cc-mobile-bar__inner {
       gap: 9px;
     }
 
     .cc-mobile-bar__button {
-      min-height: 50px;
-      gap: 7px;
-      padding-inline: 9px;
-      border-radius: 14px;
-      font-size: 13px;
+      min-height: 56px;
+      gap: 6px;
+      padding-inline: 7px;
+      font-size: 12px;
     }
 
-    .cc-mobile-bar__button svg {
+    .cc-mobile-bar__button > svg:not(.pm-arrow) {
       width: 19px;
       height: 19px;
     }
 
-    .cc-mobile-bar__whatsapp svg {
+    .cc-mobile-bar__whatsapp > svg:not(.pm-arrow) {
       width: 21px;
       height: 21px;
     }
@@ -224,29 +134,9 @@ const mobileBarStyles = `
     }
   }
 
-  @keyframes ccMobileWhatsAppPulse {
-    0%, 72%, 100% {
-      transform: scale(1);
-    }
-
-    80% {
-      transform: scale(1.018);
-    }
-
-    88% {
-      transform: scale(1);
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .cc-mobile-bar__button {
       animation: none !important;
-      transition: none !important;
-    }
-
-    .cc-mobile-bar__button:hover,
-    .cc-mobile-bar__button:active {
-      transform: none;
     }
   }
 `;
@@ -271,20 +161,26 @@ export default function MobileBar() {
         <a
           href={bookingHref}
           {...ext(bookingIsExternal)}
-          className="cc-mobile-bar__button cc-mobile-bar__call"
+          className="cc-mobile-bar__button cc-mobile-bar__call pm-btn"
         >
           <PhoneIcon />
           <span>Book A Call</span>
+          <svg className="pm-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
         </a>
 
         <a
           href={chatHref}
           {...ext(chatIsExternal)}
-          className="cc-mobile-bar__button cc-mobile-bar__whatsapp"
+          className="cc-mobile-bar__button cc-mobile-bar__whatsapp pm-btn"
           aria-label="Chat On WhatsApp"
         >
           <WhatsAppIcon />
           <span>WhatsApp</span>
+          <svg className="pm-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
         </a>
       </div>
     </nav>

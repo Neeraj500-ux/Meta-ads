@@ -43,6 +43,27 @@ const sectionStyles = `
     letter-spacing: -.025em;
     text-wrap: balance;
   }
+  .edu-sections .edu-audience-promise {
+    max-width: 760px;
+    margin: clamp(17px, 2.4vw, 25px) auto 0;
+    color: #4b266a;
+    font-size: clamp(16px, 2.2vw, 26px);
+    font-weight: 750;
+    line-height: 1.5;
+    letter-spacing: -.015em;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .edu-sections .edu-audience-promise strong {
+    display: block;
+    margin-top: 8px;
+    font-weight: 850;
+  }
+  @media (max-width: 767px) {
+    .edu-sections .edu-audience-promise {
+      font-size: clamp(15px, 3.7vw, 19px);
+    }
+  }
   .edu-sections h3 { line-height: 1.35; text-wrap: balance; }
   .edu-sections p, .edu-sections dd, .edu-sections blockquote {
     line-height: 1.75;
@@ -139,7 +160,7 @@ const sectionStyles = `
     .edu-sections .edu-report { grid-template-columns: minmax(0,1fr); gap: 22px; }
     .edu-sections .edu-report > div + div { padding-top: 22px; border-top: 1px solid #e7d6ef; }
     .edu-sections .edu-pricing a { width: 100%; min-height: 48px; }
-    .edu-sections .edu-cta a { width: 100%; min-height: 54px; }
+    .edu-sections .edu-cta a { width: 100%; min-height: 56px; }
     .edu-sections .edu-audience-grid { gap: 22px; }
     .edu-sections .edu-testimonial figcaption { padding-top: 18px; }
     .edu-process .ep-card-header { align-items: flex-start; }
@@ -677,9 +698,11 @@ export function Audience() {
           })}
         </div>
 
-        <Reveal className="mx-auto mt-10 max-w-2xl text-center text-[15px]">
-          This service is suited to institutes with a clear course offering and
-          a team ready to respond to student enquiries.
+        <Reveal className="edu-audience-promise">
+          Get your courses in front of prospective students in the right
+          locations, without relying on referrals, walk-ins or unpredictable
+          enquiries.{" "}
+          <strong>Better Leads. Not Just More Leads.</strong>
         </Reveal>
 
         <div className="edu-cta"><SectionCta href={bookingHref} external={bookingIsExternal}>
