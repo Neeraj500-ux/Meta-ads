@@ -542,7 +542,7 @@ const styles = `
     display: block;
     margin-top: 8px;
     color: #4b266a;
-    font-size: clamp(32px, 16vw, 20px);
+    font-size: clamp(32px, 2vw, 26px);
     font-weight: 800;
     line-height: 1.3;
     letter-spacing: -.03em;
