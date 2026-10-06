@@ -542,7 +542,7 @@ const styles = `
     display: block;
     margin-top: 8px;
     color: #4b266a;
-    font-size: clamp(32px, 2vw, 26px);
+    font-size: clamp(30px, 2.5vw, 36px);
     font-weight: 800;
     line-height: 1.3;
     letter-spacing: -.03em;
@@ -565,10 +565,10 @@ const styles = `
     .institute-hero .hero-image-wrap { margin-top: 26px; }
     .institute-hero .hero-target { grid-template-columns: minmax(0, 1fr); gap: 26px; }
     .institute-hero .hero-lead-quality {
-      font-size: clamp(13.5px, 4.4vw, 20px);
+      font-size: clamp(20px, 5vw, 25px);
       line-height: 1.3;
-      white-space: nowrap;
-      text-wrap: nowrap;
+      white-space: normal;
+      text-wrap: balance;
     }
     .institute-hero .hero-stat-value { font-size: clamp(32px, 6.5vw, 44px); }
   }
@@ -1042,7 +1042,7 @@ const styles = `
     .institute-hero .hero-target { padding: 30px; gap: 28px; }
     .institute-hero .hero-visual-frame { max-width: 560px; margin-inline: auto; }
     .institute-hero .hero-target-number { font-size: 76px; }
-    .institute-hero .hero-lead-quality { font-size: 24px; }
+    .institute-hero .hero-lead-quality { font-size: 26px; }
     .institute-hero .hero-marquee-section { margin-top: 40px; }
   }
 
@@ -1208,7 +1208,7 @@ export default function Hero() {
               500
               <span className="align-top text-[.55em] text-coral-500">+</span>
             </p>
-            <span className="hero-lead-quality text-30xl">
+            <span className="hero-lead-quality">
               Better Leads.{" "}
               <span>Not Just More Leads.</span>
             </span>
