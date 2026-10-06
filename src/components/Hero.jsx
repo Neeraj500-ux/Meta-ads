@@ -4,6 +4,7 @@ import {
   bookingHref,
   bookingIsExternal,
 } from "../config/site.js";
+import { Button } from "./ui.jsx";
 import HeroVisual from "./HeroVisual.jsx";
 // Vite resolves this file from public/images/Neeraj.png, including subpath deployments.
 const heroImageBase = import.meta.env.BASE_URL || "/";
@@ -770,7 +771,7 @@ export default function Hero() {
         <header className="hero-heading">
           <p className="hero-eyebrow hero-enter">
             <span className="hero-eyebrow-dot" aria-hidden="true" />
-            <span>for fashion, beauty and skill-based institutes</span>
+            <span>For Fashion, Beauty and Skill-Based Institutes</span>
           </p>
           <h1 id="institute-hero-title" className="hero-title hero-enter" style={{ "--delay": "80ms" }}>
             <span className="hero-title-line hero-title-keep">
@@ -861,14 +862,13 @@ export default function Hero() {
         {/* Calls to action */}
         <div className="mx-auto max-w-4xl text-center">
           <div className="hero-actions mt-8 flex flex-col items-stretch justify-center gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-4">
-            <a
+            <Button
               href={bookingHref}
-              target={bookingIsExternal ? "_blank" : undefined}
-              rel={bookingIsExternal ? "noopener noreferrer" : undefined}
+              external={bookingIsExternal}
               className="hero-primary-cta"
             >
               Yes, I Want to Fill My Next Batch
-            </a>
+            </Button>
           </div>
         </div>
         <div className="hero-stats-grid mx-auto mt-10 grid max-w-5xl grid-cols-2 gap-3 sm:mt-12 sm:gap-5 lg:grid-cols-4">
