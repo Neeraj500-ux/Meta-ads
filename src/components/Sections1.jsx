@@ -168,10 +168,7 @@ const styles = `
 .s1-panel-foot svg{width:15px;height:15px;flex:0 0 15px;margin-top:1px}
 .s1-bottom{margin-top:26px;padding:clamp(26px,4vw,42px);border:1px solid #e8ddec;border-radius:28px;background:linear-gradient(135deg,#fff,#fbf6fe);text-align:center;box-shadow:0 16px 40px #55346106}
 .s1-bottom h3{max-width:690px;margin:auto;font-size:clamp(23px,2.7vw,32px);font-weight:800;line-height:1.25;letter-spacing:-.035em;text-wrap:balance}
-.s1-bottom p{max-width:650px;margin:14px auto 0;font-size:14px}
-.s1-notes{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 20px;margin-top:20px;color:var(--muted);font-size:11px}
-.s1-notes span{display:flex;align-items:center;gap:6px}
-.s1-notes svg{width:14px;height:14px;color:var(--plum)}
+.s1-bottom p{max-width:650px;margin:14px auto 0;color:#4e286d;font-size:clamp(16px,1.5vw,18px);line-height:1.7}
 @keyframes s1-float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-3px) rotate(3deg)}}
 @keyframes s1-detail{from{opacity:.5;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
 @media(hover:hover) and (pointer:fine){
@@ -204,7 +201,6 @@ const styles = `
   .s1-bottom{padding:28px 19px}
   .s1-cta>a{width:100%;min-height:48px}
   .s1 p{font-size:14px}
-  .s1-notes{gap:10px 14px}
 }
 @media(prefers-reduced-motion:reduce){
   .s1 *,.s1 *::before,.s1 *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
@@ -429,20 +425,6 @@ export function Problems() {
             institute. Your team focuses on admission conversations.
           </p>
           <BatchCta />
-          <div className="s1-notes">
-            <span>
-              <Icon />
-              Local targeting
-            </span>
-            <span>
-              <Icon />
-              Course-specific ads
-            </span>
-            <span>
-              <Icon />
-              Fast lead delivery
-            </span>
-          </div>
         </Reveal>
       </div>
     </section>

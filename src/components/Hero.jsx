@@ -6,9 +6,11 @@ import {
 } from "../config/site.js";
 import { Button } from "./ui.jsx";
 import HeroVisual from "./HeroVisual.jsx";
+
 // Vite resolves this file from public/images/Neeraj.png, including subpath deployments.
 const heroImageBase = import.meta.env.BASE_URL || "/";
 const heroImage = `${heroImageBase.endsWith("/") ? heroImageBase : `${heroImageBase}/`}images/${encodeURIComponent("Neeraj.png")}`;
+
 const journey = [
   {
     title: "Reach the Right Students",
@@ -23,19 +25,23 @@ const journey = [
     text: "Fast lead delivery helps your team turn interest into admission conversations."
   }
 ];
+
 const marquee = ["Hyper-Local Targeting", "Course-Specific Campaigns", "High-Intent Lead Filtering", "Instant Lead Delivery"];
 const benefits = ["Guaranteed 500+ Quality Student Leads Every Month."];
+
 const stats = [
   { value: "500+", count: 500, label: "Quality leads every month", icon: "target", tone: "coral" },
   { value: "50+", count: 50, label: "Happy clients", icon: "people", tone: "plum" },
   { value: "500+", count: 500, label: "Systems built", icon: "layers", tone: "sun" },
   { value: "20+", count: 20, label: "People in our in-house team", icon: "team", tone: "plum" },
 ];
+
 const journeyTones = [
   "border-plum-200 bg-plum-100 text-plum-700",
   "border-coral-100 bg-coral-50 text-coral-700",
   "border-sun-200 bg-sun-50 text-sun-700",
 ];
+
 function HeroIcon({ name, className = "" }) {
   const icons = {
     target: (
@@ -63,7 +69,9 @@ function HeroIcon({ name, className = "" }) {
     filter: <path d="M3 4h18l-7 8v6l-4 3v-9L3 4Z" />,
     growth: <path d="M3 17 9 11l4 4 8-10M15 5h6v6M3 21h18" />,
     spark: <path d="m12 3 2.3 6.7L21 12l-6.7 2.3L12 21l-2.3-6.7L3 12l6.7-2.3L12 3Z" />,
+    arrow: <path d="M5 12h14M13 6l6 6-6 6" />,
   };
+
   return (
     <svg
       className={className}
@@ -79,12 +87,15 @@ function HeroIcon({ name, className = "" }) {
     </svg>
   );
 }
+
 function GlassStatCard({ stat, index }) {
   const cardRef = useRef(null);
   const [count, setCount] = useState(stat.count);
+
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (reduceMotion.matches || !window.IntersectionObserver) return;
+
     let frame = 0;
     const observer = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
@@ -98,12 +109,14 @@ function GlassStatCard({ stat, index }) {
       };
       frame = requestAnimationFrame(animate);
     }, { threshold: 0.3 });
+
     if (cardRef.current) observer.observe(cardRef.current);
     return () => {
       observer.disconnect();
       cancelAnimationFrame(frame);
     };
   }, [stat.count]);
+
   const handlePointerMove = (event) => {
     if (event.pointerType !== "mouse" || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -116,10 +129,12 @@ function GlassStatCard({ stat, index }) {
     card.style.setProperty("--rotate-x", `${(0.5 - y) * 6}deg`);
     card.style.setProperty("--rotate-y", `${(x - 0.5) * 6}deg`);
   };
+
   const resetTilt = (event) => {
     event.currentTarget.style.setProperty("--rotate-x", "0deg");
     event.currentTarget.style.setProperty("--rotate-y", "0deg");
   };
+
   return (
     <div
       ref={cardRef}
@@ -140,6 +155,7 @@ function GlassStatCard({ stat, index }) {
     </div>
   );
 }
+
 const styles = `
   .institute-hero {
     position: relative;
@@ -153,10 +169,12 @@ const styles = `
   .institute-hero *,
   .institute-hero *::before,
   .institute-hero *::after { box-sizing: border-box; }
+
   .institute-hero .hero-enter {
     animation: ihReveal .8s cubic-bezier(.22,1,.36,1) both;
     animation-delay: var(--delay, 0ms);
   }
+
   .institute-hero .hero-image-wrap {
     position: relative;
     isolation: isolate;
@@ -188,6 +206,7 @@ const styles = `
     object-fit: contain;
     border-radius: inherit;
   }
+
   .institute-hero .hero-ticker {
     overflow: hidden;
     -webkit-mask-image: linear-gradient(
@@ -202,6 +221,7 @@ const styles = `
     animation: ihMarquee 36s linear infinite;
   }
   .institute-hero .hero-ticker:hover .hero-track { animation-play-state: paused; }
+
   .institute-hero .hero-actions a,
   .institute-hero .hero-actions button {
     max-width: 100%;
@@ -209,6 +229,7 @@ const styles = `
     white-space: normal;
     text-align: center;
   }
+
   @media (hover: hover) and (pointer: fine) {
     .institute-hero .hero-image-shell:hover {
       border-color: rgba(75,38,106,.25);
@@ -217,6 +238,7 @@ const styles = `
         0 6px 18px rgba(75,38,106,.05);
     }
   }
+
   @media (max-width: 767px) {
     .institute-hero .hero-image-wrap {
       max-width: 620px;
@@ -241,6 +263,7 @@ const styles = `
     }
     .institute-hero .hero-image-screen { border-radius: 12px; }
   }
+
   @keyframes ihReveal {
     from { opacity: 0; transform: translateY(18px); }
     to { opacity: 1; transform: translateY(0); }
@@ -253,6 +276,7 @@ const styles = `
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
+
   @media (prefers-reduced-motion: reduce) {
     .institute-hero *,
     .institute-hero *::before,
@@ -277,6 +301,7 @@ const styles = `
     }
     .institute-hero .hero-duplicate { display: none; }
   }
+
   /* Liquid glass finish, layered surfaces and local SVG icons. */
   .institute-hero {
     background:
@@ -405,6 +430,7 @@ const styles = `
   .institute-hero .hero-step:nth-child(3) > span { animation-delay: -4s; }
   .institute-hero .hero-step svg { width: 20px; height: 20px; }
   .institute-hero .hero-copy svg { width: 16px; height: 16px; }
+
   @media (hover:hover) and (pointer:fine) {
     .institute-hero .hero-stat-glass:hover { border-color: #c6a5d9; box-shadow: 0 24px 45px #4b266a13, 0 5px 0 #e6d6ed, inset 0 2px 0 #fff; }
     .institute-hero .hero-stat-glass:hover .hero-stat-shine { opacity: 1; animation: ihShine .85s ease both; }
@@ -433,6 +459,7 @@ const styles = `
     .institute-hero .hero-stat-shine { display: none; }
     .institute-hero .hero-actions a:hover { transform: none; }
   }
+
   .institute-hero .hero-actions a:focus-visible {
     outline: 3px solid #f58562;
     outline-offset: 6px;
@@ -453,6 +480,7 @@ const styles = `
       overflow-wrap: anywhere;
     }
   }
+
   /* Heading and layout: sizes are scoped to this hero. */
   .institute-hero { padding-block: clamp(26px, 4vw, 56px) clamp(44px, 6vw, 80px); }
   .institute-hero .container-x {
@@ -516,10 +544,6 @@ const styles = `
     text-align: center;
     text-wrap: pretty;
   }
-  .institute-hero .hero-image-copy-actions {
-    display: flex;
-    flex-direction: column;
-  }
   .institute-hero .hero-stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .institute-hero .hero-target { min-width: 0; }
   .institute-hero .hero-target-number { margin: 0; font-size: clamp(58px, 7vw, 96px); line-height: 1; letter-spacing: -.045em; }
@@ -580,6 +604,7 @@ const styles = `
     .institute-hero .hero-copy { gap: 12px; padding: 0 16px; }
     .institute-hero .hero-icon-3d { transform: none; }
   }
+
   /* Clear typography with no background, pill, border or shadow. */
   .institute-hero .hero-guarantee-ticker {
     padding-block: 12px;
@@ -624,6 +649,7 @@ const styles = `
     .institute-hero .hero-guarantee-item { white-space: normal; }
     .institute-hero .hero-guarantee-item > span:last-child { min-width: 0; }
   }
+
   /* Restore the course badge and keep the guarantee close to the video. */
   .institute-hero .hero-eyebrow {
     padding: 10px 20px;
@@ -648,6 +674,7 @@ const styles = `
     .institute-hero .hero-eyebrow { padding: 9px 14px; font-size: 12px; line-height: 1.65; border-radius: 20px; }
     .institute-hero .hero-guarantee-ticker { padding-block: 3px; }
   }
+
   /* Wide image with its original proportions on every screen. */
   .institute-hero .hero-image-wrap {
     max-width: 960px;
@@ -674,6 +701,7 @@ const styles = `
     .institute-hero .hero-image-shell { padding: 4px; border-radius: 18px; }
     .institute-hero .hero-image-screen { border-radius: 13px; }
   }
+
   /* Soft light replaces the decorative circles. */
   .institute-hero {
     background:
@@ -756,7 +784,6 @@ const styles = `
     .institute-hero .hero-title-guarantee { color: #e96849; font-size: 1em; }
     .institute-hero .hero-promise { font-size: clamp(15px, 3.7vw, 19px); }
     .institute-hero .hero-actions { margin-top: 24px; }
-    .institute-hero .hero-image-copy-actions .hero-image-action { order: -1; }
     .institute-hero .hero-actions .hero-primary-cta { width: 100%; min-height: 60px; font-size: 18px !important; padding: 17px 18px !important; border-radius: 16px; }
     .institute-hero .hero-guarantee-item { font-size: 16px; }
   }
@@ -766,11 +793,275 @@ const styles = `
     .institute-hero .hero-guarantee-ticker { -webkit-mask-image: none; mask-image: none; }
   }
 
+  /* ============================================================
+     Benefits bar: fixed tag + looping text (same palette)
+     ============================================================ */
+  .institute-hero .hero-benefit-wrap {
+    width: min(100%, 1040px);
+    margin: 18px auto 0;
+    padding-inline: 16px;
+  }
+  .institute-hero .hero-benefit-bar {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: stretch;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #ecd9e8;
+    border-radius: 22px;
+    background:
+      radial-gradient(ellipse at 0 0, rgba(255,222,133,.28), transparent 55%),
+      linear-gradient(135deg, rgba(255,255,255,.96), rgba(250,243,252,.9) 55%, rgba(255,245,233,.95));
+    box-shadow: 0 5px 0 #eadcee, 0 18px 40px rgba(75,38,106,.1), inset 0 2px 0 #fff;
+  }
+  .institute-hero .hero-benefit-bar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(105deg, transparent 42%, rgba(255,255,255,.65) 50%, transparent 58%);
+    transform: translateX(-120%);
+    animation: ihBarShine 6s ease-in-out 1.5s infinite;
+  }
+  .institute-hero .hero-benefit-tag {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 10px;
+    padding: 0 28px 0 20px;
+    background: linear-gradient(120deg, #351d4e, #4b266a 60%, #60317d);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
+  }
+  .institute-hero .hero-benefit-live {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    flex: 0 0 10px;
+    border-radius: 50%;
+    background: #ffd45b;
+  }
+  .institute-hero .hero-benefit-live::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: #ffd45b;
+    animation: ihPing 1.8s cubic-bezier(0,0,.2,1) infinite;
+  }
+  .institute-hero .hero-benefit-tag svg { width: 16px; height: 16px; color: #ffd45b; }
+  .institute-hero .hero-benefit-ticker {
+    position: relative;
+    z-index: 1;
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-block: 12px;
+    margin-left: -12px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+  }
+  .institute-hero .hero-benefit-ticker .hero-track { animation-duration: 28s; will-change: transform; transform: translate3d(0,0,0); }
+  .institute-hero .hero-benefit-ticker .hero-copy { align-items: center; }
+  .institute-hero .hero-benefit-item {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 12px;
+    padding-inline: 18px;
+    color: #4b266a;
+    font-size: clamp(15px, 1.7vw, 20px);
+    font-weight: 800;
+    letter-spacing: -.015em;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+  .institute-hero .hero-benefit-word { color: #f58562; }
+  .institute-hero .hero-benefit-num {
+    font-size: 1.5em;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -.04em;
+    color: #f58562;
+    background: linear-gradient(100deg, #f58562 0%, #e96849 50%, #f58562 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: ihTextShift 4.5s ease-in-out infinite;
+  }
+  .institute-hero .hero-benefit-spark {
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 26px;
+    width: 26px;
+    height: 26px;
+    margin-left: 6px;
+    border-radius: 50%;
+    border: 1px solid #f1d0bc;
+    background: linear-gradient(145deg, #fff, #ffe2d0);
+    color: #ce6b47;
+    box-shadow: 0 3px 0 #deb099, inset 0 1px 0 #fff;
+  }
+  .institute-hero .hero-benefit-spark svg { width: 14px; height: 14px; animation: ihSpin 7s linear infinite; }
+  @keyframes ihTextShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+  @keyframes ihSpin { to { transform: rotate(360deg); } }
+  @keyframes ihPing { 0% { transform: scale(1); opacity: .8; } 80%,100% { transform: scale(2.6); opacity: 0; } }
+  @keyframes ihBarShine { 0%, 55% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+  @media (max-width: 767px) {
+    .institute-hero .hero-benefit-wrap { margin-top: 14px; padding-inline: 12px; }
+    .institute-hero .hero-benefit-bar { border-radius: 18px; }
+    .institute-hero .hero-benefit-tag { padding: 0 22px 0 14px; font-size: 11px; gap: 8px; }
+    .institute-hero .hero-benefit-ticker { padding-block: 10px; margin-left: -10px; }
+    .institute-hero .hero-benefit-item { padding-inline: 12px; gap: 9px; font-size: 15px; }
+    .institute-hero .hero-benefit-spark { flex-basis: 22px; width: 22px; height: 22px; margin-left: 2px; }
+  }
+  @media (max-width: 359px) {
+    .institute-hero .hero-benefit-tag { font-size: 10px; letter-spacing: .05em; padding-right: 18px; }
+    .institute-hero .hero-benefit-item { font-size: 14px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .institute-hero .hero-benefit-bar { flex-direction: column; }
+    .institute-hero .hero-benefit-tag { justify-content: center; padding: 10px 16px; clip-path: none; }
+    .institute-hero .hero-benefit-ticker { margin-left: 0; -webkit-mask-image: none; mask-image: none; }
+    .institute-hero .hero-benefit-item { white-space: normal; flex-wrap: wrap; justify-content: center; text-align: center; }
+    .institute-hero .hero-benefit-spark { display: none; }
+    .institute-hero .hero-benefit-num { animation: none; }
+    .institute-hero .hero-benefit-bar::after { display: none; }
+  }
+
+  /* ============================================================
+     Second ticker (white band, same palette) with chips
+     ============================================================ */
+  .institute-hero .hero-marquee-section { margin-top: 44px; }
+  .institute-hero .hero-marquee-band {
+    position: relative;
+    isolation: isolate;
+    padding-block: 14px;
+    border-block: 1px solid #ead9ee;
+    background: linear-gradient(180deg, #fff, #fdf9fe 60%, #fff);
+    box-shadow: 0 -10px 30px rgba(75,38,106,.04), 0 14px 34px rgba(75,38,106,.06);
+  }
+  .institute-hero .hero-marquee-band .hero-track { animation-duration: 40s; will-change: transform; transform: translate3d(0,0,0); }
+  .institute-hero .hero-marquee-band .hero-copy { align-items: center; gap: 14px; padding-right: 14px; }
+  .institute-hero .hero-marquee-chip {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 11px;
+    padding: 8px 20px 8px 10px;
+    border: 1px solid #ecdcf0;
+    border-radius: 999px;
+    background: linear-gradient(145deg, #fff, #faf3fc);
+    color: #4b266a;
+    font-size: clamp(13px, 1.5vw, 16px);
+    font-weight: 800;
+    line-height: 1.4;
+    white-space: nowrap;
+    box-shadow: 0 4px 0 #ecdff1, 0 10px 20px rgba(75,38,106,.07), inset 0 1px 0 #fff;
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .institute-hero .hero-marquee-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid #f1d0bc;
+    background: linear-gradient(145deg, #fff, #ffe2d0);
+    color: #ce6b47;
+    box-shadow: 0 3px 0 #deb099, inset 0 1px 0 #fff;
+  }
+  .institute-hero .hero-marquee-icon svg { width: 15px; height: 15px; }
+  .institute-hero .hero-marquee-sep { flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; background: #f58562; opacity: .7; }
+  .institute-hero .hero-marquee-band::before,
+  .institute-hero .hero-marquee-band::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: clamp(30px, 8vw, 110px);
+    z-index: 3;
+    pointer-events: none;
+  }
+  .institute-hero .hero-marquee-band::before { left: 0; background: linear-gradient(90deg, #fff, rgba(255,255,255,0)); }
+  .institute-hero .hero-marquee-band::after { right: 0; background: linear-gradient(270deg, #fff, rgba(255,255,255,0)); }
+  @media (hover:hover) and (pointer:fine) {
+    .institute-hero .hero-marquee-chip:hover { transform: translateY(-2px); border-color: #e5b9a4; box-shadow: 0 6px 0 #ecdff1, 0 14px 26px rgba(75,38,106,.1), inset 0 1px 0 #fff; }
+  }
+  @media (max-width: 767px) {
+    .institute-hero .hero-marquee-section { margin-top: 34px; }
+    .institute-hero .hero-marquee-band { padding-block: 11px; }
+    .institute-hero .hero-marquee-band .hero-track { animation-duration: 30s; }
+    .institute-hero .hero-marquee-band .hero-copy { gap: 10px; padding-right: 10px; }
+    .institute-hero .hero-marquee-chip { padding: 6px 15px 6px 8px; gap: 8px; font-size: 13px; box-shadow: 0 3px 0 #ecdff1, 0 6px 12px rgba(75,38,106,.06), inset 0 1px 0 #fff; }
+    .institute-hero .hero-marquee-icon { flex-basis: 24px; width: 24px; height: 24px; }
+    .institute-hero .hero-marquee-icon svg { width: 13px; height: 13px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .institute-hero .hero-marquee-band .hero-track { width: 100%; }
+    .institute-hero .hero-marquee-band .hero-copy { flex-wrap: wrap; justify-content: center; padding: 0 14px; }
+    .institute-hero .hero-marquee-chip { white-space: normal; text-align: center; }
+    .institute-hero .hero-marquee-sep,
+    .institute-hero .hero-marquee-band::before,
+    .institute-hero .hero-marquee-band::after { display: none; }
+  }
+
+  /* ============================================================
+     Main CTA polish (colours unchanged)
+     ============================================================ */
+  .institute-hero .hero-primary-cta { position: relative; overflow: hidden; isolation: isolate; -webkit-tap-highlight-color: transparent; }
+  .institute-hero .hero-primary-cta::after {
+    content: "";
+    position: absolute;
+    inset: -40% auto -40% -30%;
+    width: 24%;
+    z-index: -1;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.38), transparent);
+    transform: translateX(-120%) skewX(-18deg);
+    animation: ihCtaShine 4.2s ease-in-out 1.2s infinite;
+    pointer-events: none;
+  }
+  .institute-hero .hero-primary-cta:active { transform: translateY(2px) scale(.99); }
+  .institute-hero .hero-actions { position: relative; }
+  .institute-hero .hero-actions::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(420px, 78%);
+    height: 62px;
+    transform: translate(-50%, -50%);
+    border-radius: 22px;
+    background: rgba(245,133,98,.32);
+    filter: blur(22px);
+    z-index: -1;
+    animation: ihGlow 3.4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes ihCtaShine { 0%, 55% { transform: translateX(-120%) skewX(-18deg); } 100% { transform: translateX(620%) skewX(-18deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .institute-hero .hero-primary-cta::after,
+    .institute-hero .hero-actions::before { display: none; }
+  }
 `;
+
 export default function Hero() {
+  const [beforeNum, afterNum] = (benefits[0] || "").split("500+");
   return (
     <section aria-labelledby="institute-hero-title" className="institute-hero">
       <style>{styles}</style>
+
       {/* Headline */}
       <div className="container-x">
         <header className="hero-heading">
@@ -778,6 +1069,7 @@ export default function Hero() {
             <span className="hero-eyebrow-dot" aria-hidden="true" />
             <span>For Fashion, Beauty and Skill-Based Institutes</span>
           </p>
+
           <h1 id="institute-hero-title" className="hero-title hero-enter" style={{ "--delay": "80ms" }}>
             <span className="hero-title-line hero-title-keep">
               Get <span className="hero-title-accent">Qualified Student</span>
@@ -789,51 +1081,57 @@ export default function Hero() {
               Batch Faster. <span className="hero-title-guarantee">Guaranteed.</span>
             </span>
           </h1>
+
           <p className="hero-promise hero-enter" style={{ "--delay": "120ms" }}>
             Stop depending on referrals, walk-ins and random enquiries. We put your
             courses directly in front of prospective students in your target locations.
           </p>
         </header>
       </div>
-      {/* Benefits */}
-      <div className="hero-guarantee-wrap">
+
+      {/* Benefits: fixed tag + looping text */}
+      <div className="hero-benefit-wrap">
         <ul className="sr-only">
           {benefits.map((benefit) => (
             <li key={benefit}>{benefit}</li>
           ))}
         </ul>
-        <div
-          aria-hidden="true"
-          className="hero-ticker hero-guarantee-ticker"
-        >
-          <div className="hero-track">
-            {[0, 1].map((copy) => (
-              <div
-                key={copy}
-                className={`hero-copy flex shrink-0 items-center gap-4 pr-4 sm:gap-6 sm:pr-6 ${
-                  copy === 1 ? "hero-duplicate" : ""
-                }`}
-              >
-                {[0, 1, 2].flatMap((round) =>
-                  benefits.map((benefit) => (
+
+        <div className="hero-benefit-bar" aria-hidden="true">
+          <span className="hero-benefit-tag">
+            <span className="hero-benefit-live" />
+            Our Promise
+          </span>
+
+          <div className="hero-ticker hero-benefit-ticker">
+            <div className="hero-track">
+              {[0, 1].map((copy) => (
+                <div
+                  key={copy}
+                  className={`hero-copy flex shrink-0 items-center ${
+                    copy === 1 ? "hero-duplicate" : ""
+                  }`}
+                >
+                  {[0, 1, 2].map((round) => (
                     <span
-                      key={`${copy}-${round}-${benefit}`}
-                      className={`hero-guarantee-item ${
-                        round > 0 ? "hero-duplicate" : ""
-                      }`}
+                      key={`${copy}-${round}`}
+                      className={`hero-benefit-item ${round > 0 ? "hero-duplicate" : ""}`}
                     >
-                      <span className="hero-guarantee-icon">
+                      <span className="hero-benefit-word">{beforeNum.trim()}</span>
+                      <strong className="hero-benefit-num">500+</strong>
+                      <span>{(afterNum || "").trim()}</span>
+                      <span className="hero-benefit-spark">
                         <HeroIcon name="spark" />
                       </span>
-                      <span>{benefit.split("500+")[0]}<strong className="hero-guarantee-number">500+</strong>{benefit.split("500+")[1]}</span>
                     </span>
-                  ))
-                )}
-              </div>
-            ))}
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
+
       <div className="container-x">
         {/* Hero image: public/images/Neeraj.png */}
         <figure
@@ -856,39 +1154,42 @@ export default function Hero() {
             </div>
           </div>
         </figure>
-        <div className="hero-image-copy-actions">
-          <p
-            className="hero-image-copy hero-enter"
-            style={{ "--delay": "260ms" }}
-          >
-            Make your courses easier to discover, enquire about, and join—whether it’s fashion, beauty, makeup, or other skill-based programs.
-          </p>
-          <div className="hero-image-action mx-auto max-w-4xl text-center">
-            <div className="hero-actions mt-8 flex flex-col items-stretch justify-center gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-4">
-              <Button
-                href={bookingHref}
-                external={bookingIsExternal}
-                arrow={false}
-                className="hero-primary-cta"
-              >
-                Yes, I Want to Fill My Next Batch
-              </Button>
-            </div>
+
+        <p
+          className="hero-image-copy hero-enter"
+          style={{ "--delay": "260ms" }}
+        >
+          Make your courses easier to discover, enquire about, and join—whether it’s fashion, beauty, makeup, or other skill-based programs.
+        </p>
+      </div>
+
+      <div className="container-x">
+        {/* Calls to action */}
+        <div className="mx-auto max-w-4xl text-center">
+          <div className="hero-actions mt-8 flex flex-col items-stretch justify-center gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-4">
+            <Button
+              href={bookingHref}
+              external={bookingIsExternal}
+              className="hero-primary-cta"
+            >
+              Yes, I Want to Fill My Next Batch
+            </Button>
           </div>
         </div>
-      </div>
-      <div className="container-x">
+
         <div className="hero-stats-grid mx-auto mt-10 grid max-w-5xl grid-cols-2 gap-3 sm:mt-12 sm:gap-5 lg:grid-cols-4">
           {stats.map((stat, index) => (
             <GlassStatCard key={stat.label} stat={stat} index={index} />
           ))}
         </div>
+
         <div className="hero-target mx-auto mt-11 grid max-w-5xl items-center gap-8 overflow-hidden rounded-[26px] border border-plum-200/80 p-5 sm:mt-14 sm:rounded-[32px] sm:p-9 lg:grid-cols-[1fr_1.1fr] lg:gap-10">
           <div className="min-w-0">
             <div className="hero-visual-frame rounded-[22px] border border-white/90 bg-white/55 p-3 sm:p-4">
               <HeroVisual />
             </div>
           </div>
+
           <div className="min-w-0">
             <p className="hero-target-number font-display font-extrabold text-plum-700">
               500
@@ -904,6 +1205,7 @@ export default function Hero() {
             <p className="mt-1 text-sm leading-relaxed text-[#62536e]">
               A student acquisition system built around your courses and admission goals.
             </p>
+
             <ol className="mt-6 space-y-2">
               {journey.map((item, index) => (
                 <li
@@ -928,6 +1230,7 @@ export default function Hero() {
                 </li>
               ))}
             </ol>
+
             <p className="mt-6 rounded-2xl border border-sun-200 bg-sun-50 px-4 py-4 text-sm leading-[1.75] text-[#7b6035]">
               Course-specific messaging. Clear enquiry journeys. Reporting that
               helps you understand performance.
@@ -935,22 +1238,18 @@ export default function Hero() {
           </div>
         </div>
       </div>
+
       {/* Second ticker */}
       {marquee.length > 0 && (
-        <div className="mt-11 sm:mt-14">
+        <div className="hero-marquee-section">
           <ul className="sr-only">
             {marquee.map((item, index) => (
               <li key={`${item}-${index}`}>{item}</li>
             ))}
           </ul>
-          <div
-            aria-hidden="true"
-            className="hero-ticker border-y border-plum-200/60 bg-white/30 py-4"
-          >
-            <div
-              className="hero-track"
-              style={{ animationDuration: "42s" }}
-            >
+
+          <div aria-hidden="true" className="hero-ticker hero-marquee-band">
+            <div className="hero-track">
               {[0, 1].map((copy) => (
                 <div
                   key={copy}
@@ -958,15 +1257,23 @@ export default function Hero() {
                     copy === 1 ? "hero-duplicate" : ""
                   }`}
                 >
-                  {marquee.map((item, index) => (
-                    <span
-                      key={`${copy}-${index}`}
-                      className="flex items-center gap-6 whitespace-nowrap px-5 text-sm font-bold text-plum-700 sm:px-7"
-                    >
-                      {item}
-                      <span className="text-coral-500"><HeroIcon name="spark" /></span>
-                    </span>
-                  ))}
+                  {[0, 1].flatMap((round) =>
+                    marquee.map((item, index) => (
+                      <span
+                        key={`${copy}-${round}-${index}`}
+                        className={`flex shrink-0 items-center ${round > 0 ? "hero-duplicate" : ""}`}
+                        style={{ gap: "inherit" }}
+                      >
+                        <span className="hero-marquee-chip">
+                          <span className="hero-marquee-icon">
+                            <HeroIcon name="spark" />
+                          </span>
+                          {item}
+                        </span>
+                        <span className="hero-marquee-sep" style={{ marginInline: "14px" }} />
+                      </span>
+                    ))
+                  )}
                 </div>
               ))}
             </div>
