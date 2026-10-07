@@ -317,7 +317,6 @@ export function HeroHeading() {
           style={{
             "--delay": "120ms",
             fontSize: "clamp(20px, 4vw, 30px)",
-            lineHeight: 1.5,
           }}
         >
           We Put Your Courses Directly In Front Of Prospective Students In Your

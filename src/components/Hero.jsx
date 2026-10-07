@@ -1840,6 +1840,12 @@ const styles = `
 
   }
 
+  @media (max-width: 767px) {
+
+    .institute-hero .hero-promise { line-height: 1.35; }
+
+  }
+
   /* Short landscape phones */
 
   @media (max-height: 480px) and (orientation: landscape) {
