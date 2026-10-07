@@ -506,7 +506,7 @@ function BatchCta() {
 
     <div className="s1-cta">
 
-      <Button href={bookingHref} external={bookingIsExternal}>
+      <Button href={bookingHref} external={bookingIsExternal} data-enquiry-popup-trigger>
 
         Yes, I Want to Fill My Next Batch
 

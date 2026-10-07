@@ -705,7 +705,7 @@ export function Audience() {
            
         </Reveal>
 
-        <div className="edu-cta"><SectionCta href={bookingHref} external={bookingIsExternal}>
+        <div className="edu-cta"><SectionCta href={bookingHref} external={bookingIsExternal} data-enquiry-popup-trigger>
           Yes, I Want to Fill My Next Batch
         </SectionCta></div>
       </div>
@@ -1119,7 +1119,7 @@ export function Process() {
           ))}
         </Reveal>
 
-        <div className="edu-cta"><SectionCta href={bookingHref} external={bookingIsExternal}>
+        <div className="edu-cta"><SectionCta href={bookingHref} external={bookingIsExternal} data-enquiry-popup-trigger>
           Yes, I Want to Fill My Next Batch
         </SectionCta></div>
       </div>
@@ -1297,7 +1297,7 @@ export function WhyChoose() {
           ))}
         </div>
 
-        <div className="edu-cta"><SectionCta href={bookingHref} external={bookingIsExternal}>
+        <div className="edu-cta"><SectionCta href={bookingHref} external={bookingIsExternal} data-enquiry-popup-trigger>
           Yes, I Want to Fill My Next Batch
         </SectionCta></div>
       </div>

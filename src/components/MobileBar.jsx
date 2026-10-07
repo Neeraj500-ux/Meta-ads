@@ -1,5 +1,10 @@
 const phoneNumber = "9899669649";
 const whatsappNumber = `91${phoneNumber}`;
+const whatsappMessage = "Yes, I Want to Fill My Next Batch";
+
+const whatsappHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+  whatsappMessage
+)}`;
 
 function PhoneIcon() {
   return (
@@ -51,7 +56,6 @@ const mobileBarStyles = `
       max(14px, env(safe-area-inset-left, 0px));
 
     border-top: 1px solid rgba(116, 68, 148, .12);
-
     background: rgba(255, 252, 249, .96);
 
     box-shadow:
@@ -75,6 +79,7 @@ const mobileBarStyles = `
   .cc-mobile-bar__button {
     min-width: 0;
     white-space: nowrap;
+    font-family: inherit;
   }
 
   .cc-mobile-bar__button > svg:not(.pm-arrow) {
@@ -146,27 +151,50 @@ export default function MobileBar() {
       <style>{mobileBarStyles}</style>
 
       <div className="cc-mobile-bar__inner">
-        <a
-          href={`tel:${phoneNumber}`}
+        <button
+          type="button"
+          data-enquiry-popup-trigger
           className="cc-mobile-bar__button cc-mobile-bar__call pm-btn"
         >
           <PhoneIcon />
+
           <span>Book A Call</span>
-          <svg className="pm-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+
+          <svg
+            className="pm-arrow"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
             <path d="M5 12h14M13 6l6 6-6 6" />
           </svg>
-        </a>
+        </button>
 
         <a
-          href={`https://wa.me/${whatsappNumber}`}
+          href={whatsappHref}
           target="_blank"
           rel="noopener noreferrer"
           className="cc-mobile-bar__button cc-mobile-bar__whatsapp pm-btn pm-btn--whatsapp"
           aria-label="Chat On WhatsApp"
         >
           <WhatsAppIcon />
+
           <span>WhatsApp</span>
-          <svg className="pm-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+
+          <svg
+            className="pm-arrow"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
             <path d="M5 12h14M13 6l6 6-6 6" />
           </svg>
         </a>

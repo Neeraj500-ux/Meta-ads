@@ -110,7 +110,7 @@ export default function Footer() {
               </a>
             )}
           </div>
-          <Button href="#enquire">Yes, I Want to Fill My Next Batch</Button>
+          <Button href="#enquire" data-enquiry-popup-trigger>Yes, I Want to Fill My Next Batch</Button>
         </div>
 
         {/* Disclaimers */}

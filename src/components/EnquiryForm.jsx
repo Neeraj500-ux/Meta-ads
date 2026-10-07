@@ -4,6 +4,7 @@ import {
   chatHref,
   chatIsExternal,
 } from "../config/site.js";
+
 const COURSE_OPTIONS = [
   "Fashion Designing",
   "Beauty & Cosmetology",
@@ -38,12 +39,8 @@ const ROLE_OPTIONS = [
   "Other",
 ];
 const OTHER_COURSE = "Other Skill-Based Courses";
-const FIRST_STEP_FIELDS = [
-  "name",
-  "institute",
-  "phone",
-  "city",
-];
+const FIRST_STEP_FIELDS = ["name", "institute", "phone", "city"];
+
 const createEmpty = () => ({
   name: "",
   institute: "",
@@ -59,6 +56,7 @@ const createEmpty = () => ({
   email: "",
   website: "",
 });
+
 function validate(values, step) {
   const errors = {};
   if (step === 1 || step === "all") {
@@ -66,8 +64,7 @@ function validate(values, step) {
       errors.name = "Enter your name.";
     }
     if (!values.institute.trim()) {
-      errors.institute =
-        "Enter your institute’s name.";
+      errors.institute = "Enter your institute’s name.";
     }
     const phone = values.phone.trim();
     const digits = phone.replace(/\D/g, "");
@@ -75,24 +72,25 @@ function validate(values, step) {
       ? digits.slice(2)
       : digits.length === 12 && digits.startsWith("91")
         ? digits.slice(2)
-        : digits.length === 10 && !phone.startsWith("+") ? digits : null;
+        : digits.length === 10 && !phone.startsWith("+")
+          ? digits
+          : null;
     if (
       !/^[+\d\s()-]+$/.test(phone) ||
       !/^\+?[\d\s()-]+$/.test(phone) ||
-      digits.length < 8 || digits.length > 15 ||
+      digits.length < 8 ||
+      digits.length > 15 ||
       (indianNumber !== null && !/^[6-9]\d{9}$/.test(indianNumber))
     ) {
       errors.phone = "Enter a valid WhatsApp number with country code.";
     }
     if (!values.city.trim()) {
-      errors.city =
-        "Enter your institute’s city or locality.";
+      errors.city = "Enter your institute’s city or locality.";
     }
   }
   if (step === 2 || step === "all") {
     if (!values.courses.length) {
-      errors.courses =
-        "Select at least one course.";
+      errors.courses = "Select at least one course.";
     }
     if (
       values.courses.includes(OTHER_COURSE) &&
@@ -102,16 +100,14 @@ function validate(values, step) {
         "Tell us which other courses you want to promote.";
     }
     if (!values.challenge) {
-      errors.challenge =
-        "Select your main enquiry challenge.";
+      errors.challenge = "Select your main enquiry challenge.";
     }
     if (!values.budget) {
       errors.budget =
         "Select a budget, or choose ‘I need help deciding’.";
     }
     if (!values.start) {
-      errors.start =
-        "Choose when you would like to start.";
+      errors.start = "Choose when you would like to start.";
     }
     if (
       values.email.trim() &&
@@ -124,40 +120,27 @@ function validate(values, step) {
       try {
         const raw = values.link.trim();
         const url = new URL(
-          /^https?:\/\//i.test(raw)
-            ? raw
-            : `https://${raw}`
+          /^https?:\/\//i.test(raw) ? raw : `https://${raw}`
         );
         if (
-          !["http:", "https:"].includes(
-            url.protocol
-          ) ||
+          !["http:", "https:"].includes(url.protocol) ||
           !url.hostname.includes(".")
         ) {
           throw new Error("Invalid link");
         }
       } catch {
-        errors.link =
-          "Enter a website or Instagram profile link.";
+        errors.link = "Enter a website or Instagram profile link.";
       }
     }
   }
   return errors;
 }
-function FormIcon({
-  name = "arrow",
-  className = "",
-}) {
+
+function FormIcon({ name = "arrow", className = "" }) {
   const paths = {
-    arrow: (
-      <path d="M5 12h14m-6-6 6 6-6 6" />
-    ),
-    back: (
-      <path d="M19 12H5m6-6-6 6 6 6" />
-    ),
-    check: (
-      <path d="m5 12 4 4L19 6" />
-    ),
+    arrow: <path d="M5 12h14m-6-6 6 6-6 6" />,
+    back: <path d="M19 12H5m6-6-6 6 6 6" />,
+    check: <path d="m5 12 4 4L19 6" />,
     building: (
       <path d="M4 21h16M6 21V3h12v18M10 7h4M10 11h4M10 15h4M10 21v-3h4v3" />
     ),
@@ -180,47 +163,33 @@ function FormIcon({
     </svg>
   );
 }
-function Field({
-  id,
-  label,
-  required = false,
-  error,
-  hint,
-  children,
-}) {
+
+function Field({ id, label, required = false, error, hint, children }) {
   return (
     <div className="ce-field">
       <label htmlFor={id}>
         {label}
         {required && (
-          <span
-            className="ce-required"
-            aria-hidden="true"
-          >
+          <span className="ce-required" aria-hidden="true">
             {" "}*
           </span>
         )}
       </label>
       {children}
       {hint && (
-        <p
-          className="ce-hint"
-          id={`${id}-hint`}
-        >
+        <p className="ce-hint" id={`${id}-hint`}>
           {hint}
         </p>
       )}
       {error && (
-        <p
-          className="ce-error"
-          id={`${id}-error`}
-        >
+        <p className="ce-error" id={`${id}-error`}>
           {error}
         </p>
       )}
     </div>
   );
 }
+
 function ChoiceGroup({
   id,
   label,
@@ -233,36 +202,23 @@ function ChoiceGroup({
   compact = false,
 }) {
   const selected = (option) =>
-    multiple
-      ? value.includes(option)
-      : value === option;
+    multiple ? value.includes(option) : value === option;
   const useDropdown =
-    options === CHALLENGE_OPTIONS ||
-    options === START_OPTIONS;
+    options === CHALLENGE_OPTIONS || options === START_OPTIONS;
+
   if (useDropdown) {
     return (
       <div className="ce-select-question">
-        <Field
-          id={id}
-          label={label}
-          required
-          error={error}
-        >
+        <Field id={id} label={label} required error={error}>
           <select
             id={id}
             name={id}
             className="ce-input"
             value={value}
             required
-            onChange={(event) =>
-              onChange(event.target.value)
-            }
-            aria-invalid={
-              error ? "true" : undefined
-            }
-            aria-describedby={
-              error ? `${id}-error` : undefined
-            }
+            onChange={(event) => onChange(event.target.value)}
+            aria-invalid={error ? "true" : undefined}
+            aria-describedby={error ? `${id}-error` : undefined}
           >
             <option value="">
               {options === CHALLENGE_OPTIONS
@@ -270,10 +226,7 @@ function ChoiceGroup({
                 : "Choose your preferred start time"}
             </option>
             {options.map((option) => (
-              <option
-                key={option}
-                value={option}
-              >
+              <option key={option} value={option}>
                 {option}
               </option>
             ))}
@@ -282,99 +235,67 @@ function ChoiceGroup({
       </div>
     );
   }
+
   return (
     <fieldset
       className="ce-choice-group"
       id={id}
       tabIndex={-1}
-      aria-invalid={
-        error ? "true" : undefined
-      }
+      aria-invalid={error ? "true" : undefined}
       aria-describedby={
-        [
-          hint ? `${id}-hint` : "",
-          error ? `${id}-error` : "",
-        ]
+        [hint ? `${id}-hint` : "", error ? `${id}-error` : ""]
           .filter(Boolean)
           .join(" ") || undefined
       }
     >
       <legend>
         {label}
-        <span
-          className="ce-required"
-          aria-hidden="true"
-        >
+        <span className="ce-required" aria-hidden="true">
           {" "}*
         </span>
       </legend>
       {hint && (
-        <p
-          id={`${id}-hint`}
-          className="ce-hint"
-        >
+        <p id={`${id}-hint`} className="ce-hint">
           {hint}
         </p>
       )}
       <div
-        className={`ce-options ${
-          compact ? "ce-options--compact" : ""
-        } ${
+        className={`ce-options ${compact ? "ce-options--compact" : ""} ${
           multiple ? "ce-options--chips" : ""
         }`}
       >
         {options.map((option) => (
           <label
             key={option}
-            className={`ce-choice ${
-              selected(option)
-                ? "is-selected"
-                : ""
-            }`}
+            className={`ce-choice ${selected(option) ? "is-selected" : ""}`}
           >
             <input
-              type={
-                multiple
-                  ? "checkbox"
-                  : "radio"
-              }
+              type={multiple ? "checkbox" : "radio"}
               name={id}
               value={option}
               checked={selected(option)}
-              onChange={() =>
-                onChange(option)
-              }
-              aria-describedby={
-                error
-                  ? `${id}-error`
-                  : undefined
-              }
+              onChange={() => onChange(option)}
+              aria-describedby={error ? `${id}-error` : undefined}
             />
             <span
-              className={`ce-choice-mark ${
-                multiple ? "is-square" : ""
-              }`}
+              className={`ce-choice-mark ${multiple ? "is-square" : ""}`}
               aria-hidden="true"
             >
-              {selected(option) && (
-                <FormIcon name="check" />
-              )}
+              {selected(option) && <FormIcon name="check" />}
             </span>
             <span>{option}</span>
           </label>
         ))}
       </div>
       {error && (
-        <p
-          id={`${id}-error`}
-          className="ce-error"
-        >
+        <p id={`${id}-error`} className="ce-error">
           {error}
         </p>
       )}
     </fieldset>
   );
 }
+
 const styles = `
 .ce-section {
   --ce-plum: #543170;
@@ -383,7 +304,7 @@ const styles = `
   --ce-line: #e9dff0;
   position: relative;
   isolation: isolate;
-  padding: clamp(48px, 7vw, 100px) clamp(16px, 4vw, 36px);
+  padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 36px);
   color: var(--ce-ink);
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background: radial-gradient(ellipse at 0% 20%, #f0e5f6 0, transparent 45%), radial-gradient(ellipse at 100% 90%, #f3eaf8 0, transparent 42%), #fcf9fe;
@@ -392,28 +313,8 @@ const styles = `
 .ce-section, .ce-section *, .ce-section *::before, .ce-section *::after { box-sizing: border-box; }
 .ce-section svg { display: block; }
 .ce-section button, .ce-section input, .ce-section select { font-family: inherit; }
-.ce-container { width: min(100%, 1180px); margin-inline: auto; display: grid; grid-template-columns: minmax(0, .86fr) minmax(0, 1.14fr); gap: clamp(28px, 5vw, 68px); align-items: start; }
-.ce-intro { position: sticky; top: 100px; min-width: 0; padding-block: 0; }
-.ce-eyebrow { display: inline-flex; align-items: center; gap: 9px; margin: 0 0 24px; padding: 9px 13px; border: 1px solid #e7d9ef; border-radius: 999px; background: #ffffffb8; color: #7c5a90; font-size: 11px; line-height: 1.5; letter-spacing: .075em; font-weight: 750; }
-.ce-eyebrow svg { width: 15px; height: 15px; flex-shrink: 0; }
-.ce-intro h2 { margin: 0; font-size: clamp(34px, 4.1vw, 52px); line-height: 1.12; letter-spacing: -.05em; font-weight: 800; text-wrap: balance; }
-.ce-intro h2 span { color: var(--ce-plum); }
-.ce-intro-description { max-width: 440px; margin: 23px 0 0; font-size: 16px; line-height: 1.8; color: var(--ce-muted); }
-.ce-sidebar-art { position: relative; display: flex; align-items: center; gap: 19px; margin: 30px 0; padding: 22px; border: 1px solid #ffffff; border-radius: 22px; background: linear-gradient(130deg, #ffffffdb, #f7f2fab8); box-shadow: inset 0 1px 0 #fff, 0 16px 40px #6a45800b; -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
-.ce-art-icon { display: grid; place-items: center; width: 62px; height: 62px; flex: 0 0 62px; border: 1px solid #fff; border-radius: 19px; color: var(--ce-plum); background: linear-gradient(145deg, #fff, #f3ebf8); box-shadow: inset 0 1px 1px #fff, 0 4px 0 #e6daee, 0 12px 24px #54317015; transform: rotate(-6deg); }
-.ce-art-icon svg { width: 29px; height: 29px; }
-.ce-sidebar-art strong { display: block; font-size: 15px; line-height: 1.5; letter-spacing: -.02em; }
-.ce-sidebar-art p { margin: 5px 0 0; font-size: 13px; line-height: 1.6; color: var(--ce-muted); }
-.ce-sidebar-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
-.ce-sidebar-steps li { position: relative; display: flex; gap: 16px; padding-bottom: 25px; }
-.ce-sidebar-steps li:last-child { padding-bottom: 0; }
-.ce-sidebar-steps li:not(:last-child)::before { content: ""; position: absolute; width: 1px; left: 17px; top: 39px; bottom: 5px; background: linear-gradient(#ddcce7, #e9dff0); }
-.ce-sidebar-steps li > span { position: relative; display: grid; place-items: center; width: 35px; height: 35px; flex: 0 0 35px; border: 1px solid #e4d9ea; border-radius: 11px; background: #fff; color: #8656a2; font-size: 12px; font-weight: 750; box-shadow: 0 3px 8px #54317006; }
-.ce-sidebar-steps strong { display: block; font-size: 14px; line-height: 1.5; padding-top: 2px; }
-.ce-sidebar-steps p { margin: 5px 0 0; color: var(--ce-muted); font-size: 13px; line-height: 1.65; }
-.ce-sidebar-contact { margin: 28px 0 0; color: var(--ce-muted); font-size: 13px; line-height: 1.8; }
-.ce-sidebar-contact a, .ce-support a { color: #56866a; font-weight: 700; text-underline-offset: 4px; }
-.ce-card { position: relative; min-width: 0; margin: 0; padding: clamp(24px, 3vw, 38px); border: 1px solid #fff; border-radius: 28px; background: #ffffffef; -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px); box-shadow: 0 25px 65px #5e3f7110, 0 3px 12px #5e3f7106, inset 0 1px 0 #fff; scroll-margin-top: 95px; }
+.ce-container { display: block; width: min(100%, 720px); margin-inline: auto; }
+.ce-card { position: relative; min-width: 0; margin: 0 auto; padding: clamp(24px, 3vw, 38px); border: 1px solid #fff; border-radius: 28px; background: #ffffffef; -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px); box-shadow: 0 25px 65px #5e3f7110, 0 3px 12px #5e3f7106, inset 0 1px 0 #fff; scroll-margin-top: 95px; }
 .ce-card::before { content: ""; position: absolute; left: 32px; right: 32px; top: 0; height: 2px; background: linear-gradient(90deg, transparent, #c5a1dc, transparent); }
 .ce-progress { display: flex; gap: 8px; padding: 6px; margin-bottom: 30px; border: 1px solid #f0ebf3; border-radius: 16px; background: #f8f6fa; }
 .ce-progress-item { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center; gap: 9px; padding: 11px 8px; border: 1px solid transparent; border-radius: 11px; color: var(--ce-muted); }
@@ -477,6 +378,7 @@ const styles = `
 .ce-button:disabled { opacity: .65; cursor: wait; }
 .ce-form-body:disabled .ce-choice { cursor: wait; opacity: .7; }
 .ce-support { padding-top: 21px; border-top: 1px solid #f3f0f5; margin: 23px 0 0; text-align: center; font-size: 12px; line-height: 1.8; color: var(--ce-muted); }
+.ce-support a { color: #56866a; font-weight: 700; text-underline-offset: 4px; }
 .ce-status { margin: 18px 0 0; padding: 13px 15px; border: 1px solid #eee4f4; border-radius: 12px; background: #f9f5fc; color: #694183; font-size: 13px; line-height: 1.7; }
 .ce-status.is-error { color: #a13131; background: #fff5f5; border-color: #f2d5d5; }
 .ce-honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
@@ -494,40 +396,11 @@ const styles = `
   .ce-button--primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: inset 0 1px 0 #ffffff55, 0 12px 28px #54317030; }
   .ce-button--back:hover { background: #faf7fc; }
 }
-@media (max-width: 1000px) {
-  .ce-container { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 28px; }
-  .ce-intro h2 { font-size: 39px; }
+@media (max-width: 640px) {
   .ce-grid { grid-template-columns: minmax(0, 1fr); }
-}
-@media (max-width: 800px) {
-  .ce-container { max-width: 640px; grid-template-columns: minmax(0, 1fr); gap: 32px; }
-  .ce-intro { position: static; padding: 0; }
-  .ce-intro h2 { max-width: 590px; font-size: clamp(34px, 6vw, 44px); }
-  .ce-intro-description { max-width: 540px; }
-  .ce-sidebar-art { margin-block: 24px; }
-  .ce-sidebar-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-  .ce-sidebar-steps li { display: block; padding: 0; }
-  .ce-sidebar-steps li:not(:last-child)::before { display: none; }
-  .ce-sidebar-steps li > span { margin-bottom: 10px; }
-  .ce-sidebar-steps strong { font-size: 12px; }
-  .ce-sidebar-steps p { font-size: 12px; }
-  .ce-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 560px) {
   .ce-section { padding: 44px 16px; }
-  .ce-eyebrow { font-size: 10px; letter-spacing: .055em; margin-bottom: 20px; }
-  .ce-intro h2 { font-size: clamp(30px, 8.5vw, 39px); letter-spacing: -.045em; }
-  .ce-intro-description { margin-top: 18px; font-size: 14px; line-height: 1.8; }
-  .ce-sidebar-art { padding: 18px; gap: 15px; border-radius: 19px; }
-  .ce-art-icon { width: 52px; height: 52px; flex-basis: 52px; border-radius: 16px; }
-  .ce-sidebar-art strong { font-size: 14px; }
-  .ce-sidebar-art p { font-size: 12px; }
-  .ce-sidebar-steps { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-  .ce-sidebar-steps li { display: flex; gap: 13px; }
-  .ce-sidebar-steps li > span { margin: 0; }
-  .ce-sidebar-steps strong { font-size: 13px; }
-  .ce-sidebar-steps p { font-size: 12px; margin-top: 3px; }
-  .ce-sidebar-contact { margin-top: 20px; }
   .ce-card { padding: 22px 18px; border-radius: 23px; }
   .ce-progress { gap: 4px; padding: 5px; margin-bottom: 24px; }
   .ce-progress-item { gap: 6px; padding: 10px 5px; }
@@ -537,7 +410,7 @@ const styles = `
   .ce-step-heading h3 { font-size: 22px; }
   .ce-step-heading p { font-size: 12px; }
   .ce-step-icon { width: 39px; height: 39px; flex-basis: 39px; border-radius: 12px; }
-  .ce-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .ce-grid { gap: 20px; }
   .ce-options--compact, .ce-options--chips { grid-template-columns: minmax(0, 1fr); }
   .ce-choice { min-height: 54px; }
   .ce-input::placeholder { font-size: 13px; }
@@ -553,17 +426,10 @@ const styles = `
 
 /* Align paired fields when a label occupies two lines. */
 .ce-form-body > .ce-grid .ce-field > label { min-height: 42px; display: flex; align-items: flex-end; gap: 3px; }
-.ce-intro h2 span { color: #9a6bba; }
 .ce-optional .ce-field > label { min-height: 0; }
 .ce-button--primary:active:not(:disabled) { transform: translateY(0); }
-@media (min-width: 801px) and (max-width: 1000px) {
+@media (max-width: 640px) {
   .ce-form-body > .ce-grid .ce-field > label { min-height: 0; display: block; }
-}
-@media (max-width: 560px) {
-  .ce-form-body > .ce-grid .ce-field > label { min-height: 0; display: block; }
-}
-@media (min-width: 801px) and (max-height: 760px) {
-  .ce-intro { position: static; }
 }
 `;
 
@@ -571,22 +437,18 @@ export default function EnquiryForm() {
   const uid = useId();
   const formId = `campaign-form-${uid}`;
   const id = (key) => `${formId}-${key}`;
-  const brandName =
-    site.brandName || "Creative Crew";
-  const [values, setValues] =
-    useState(createEmpty);
+  const brandName = site.brandName || "Creative Crew";
+  const [values, setValues] = useState(createEmpty);
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState({
-    type: "idle",
-    message: "",
-  });
+  const [status, setStatus] = useState({ type: "idle", message: "" });
   const pendingFocus = useRef(null);
   const stepHeading = useRef(null);
   const submitLock = useRef(false);
   const requestRef = useRef(null);
   const alive = useRef(true);
   const busy = status.type === "sending";
+
   useEffect(() => {
     alive.current = true;
     return () => {
@@ -594,78 +456,42 @@ export default function EnquiryForm() {
       requestRef.current?.abort();
     };
   }, []);
+
   useEffect(() => {
     if (!pendingFocus.current) return;
-    if (
-      pendingFocus.current === "heading"
-    ) {
-      stepHeading.current?.focus({
-        preventScroll: true,
-      });
+    if (pendingFocus.current === "heading") {
+      stepHeading.current?.focus({ preventScroll: true });
     } else {
-      document
-        .getElementById(
-          pendingFocus.current
-        )
-        ?.focus();
+      document.getElementById(pendingFocus.current)?.focus();
     }
     pendingFocus.current = null;
   }, [step, errors]);
+
   const update = (key, value) => {
-    setValues((current) => ({
-      ...current,
-      [key]: value,
-    }));
-    setErrors((current) => ({
-      ...current,
-      [key]: undefined,
-    }));
-    if (
-      status.type === "error" ||
-      status.type === "draft"
-    ) {
-      setStatus({
-        type: "idle",
-        message: "",
-      });
+    setValues((current) => ({ ...current, [key]: value }));
+    setErrors((current) => ({ ...current, [key]: undefined }));
+    if (status.type === "error" || status.type === "draft") {
+      setStatus({ type: "idle", message: "" });
     }
   };
-  const inputProps = (
-    key,
-    extra = {}
-  ) => ({
+
+  const inputProps = (key, extra = {}) => ({
     id: id(key),
     name: key,
     value: values[key],
-    onChange: (event) =>
-      update(
-        key,
-        event.target.value
-      ),
+    onChange: (event) => update(key, event.target.value),
     className: "ce-input",
-    "aria-invalid":
-      errors[key]
-        ? "true"
-        : undefined,
-    "aria-describedby":
-      errors[key]
-        ? `${id(key)}-error`
-        : undefined,
+    "aria-invalid": errors[key] ? "true" : undefined,
+    "aria-describedby": errors[key] ? `${id(key)}-error` : undefined,
     ...extra,
   });
+
   const toggleCourse = (option) => {
     setValues((current) => ({
       ...current,
-      courses:
-        current.courses.includes(option)
-          ? current.courses.filter(
-              (course) =>
-                course !== option
-            )
-          : [
-              ...current.courses,
-              option,
-            ],
+      courses: current.courses.includes(option)
+        ? current.courses.filter((course) => course !== option)
+        : [...current.courses, option],
     }));
     setErrors((current) => ({
       ...current,
@@ -673,55 +499,41 @@ export default function EnquiryForm() {
       otherCourse: undefined,
     }));
   };
+
   const showErrors = (nextErrors) => {
-    const first =
-      Object.keys(nextErrors)[0];
+    const first = Object.keys(nextErrors)[0];
     pendingFocus.current = id(first);
     setErrors(nextErrors);
-    if (
-      FIRST_STEP_FIELDS.includes(first)
-    ) {
+    if (FIRST_STEP_FIELDS.includes(first)) {
       setStep(1);
     }
     setStatus({
       type: "error",
-      message:
-        "Please check the highlighted fields.",
+      message: "Please check the highlighted fields.",
     });
   };
+
   async function onSubmit(event) {
     event.preventDefault();
-    if (
-      submitLock.current ||
-      values.website.trim()
-    ) {
+    if (submitLock.current || values.website.trim()) {
       return;
     }
-    const nextErrors = validate(
-      values,
-      step === 1 ? 1 : "all"
-    );
-    if (
-      Object.keys(nextErrors).length
-    ) {
+    const nextErrors = validate(values, step === 1 ? 1 : "all");
+    if (Object.keys(nextErrors).length) {
       showErrors(nextErrors);
       return;
     }
     if (step === 1) {
-      pendingFocus.current =
-        "heading";
+      pendingFocus.current = "heading";
       setErrors({});
-      setStatus({
-        type: "idle",
-        message: "",
-      });
+      setStatus({ type: "idle", message: "" });
       setStep(2);
       return;
     }
+
     const data = {
       name: values.name.trim(),
-      institute:
-        values.institute.trim(),
+      institute: values.institute.trim(),
       phone: values.phone.trim(),
       city: values.city.trim(),
       courses: values.courses
@@ -738,43 +550,28 @@ export default function EnquiryForm() {
       link: values.link.trim(),
       email: values.email.trim(),
     };
+
     if (site.formEndpoint) {
       submitLock.current = true;
-      const controller =
-        new AbortController();
-      requestRef.current =
-        controller;
-      const timeout =
-        window.setTimeout(
-          () => controller.abort(),
-          20000
-        );
+      const controller = new AbortController();
+      requestRef.current = controller;
+      const timeout = window.setTimeout(() => controller.abort(), 20000);
       setStatus({
         type: "sending",
-        message:
-          "Sending your institute’s details…",
+        message: "Sending your institute’s details…",
       });
       try {
-        const response = await fetch(
-          site.formEndpoint,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type":
-                "application/json",
-              Accept:
-                "application/json",
-            },
-            body:
-              JSON.stringify(data),
-            signal:
-              controller.signal,
-          }
-        );
+        const response = await fetch(site.formEndpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(data),
+          signal: controller.signal,
+        });
         if (!response.ok) {
-          throw new Error(
-            "Submission failed"
-          );
+          throw new Error("Submission failed");
         }
         if (!alive.current) return;
         setStatus({
@@ -798,6 +595,7 @@ export default function EnquiryForm() {
       }
       return;
     }
+
     if (site.email) {
       const labels = {
         name: "Your Name",
@@ -812,25 +610,15 @@ export default function EnquiryForm() {
         link: "Website / Instagram",
         email: "Email",
       };
-      const body = Object.entries(
-        labels
-      )
-        .map(
-          ([key, label]) =>
-            `${label}: ${
-              data[key] ||
-              "Not provided"
-            }`
-        )
+      const body = Object.entries(labels)
+        .map(([key, label]) => `${label}: ${data[key] || "Not provided"}`)
         .join("\n");
       window.location.href =
         `mailto:${site.email}` +
         `?subject=${encodeURIComponent(
           "Institute Admission Goals Enquiry"
         )}` +
-        `&body=${encodeURIComponent(
-          body
-        )}`;
+        `&body=${encodeURIComponent(body)}`;
       setStatus({
         type: "draft",
         message:
@@ -838,120 +626,30 @@ export default function EnquiryForm() {
       });
       return;
     }
+
     setStatus({
       type: "error",
       message:
         "The online form isn’t connected yet. Please contact us on WhatsApp to discuss your admission goals.",
     });
   }
+
   const reset = () => {
     pendingFocus.current = "heading";
     setValues(createEmpty());
     setErrors({});
     setStep(1);
-    setStatus({
-      type: "idle",
-      message: "",
-    });
+    setStatus({ type: "idle", message: "" });
   };
-  const whatsappProps =
-    chatIsExternal
-      ? {
-          target: "_blank",
-          rel:
-            "noopener noreferrer",
-        }
-      : {};
+
+  const whatsappProps = chatIsExternal
+    ? { target: "_blank", rel: "noopener noreferrer" }
+    : {};
+
   return (
-    <section
-      id="enquire"
-      className="ce-section"
-    >
+    <section id="enquire" className="ce-section">
       <style>{styles}</style>
       <div className="ce-container">
-        <header className="ce-intro">
-          <p className="ce-eyebrow">
-            <FormIcon name="spark" />
-            META ADS · INSTITUTE ENQUIRY
-          </p>
-          <h2>
-            Let’s Plan{" "}
-            <span>
-              More Student Enquiries
-            </span>{" "}
-            For Your Next Batch
-          </h2>
-          <p className="ce-intro-description">
-            Share your institute’s details
-            so we can discuss a Meta Ads
-            campaign around your courses,
-            location and admission goals.
-          </p>
-          <div className="ce-sidebar-art">
-            <span className="ce-art-icon">
-              <FormIcon name="building" />
-            </span>
-            <div>
-              <strong>
-                Your Courses. Your Next Batch.
-              </strong>
-              <p>
-                A Campaign Built Around
-                Your Institute.
-              </p>
-            </div>
-          </div>
-          <ol className="ce-sidebar-steps">
-            <li>
-              <span>01</span>
-              <div>
-                <strong>
-                  Tell Us About Your Institute
-                </strong>
-                <p>
-                  Your location, courses
-                  and admission goals.
-                </p>
-              </div>
-            </li>
-            <li>
-              <span>02</span>
-              <div>
-                <strong>
-                  Discuss Your Campaign
-                </strong>
-                <p>
-                  Explore the budget,
-                  targeting and next steps.
-                </p>
-              </div>
-            </li>
-            <li>
-              <span>03</span>
-              <div>
-                <strong>
-                  Plan Your Student
-                  Enquiry Journey
-                </strong>
-                <p>
-                  From course discovery
-                  to admission conversations.
-                </p>
-              </div>
-            </li>
-          </ol>
-          {chatHref && (
-            <p className="ce-sidebar-contact">
-              Prefer to talk first?{" "}
-              <a
-                href={chatHref}
-                {...whatsappProps}
-              >
-                Chat On WhatsApp
-              </a>
-            </p>
-          )}
-        </header>
         <form
           id={formId}
           className="ce-card"
@@ -961,19 +659,11 @@ export default function EnquiryForm() {
           aria-busy={busy}
         >
           {status.type === "success" ? (
-            <div
-              className="ce-success"
-              role="status"
-              aria-live="polite"
-            >
-              <span
-                className="ce-success-mark"
-              >
+            <div className="ce-success" role="status" aria-live="polite">
+              <span className="ce-success-mark">
                 <FormIcon name="check" />
               </span>
-              <h3 id={id("title")}>
-                Thanks For Sharing!
-              </h3>
+              <h3 id={id("title")}>Thanks For Sharing!</h3>
               <p>{status.message}</p>
               <button
                 type="button"
@@ -985,65 +675,30 @@ export default function EnquiryForm() {
             </div>
           ) : (
             <>
-              <div
-                className="ce-progress"
-                aria-label={
-                  `Step ${step} of 2`
-                }
-              >
-                {[
-                  "Your Institute",
-                  "Admission Goals",
-                ].map((label, index) => (
+              <div className="ce-progress" aria-label={`Step ${step} of 2`}>
+                {["Your Institute", "Admission Goals"].map((label, index) => (
                   <div
                     key={label}
-                    className={
-                      `ce-progress-item ${
-                        step >= index + 1
-                          ? "is-active"
-                          : ""
-                      }`
-                    }
-                    aria-current={
-                      step === index + 1
-                        ? "step"
-                        : undefined
-                    }
+                    className={`ce-progress-item ${
+                      step >= index + 1 ? "is-active" : ""
+                    }`}
+                    aria-current={step === index + 1 ? "step" : undefined}
                   >
-                    <span
-                      className="ce-progress-number"
-                    >
+                    <span className="ce-progress-number">
                       {step > index + 1 ? (
-                        <FormIcon
-                          name="check"
-                        />
+                        <FormIcon name="check" />
                       ) : (
                         index + 1
                       )}
                     </span>
-                    <span
-                      className="ce-progress-label"
-                    >
-                      {label}
-                    </span>
+                    <span className="ce-progress-label">{label}</span>
                   </div>
                 ))}
               </div>
-              <div
-                className="ce-step-heading"
-                ref={stepHeading}
-                tabIndex={-1}
-              >
-                <span
-                  className="ce-step-icon"
-                >
-                  <FormIcon
-                    name={
-                      step === 1
-                        ? "building"
-                        : "spark"
-                    }
-                  />
+
+              <div className="ce-step-heading" ref={stepHeading} tabIndex={-1}>
+                <span className="ce-step-icon">
+                  <FormIcon name={step === 1 ? "building" : "spark"} />
                 </span>
                 <div>
                   <h3 id={id("title")}>
@@ -1059,6 +714,7 @@ export default function EnquiryForm() {
                   </p>
                 </div>
               </div>
+
               <fieldset
                 disabled={busy}
                 className="ce-form-body ce-step-content"
@@ -1073,39 +729,27 @@ export default function EnquiryForm() {
                       error={errors.name}
                     >
                       <input
-                        {...inputProps(
-                          "name",
-                          {
-                            required: true,
-                            autoComplete:
-                              "name",
-                            maxLength: 100,
-                            placeholder:
-                              "Your full name",
-                          }
-                        )}
+                        {...inputProps("name", {
+                          required: true,
+                          autoComplete: "name",
+                          maxLength: 100,
+                          placeholder: "Your full name",
+                        })}
                       />
                     </Field>
                     <Field
                       id={id("institute")}
                       label="Institute Name"
                       required
-                      error={
-                        errors.institute
-                      }
+                      error={errors.institute}
                     >
                       <input
-                        {...inputProps(
-                          "institute",
-                          {
-                            required: true,
-                            autoComplete:
-                              "organization",
-                            maxLength: 150,
-                            placeholder:
-                              "Your institute’s name",
-                          }
-                        )}
+                        {...inputProps("institute", {
+                          required: true,
+                          autoComplete: "organization",
+                          maxLength: 150,
+                          placeholder: "Your institute’s name",
+                        })}
                       />
                     </Field>
                     <Field
@@ -1113,55 +757,37 @@ export default function EnquiryForm() {
                       label="WhatsApp Number"
                       required
                       error={errors.phone}
-                      hint={
-                        "Include your country code. India: +91."
-                      }
+                      hint="Include your country code. India: +91."
                     >
                       <input
-                        {...inputProps(
-                          "phone",
-                          {
-                            required: true,
-                            type: "tel",
-                            inputMode: "tel",
-                            autoComplete:
-                              "tel",
-                            maxLength: 25,
-                            "aria-describedby":
-                              [
-                                `${id("phone")}-hint`,
-                                errors.phone
-                                  ? `${id("phone")}-error`
-                                  : "",
-                              ]
-                                .filter(
-                                  Boolean
-                                )
-                                .join(" "),
-                          }
-                        )}
+                        {...inputProps("phone", {
+                          required: true,
+                          type: "tel",
+                          inputMode: "tel",
+                          autoComplete: "tel",
+                          maxLength: 25,
+                          "aria-describedby": [
+                            `${id("phone")}-hint`,
+                            errors.phone ? `${id("phone")}-error` : "",
+                          ]
+                            .filter(Boolean)
+                            .join(" "),
+                        })}
                       />
                     </Field>
                     <Field
                       id={id("city")}
-                      label={
-                        "Where Is Your Institute Located?"
-                      }
+                      label="Where Is Your Institute Located?"
                       required
                       error={errors.city}
                     >
                       <input
-                        {...inputProps(
-                          "city",
-                          {
-                            required: true,
-                            autoComplete:
-                              "address-level2",
-                            maxLength: 150,
-                            placeholder:
-                              "City / locality",
-                          }
-                        )}
+                        {...inputProps("city", {
+                          required: true,
+                          autoComplete: "address-level2",
+                          maxLength: 150,
+                          placeholder: "City / locality",
+                        })}
                       />
                     </Field>
                   </div>
@@ -1169,225 +795,109 @@ export default function EnquiryForm() {
                   <>
                     <ChoiceGroup
                       id={id("courses")}
-                      label={
-                        "Which Courses Do You Want More Student Enquiries For?"
-                      }
-                      options={
-                        COURSE_OPTIONS
-                      }
-                      value={
-                        values.courses
-                      }
+                      label="Which Courses Do You Want More Student Enquiries For?"
+                      options={COURSE_OPTIONS}
+                      value={values.courses}
                       multiple
                       compact
-                      onChange={
-                        toggleCourse
-                      }
-                      error={
-                        errors.courses
-                      }
-                      hint={
-                        "Select all courses you want to promote."
-                      }
+                      onChange={toggleCourse}
+                      error={errors.courses}
+                      hint="Select all courses you want to promote."
                     />
-                    {values.courses.includes(
-                      OTHER_COURSE
-                    ) && (
-                      <div
-                        className="ce-other-course"
-                      >
+                    {values.courses.includes(OTHER_COURSE) && (
+                      <div className="ce-other-course">
                         <Field
-                          id={
-                            id("otherCourse")
-                          }
-                          label={
-                            "Specify Your Other Courses"
-                          }
+                          id={id("otherCourse")}
+                          label="Specify Your Other Courses"
                           required
-                          error={
-                            errors.otherCourse
-                          }
+                          error={errors.otherCourse}
                         >
                           <input
-                            {...inputProps(
-                              "otherCourse",
-                              {
-                                required:
-                                  true,
-                                maxLength:
-                                  300,
-                                placeholder:
-                                  "e.g. Graphic design, coding, accounting",
-                              }
-                            )}
+                            {...inputProps("otherCourse", {
+                              required: true,
+                              maxLength: 300,
+                              placeholder:
+                                "e.g. Graphic design, coding, accounting",
+                            })}
                           />
                         </Field>
                       </div>
                     )}
                     <ChoiceGroup
                       id={id("challenge")}
-                      label={
-                        "What Is Your Biggest Challenge With Student Enquiries Right Now?"
-                      }
-                      options={
-                        CHALLENGE_OPTIONS
-                      }
-                      value={
-                        values.challenge
-                      }
-                      onChange={(value) =>
-                        update(
-                          "challenge",
-                          value
-                        )
-                      }
-                      error={
-                        errors.challenge
-                      }
+                      label="What Is Your Biggest Challenge With Student Enquiries Right Now?"
+                      options={CHALLENGE_OPTIONS}
+                      value={values.challenge}
+                      onChange={(value) => update("challenge", value)}
+                      error={errors.challenge}
                     />
                     <ChoiceGroup
                       id={id("budget")}
-                      label={
-                        "What Monthly Advertising Budget Are You Considering?"
-                      }
-                      options={
-                        BUDGET_OPTIONS
-                      }
-                      value={
-                        values.budget
-                      }
+                      label="What Monthly Advertising Budget Are You Considering?"
+                      options={BUDGET_OPTIONS}
+                      value={values.budget}
                       compact
-                      onChange={(value) =>
-                        update(
-                          "budget",
-                          value
-                        )
-                      }
-                      error={
-                        errors.budget
-                      }
+                      onChange={(value) => update("budget", value)}
+                      error={errors.budget}
                     />
-                    <p
-                      className="ce-budget-note"
-                    >
-                      <FormIcon
-                        name="spark"
-                      />
-                      Budget refers to
-                      ad spend. Our service
-                      fee will be discussed
-                      separately.
+                    <p className="ce-budget-note">
+                      <FormIcon name="spark" />
+                      Budget refers to ad spend. Our service fee will be
+                      discussed separately.
                     </p>
                     <ChoiceGroup
                       id={id("start")}
-                      label={
-                        "When Would You Like To Start Promoting Your Courses?"
-                      }
-                      options={
-                        START_OPTIONS
-                      }
-                      value={
-                        values.start
-                      }
+                      label="When Would You Like To Start Promoting Your Courses?"
+                      options={START_OPTIONS}
+                      value={values.start}
                       compact
-                      onChange={(value) =>
-                        update(
-                          "start",
-                          value
-                        )
-                      }
-                      error={
-                        errors.start
-                      }
+                      onChange={(value) => update("start", value)}
+                      error={errors.start}
                     />
                     <details
                       className="ce-optional"
-                      open={
-                        errors.email ||
-                        errors.link
-                          ? true
-                          : undefined
-                      }
+                      open={errors.email || errors.link ? true : undefined}
                     >
-                      <summary>
-                        Additional Details · Optional
-                      </summary>
-                      <div
-                        className="ce-grid"
-                      >
-                        <Field
-                          id={id("role")}
-                          label="Your Role"
-                        >
-                          <select
-                            {...inputProps(
-                              "role"
-                            )}
-                          >
-                            <option value="">
-                              Select your role
-                            </option>
-                            {ROLE_OPTIONS.map(
-                              (role) => (
-                                <option
-                                  key={role}
-                                  value={role}
-                                >
-                                  {role}
-                                </option>
-                              )
-                            )}
+                      <summary>Additional Details · Optional</summary>
+                      <div className="ce-grid">
+                        <Field id={id("role")} label="Your Role">
+                          <select {...inputProps("role")}>
+                            <option value="">Select your role</option>
+                            {ROLE_OPTIONS.map((role) => (
+                              <option key={role} value={role}>
+                                {role}
+                              </option>
+                            ))}
                           </select>
                         </Field>
                         <Field
                           id={id("email")}
                           label="Email Address"
-                          error={
-                            errors.email
-                          }
+                          error={errors.email}
                         >
                           <input
-                            {...inputProps(
-                              "email",
-                              {
-                                type:
-                                  "email",
-                                autoComplete:
-                                  "email",
-                                maxLength:
-                                  200,
-                                placeholder:
-                                  "you@example.com",
-                              }
-                            )}
+                            {...inputProps("email", {
+                              type: "email",
+                              autoComplete: "email",
+                              maxLength: 200,
+                              placeholder: "you@example.com",
+                            })}
                           />
                         </Field>
-                        <div
-                          className="ce-full"
-                        >
+                        <div className="ce-full">
                           <Field
                             id={id("link")}
-                            label={
-                              "Institute Website Or Instagram"
-                            }
-                            error={
-                              errors.link
-                            }
+                            label="Institute Website Or Instagram"
+                            error={errors.link}
                           >
                             <input
-                              {...inputProps(
-                                "link",
-                                {
-                                  autoComplete:
-                                    "url",
-                                  inputMode:
-                                    "url",
-                                  maxLength:
-                                    500,
-                                  placeholder:
-                                    "Website or Instagram profile link",
-                                }
-                              )}
+                              {...inputProps("link", {
+                                autoComplete: "url",
+                                inputMode: "url",
+                                maxLength: 500,
+                                placeholder:
+                                  "Website or Instagram profile link",
+                              })}
                             />
                           </Field>
                         </div>
@@ -1395,17 +905,9 @@ export default function EnquiryForm() {
                     </details>
                   </>
                 )}
-                <div
-                  className="ce-honeypot"
-                  aria-hidden="true"
-                >
-                  <label
-                    htmlFor={
-                      id("website")
-                    }
-                  >
-                    Leave This Empty
-                  </label>
+
+                <div className="ce-honeypot" aria-hidden="true">
+                  <label htmlFor={id("website")}>Leave This Empty</label>
                   <input
                     id={id("website")}
                     name="website"
@@ -1413,33 +915,22 @@ export default function EnquiryForm() {
                     autoComplete="off"
                     value={values.website}
                     onChange={(event) =>
-                      update(
-                        "website",
-                        event.target.value
-                      )
+                      update("website", event.target.value)
                     }
                   />
                 </div>
+
                 {step === 2 && (
-                  <p
-                    className="ce-consent"
-                  >
-                    By submitting, you
-                    agree that {brandName}
-                    {" "}may contact you by
-                    phone or WhatsApp about
-                    your enquiry.
+                  <p className="ce-consent">
+                    By submitting, you agree that {brandName} may contact you
+                    by phone or WhatsApp about your enquiry.
                     {site.privacyUrl && (
                       <>
                         {" "}Read our{" "}
                         <a
-                          href={
-                            site.privacyUrl
-                          }
+                          href={site.privacyUrl}
                           target="_blank"
-                          rel={
-                            "noopener noreferrer"
-                          }
+                          rel="noopener noreferrer"
                         >
                           Privacy Policy
                         </a>
@@ -1448,26 +939,17 @@ export default function EnquiryForm() {
                     )}
                   </p>
                 )}
-                <div
-                  className="ce-actions"
-                >
+
+                <div className="ce-actions">
                   {step === 2 && (
                     <button
                       type="button"
-                      className={
-                        "ce-button ce-button--back"
-                      }
-                      aria-label={
-                        "Back To Institute Details"
-                      }
+                      className="ce-button ce-button--back"
+                      aria-label="Back To Institute Details"
                       onClick={() => {
-                        pendingFocus.current =
-                          "heading";
+                        pendingFocus.current = "heading";
                         setStep(1);
-                        setStatus({
-                          type: "idle",
-                          message: "",
-                        });
+                        setStatus({ type: "idle", message: "" });
                       }}
                     >
                       <span>Back</span>
@@ -1475,47 +957,29 @@ export default function EnquiryForm() {
                   )}
                   <button
                     type="submit"
-                    className={
-                      "ce-button ce-button--primary"
-                    }
+                    className="ce-button ce-button--primary"
                     disabled={busy}
                   >
                     {busy ? (
                       <>
-                        <span
-                          className={
-                            "ce-spinner"
-                          }
-                          aria-hidden={
-                            "true"
-                          }
-                        />
+                        <span className="ce-spinner" aria-hidden="true" />
                         Sending…
                       </>
+                    ) : step === 1 ? (
+                      "Continue"
                     ) : (
-                      <>
-                        {step === 1
-                          ? "Continue"
-                          : "Discuss My Admission Goals"}
-                      </>
+                      "Discuss My Admission Goals"
                     )}
                   </button>
                 </div>
               </fieldset>
-              <div
-                aria-live="polite"
-                aria-atomic="true"
-              >
+
+              <div aria-live="polite" aria-atomic="true">
                 {status.message && (
                   <p
-                    className={
-                      `ce-status ${
-                        status.type ===
-                        "error"
-                          ? "is-error"
-                          : ""
-                      }`
-                    }
+                    className={`ce-status ${
+                      status.type === "error" ? "is-error" : ""
+                    }`}
                   >
                     {status.message}
                   </p>
@@ -1523,13 +987,11 @@ export default function EnquiryForm() {
               </div>
             </>
           )}
+
           {chatHref && (
             <p className="ce-support">
               Prefer a conversation?{" "}
-              <a
-                href={chatHref}
-                {...whatsappProps}
-              >
+              <a href={chatHref} {...whatsappProps}>
                 Chat On WhatsApp
               </a>
             </p>
