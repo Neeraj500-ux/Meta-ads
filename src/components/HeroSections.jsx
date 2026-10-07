@@ -312,8 +312,16 @@ export function HeroHeading() {
 
         </h1>
 
-        <p className="hero-promise hero-enter" style={{ "--delay": "120ms", fontSize: "clamp(20px, 2.3vw, 28px)" }}>
-         Stop Depending On Referrals, Walk- Ins And Random Enquiries. We Put Your Courses Directly In Front Of Prospective Students In Your Target Locations
+        <p
+          className="hero-promise hero-enter"
+          style={{
+            "--delay": "120ms",
+            fontSize: "clamp(22px, 4vw, 30px)",
+            lineHeight: 1.5,
+          }}
+        >
+          Stop Depending On Referrals, Walk-Ins And Random Enquiries. We Put Your
+          Courses Directly In Front Of Prospective Students In Your Target Locations.
         </p>
 
       </header>
@@ -590,15 +598,15 @@ export function HeroTarget({ journey = defaultJourney, journeyTones = defaultJou
 
         <div className="hero-target mx-auto mt-11 grid max-w-5xl items-center gap-8 overflow-hidden rounded-[26px] border border-plum-200/80 p-5 sm:mt-14 sm:rounded-[32px] sm:p-9 lg:grid-cols-[1fr_1.1fr] lg:gap-10">
 
-          <div className="min-w-0">
+          {/* <div className="min-w-0"> */}
 
-            <div className="hero-visual-frame rounded-[22px] border border-white/90 bg-white/55 p-3 sm:p-4">
+            {/* <div className="hero-visual-frame rounded-[22px] border border-white/90 bg-white/55 p-3 sm:p-4"> */}
 
               <HeroVisual />
 
-            </div>
+            {/* </div> */}
 
-          </div>
+          {/* </div> */}
 
           <div className="min-w-0">
 
