@@ -702,7 +702,7 @@ export function Audience() {
           Get your courses in front of prospective students in the right
           locations, without relying on referrals, walk-ins or unpredictable
           enquiries.{" "}
-          <strong>Better Leads. Not Just More Leads.</strong>
+           
         </Reveal>
 
         <div className="edu-cta"><SectionCta href={bookingHref} external={bookingIsExternal}>
