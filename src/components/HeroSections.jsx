@@ -549,6 +549,46 @@ export function HeroTarget({ journey = defaultJourney, journeyTones = defaultJou
 
   journeyTones = Array.isArray(journeyTones) && journeyTones.length ? journeyTones : defaultJourneyTones;
 
+  const targetRef = useRef(null);
+  const [leadCount, setLeadCount] = useState(0);
+
+  useEffect(() => {
+    const target = targetRef.current;
+    if (!target) return;
+
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      !window.IntersectionObserver
+    ) {
+      setLeadCount(500);
+      return;
+    }
+
+    let frame = 0;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+
+      observer.disconnect();
+      const startedAt = performance.now();
+      const animate = (now) => {
+        const progress = Math.min((now - startedAt) / 1200, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setLeadCount(Math.round(500 * eased));
+
+        if (progress < 1) frame = requestAnimationFrame(animate);
+      };
+
+      frame = requestAnimationFrame(animate);
+    }, { threshold: 0.3 });
+
+    observer.observe(target);
+
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
     <div className="ht-independent">
       <style>{`
@@ -598,7 +638,7 @@ export function HeroTarget({ journey = defaultJourney, journeyTones = defaultJou
 
       <div className="container-x">
 
-        <div className="hero-target mx-auto mt-11 grid max-w-5xl items-center gap-8 overflow-hidden rounded-[26px] border border-plum-200/80 p-5 sm:mt-14 sm:rounded-[32px] sm:p-9 lg:grid-cols-[1fr_1.1fr] lg:gap-10">
+        <div ref={targetRef} className="hero-target mx-auto mt-11 grid max-w-5xl items-center gap-8 overflow-hidden rounded-[26px] border border-plum-200/80 p-5 sm:mt-14 sm:rounded-[32px] sm:p-9 lg:grid-cols-[1fr_1.1fr] lg:gap-10">
 
           {/* <div className="min-w-0"> */}
 
@@ -614,7 +654,7 @@ export function HeroTarget({ journey = defaultJourney, journeyTones = defaultJou
 
             <p className="hero-target-number font-display font-extrabold text-plum-700">
 
-              500
+              {leadCount}
 
               <span className="align-top text-[.55em] text-coral-500">+</span>
 
