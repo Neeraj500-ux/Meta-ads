@@ -316,12 +316,12 @@ export function HeroHeading() {
           className="hero-promise hero-enter"
           style={{
             "--delay": "120ms",
-            fontSize: "clamp(18px, 4vw, 30px)",
+            fontSize: "clamp(20px, 4vw, 30px)",
             lineHeight: 1.5,
           }}
         >
-          Stop Depending On Referrals, Walk-Ins And Random Enquiries. We Put Your
-          Courses Directly In Front Of Prospective Students In Your Target Locations.
+          We Put Your Courses Directly In Front Of Prospective Students In Your
+          Target Locations.
         </p>
 
       </header>

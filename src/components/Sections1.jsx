@@ -544,21 +544,21 @@ export function Intro() {
 
         <Reveal delay={80} className="s1-intro-copy">
 
-        <p>
-  WRONG LOCATIONS, MISMATCHED COURSES AND LOW-INTENT ENQUIRIES MAKE IT HARDER TO
-  FILL YOUR BATCHES.
-</p>
+          <p>
+            Wrong Locations, Mismatched Courses And Low-Intent Enquiries Make It Harder To
+            Fill Your Batches.
+          </p>
 
-<p>
-  <strong>LET’S FIX THAT.</strong> AT{" "}
-  <strong>{site.brandName.toUpperCase()}</strong>, WE BUILD STUDENT ACQUISITION
-  SYSTEMS FOR BEAUTY, FASHION DESIGNING AND SKILL-BASED INSTITUTES.
-</p>
+          <p>
+            <strong>Let’s Fix That.</strong> At{" "}
+            <strong>{site.brandName}</strong>, We Build Student Acquisition
+            Systems For Beauty, Fashion Designing And Skill-Based Institutes.
+          </p>
 
-<p>
-  LOCAL TARGETING, COURSE-SPECIFIC ADS AND QUALIFIED ENQUIRIES HELP YOUR TEAM
-  TURN STUDENT INTEREST INTO ADMISSION CONVERSATIONS.
-</p>
+          <p>
+            Local Targeting, Course-Specific Ads And Qualified Enquiries Help Your Team
+            Turn Student Interest Into Admission Conversations.
+          </p>
 
           <BatchCta />
 
