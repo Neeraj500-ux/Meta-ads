@@ -833,6 +833,7 @@ export default function Header() {
               href={bookingHref}
               external={bookingIsExternal}
               appearance="legacy"
+              arrow
               className="!min-h-[46px] !rounded-[14px] !px-5 !py-2.5 !text-sm"
             >
               Book a Strategy Call
@@ -910,6 +911,7 @@ export default function Header() {
                   href={bookingHref}
                   external={bookingIsExternal}
                   appearance="legacy"
+                  arrow
                   className="!rounded-[14px] !text-sm"
                   onClick={closeMenu}
                 >

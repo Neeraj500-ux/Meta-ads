@@ -31,7 +31,7 @@ export function Button({
   children,
   onClick,
   type = "button",
-  arrow = true,
+  arrow = false,
   ...rest
 }) {
   const v = { primary: "btn-primary", sun: "btn-sun", soft: "btn-soft" }[variant];

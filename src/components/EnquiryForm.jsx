@@ -1470,9 +1470,6 @@ export default function EnquiryForm() {
                         });
                       }}
                     >
-                      <FormIcon
-                        name="back"
-                      />
                       <span>Back</span>
                     </button>
                   )}
@@ -1500,7 +1497,6 @@ export default function EnquiryForm() {
                         {step === 1
                           ? "Continue"
                           : "Discuss My Admission Goals"}
-                        <FormIcon />
                       </>
                     )}
                   </button>
