@@ -691,10 +691,8 @@ const styles = `
   .institute-hero { padding-block: clamp(26px, 4vw, 56px) clamp(44px, 6vw, 80px); }
 
   .institute-hero .container-x {
-
-    width: min(100%, 1200px);
-
-    padding-inline: clamp(16px, 4vw, 40px);
+    width: min(100%, 1180px);
+    padding-inline: clamp(16px, 4vw, 36px);
 
     margin-inline: auto;
 
@@ -1768,7 +1766,7 @@ const styles = `
 
   @media (min-width: 1280px) {
 
-    .institute-hero .container-x { width: min(100%, 1240px); }
+    .institute-hero .container-x { width: min(100%, 1180px); }
 
     .institute-hero .hero-title { font-size: clamp(58px, 4.7vw, 72px); }
 

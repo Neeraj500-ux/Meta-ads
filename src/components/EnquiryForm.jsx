@@ -383,7 +383,7 @@ const styles = `
   --ce-line: #e9dff0;
   position: relative;
   isolation: isolate;
-  padding: clamp(48px, 7vw, 100px) clamp(16px, 4vw, 40px);
+  padding: clamp(48px, 7vw, 100px) clamp(16px, 4vw, 36px);
   color: var(--ce-ink);
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background: radial-gradient(ellipse at 0% 20%, #f0e5f6 0, transparent 45%), radial-gradient(ellipse at 100% 90%, #f3eaf8 0, transparent 42%), #fcf9fe;

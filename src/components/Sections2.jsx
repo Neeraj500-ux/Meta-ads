@@ -32,9 +32,9 @@ const sectionStyles = `
   .edu-sections, .edu-sections *, .edu-sections *::before,
   .edu-sections *::after { box-sizing: border-box; }
   .edu-sections .container-x {
-    width: min(100%, 1200px);
+    width: min(100%, 1180px);
     margin-inline: auto;
-    padding-inline: clamp(16px, 4vw, 40px);
+    padding-inline: clamp(16px, 4vw, 36px);
     min-width: 0;
   }
   .edu-sections h2 {

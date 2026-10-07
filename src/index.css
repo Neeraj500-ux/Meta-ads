@@ -33,7 +33,10 @@
 }
 
 @layer components {
-  .container-x { @apply mx-auto w-full max-w-[1180px] px-5 sm:px-8; }
+  .container-x {
+    @apply mx-auto w-full max-w-[1180px];
+    padding-inline: clamp(16px, 4vw, 36px);
+  }
   .section-y { @apply py-16 sm:py-24; }
   .h2 { @apply text-[2rem] font-bold sm:text-[2.6rem] lg:text-[3rem]; }
   .lede { @apply mx-auto max-w-2xl text-base sm:text-lg; }
