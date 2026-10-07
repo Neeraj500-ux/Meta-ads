@@ -316,7 +316,7 @@ export function HeroHeading() {
           className="hero-promise hero-enter"
           style={{
             "--delay": "120ms",
-            fontSize: "clamp(22px, 4vw, 30px)",
+            fontSize: "clamp(18px, 4vw, 30px)",
             lineHeight: 1.5,
           }}
         >
