@@ -366,7 +366,7 @@ const styles = `
 
 @media(max-width:767px){
 
-  .s1-compare{padding-top:24px}
+  .s1-compare{padding-top:12px}
 
   .s1-intro-grid,.s1-compare-grid{grid-template-columns:minmax(0,1fr)}
 
