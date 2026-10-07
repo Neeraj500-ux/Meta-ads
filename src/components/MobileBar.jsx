@@ -1,9 +1,5 @@
-import {
-  bookingHref,
-  bookingIsExternal,
-  chatHref,
-  chatIsExternal,
-} from "../config/site.js";
+const phoneNumber = "9899669649";
+const whatsappNumber = `91${phoneNumber}`;
 
 function PhoneIcon() {
   return (
@@ -142,14 +138,6 @@ const mobileBarStyles = `
 `;
 
 export default function MobileBar() {
-  const ext = (external) =>
-    external
-      ? {
-          target: "_blank",
-          rel: "noopener noreferrer",
-        }
-      : {};
-
   return (
     <nav
       className="cc-mobile-bar"
@@ -159,8 +147,7 @@ export default function MobileBar() {
 
       <div className="cc-mobile-bar__inner">
         <a
-          href={bookingHref}
-          {...ext(bookingIsExternal)}
+          href={`tel:${phoneNumber}`}
           className="cc-mobile-bar__button cc-mobile-bar__call pm-btn"
         >
           <PhoneIcon />
@@ -171,8 +158,9 @@ export default function MobileBar() {
         </a>
 
         <a
-          href={chatHref}
-          {...ext(chatIsExternal)}
+          href={`https://wa.me/${whatsappNumber}`}
+          target="_blank"
+          rel="noopener noreferrer"
           className="cc-mobile-bar__button cc-mobile-bar__whatsapp pm-btn pm-btn--whatsapp"
           aria-label="Chat On WhatsApp"
         >
