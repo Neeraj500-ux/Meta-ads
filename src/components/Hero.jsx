@@ -1863,7 +1863,7 @@ export default function Hero() {
       <HeroImageSection image={heroImage} />
       <HeroActions />
       <HeroStats stats={stats} />
-      <HeroTarget journey={journey} journeyTones={journeyTones} />?
+      {/* <HeroTarget journey={journey} journeyTones={journeyTones} /> */}
       <HeroMarquee items={marquee} />
     </section>
   );
