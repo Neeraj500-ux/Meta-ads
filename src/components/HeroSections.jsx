@@ -5,6 +5,7 @@ import { bookingHref, bookingIsExternal } from "../config/site.js";
 import { Button } from "./ui.jsx";
 
 import HeroVisual from "./HeroVisual.jsx";
+import VideoEmbed from "./VideoEmbed.jsx";
 
 const heroImageBase = import.meta.env.BASE_URL || "/";
 
@@ -425,7 +426,10 @@ export function HeroBenefits({ benefits = defaultBenefits } = {}) {
 
 }
 
-export function HeroImageSection({ image = defaultHeroImage } = {}) {
+export function HeroImageSection({
+  image = defaultHeroImage,
+  videoUrl = "https://player.vimeo.com/video/1234072596?autoplay=0&title=0&byline=0&portrait=0&playsinline=1",
+} = {}) {
 
   return (
 
@@ -445,24 +449,10 @@ export function HeroImageSection({ image = defaultHeroImage } = {}) {
 
           <div className="hero-image-screen">
 
-            <img
-
-              className="hero-image-asset"
-
-              src={image}
-
-              alt="Student acquisition funnel connecting fashion, beauty and skill-based institutes with prospective learners"
-
-              width={1672}
-
-              height={941}
-
-              loading="eager"
-
-              fetchPriority="high"
-
-              decoding="async"
-
+            <VideoEmbed
+              src={videoUrl}
+              title="Meta Ads institute growth story"
+              className="max-w-none"
             />
 
           </div>
@@ -470,7 +460,6 @@ export function HeroImageSection({ image = defaultHeroImage } = {}) {
         </div>
 
       </figure>
-
 
     </div>
 
