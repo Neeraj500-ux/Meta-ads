@@ -32,11 +32,32 @@ Restart `npm run dev` after editing `.env`. Variables are baked in at build time
 
 The form validates name, institute, phone (8 to 15 digits), email, city and courses in the browser, and includes a hidden spam trap field. On a valid submit it does the first of these that is configured:
 
-1. **`VITE_FORM_ENDPOINT` set:** sends the data as JSON (`name`, `institute`, `phone`, `email`, `city`, `batch`, `courses`, `budget`, `challenge`). Works with Formspree, Web3Forms, Make, Zapier, n8n or your own API. Create the form in that service, paste its endpoint URL, and make sure it allows requests from your domain.
+1. **`VITE_FORM_ENDPOINT` set:** sends the data as JSON (`name`, `institute`, `phone`, `email`, `city`, `batch`, `courses`, `budget`, `challenge`). Works with Formspree, Web3Forms, Make, Zapier, n8n, Google Apps Script or your own API. Create the form in that service, paste its endpoint URL, and make sure it allows requests from your domain.
 2. **Only `VITE_CONTACT_EMAIL` set:** opens an email draft for the visitor to send.
 3. **Neither set:** shows a clear message asking the visitor to use WhatsApp or the footer contact details.
 
 No data is stored by this project. Add your own privacy policy URL before launch.
+
+### Google Sheets / Apps Script setup
+
+If you want every enquiry saved directly to a Google Sheet, use a Google Apps Script Web App as the `VITE_FORM_ENDPOINT`.
+
+1. Open Google Sheets and create a workbook.
+2. In the spreadsheet, go to **Extensions → Apps Script**.
+3. Paste the script from `scripts/google-sheet-apps-script.js`.
+4. Deploy it as a **Web App** with:
+   - **Execute as:** Me
+   - **Who has access:** Anyone
+5. Copy the generated Web App URL and set it as `VITE_FORM_ENDPOINT` in `.env`.
+6. Restart the app or rebuild for production.
+
+Example:
+
+```env
+VITE_FORM_ENDPOINT=https://script.google.com/macros/s/AKfycby.../exec
+```
+
+The script appends each submission as a new row in a sheet named `Enquiries` and includes the timestamp plus the form values.
 
 ## 2. Edit the content
 

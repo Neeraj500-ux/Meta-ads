@@ -447,7 +447,27 @@ export default function EnquiryForm() {
   const submitLock = useRef(false);
   const requestRef = useRef(null);
   const alive = useRef(true);
+  const leadId = useRef(null);
   const busy = status.type === "sending";
+
+  // One ID per lead so Step 1 and Step 2 land on the same Google Sheet row.
+  const getLeadId = () => {
+    if (!leadId.current) {
+      leadId.current =
+        globalThis.crypto?.randomUUID?.() ||
+        `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    }
+    return leadId.current;
+  };
+
+  // text/plain avoids the CORS preflight that Google Apps Script cannot answer.
+  const sendToSheet = (payload, signal) =>
+    fetch(site.formEndpoint, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload),
+      signal,
+    });
 
   useEffect(() => {
     alive.current = true;
@@ -523,7 +543,19 @@ export default function EnquiryForm() {
       showErrors(nextErrors);
       return;
     }
+
     if (step === 1) {
+      // Save Step 1 right away so the lead is captured even if Step 2 is skipped.
+      if (site.formEndpoint) {
+        sendToSheet({
+          leadId: getLeadId(),
+          stage: "step1",
+          name: values.name.trim(),
+          institute: values.institute.trim(),
+          phone: values.phone.trim(),
+          city: values.city.trim(),
+        }).catch(() => {}); // silent: never block the user
+      }
       pendingFocus.current = "heading";
       setErrors({});
       setStatus({ type: "idle", message: "" });
@@ -532,6 +564,8 @@ export default function EnquiryForm() {
     }
 
     const data = {
+      leadId: getLeadId(),
+      stage: "complete",
       name: values.name.trim(),
       institute: values.institute.trim(),
       phone: values.phone.trim(),
@@ -561,15 +595,7 @@ export default function EnquiryForm() {
         message: "Sending your institute’s details…",
       });
       try {
-        const response = await fetch(site.formEndpoint, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(data),
-          signal: controller.signal,
-        });
+        const response = await sendToSheet(data, controller.signal);
         if (!response.ok) {
           throw new Error("Submission failed");
         }
@@ -580,6 +606,7 @@ export default function EnquiryForm() {
             "Thanks! We’ve received your institute’s details. Our team will contact you to discuss your courses and admission goals.",
         });
         setValues(createEmpty());
+        leadId.current = null;
       } catch {
         if (alive.current) {
           setStatus({
@@ -636,6 +663,7 @@ export default function EnquiryForm() {
 
   const reset = () => {
     pendingFocus.current = "heading";
+    leadId.current = null;
     setValues(createEmpty());
     setErrors({});
     setStep(1);
