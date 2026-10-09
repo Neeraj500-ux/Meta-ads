@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-// Default to the Vimeo hero preview URL provided by the client.
-export const HERO_VIDEO_ID = "1234072596";
+export const HERO_VIDEO_ID = "ERZnOLH1J9Y";
 
 export default function VideoEmbed({
   id = HERO_VIDEO_ID,
@@ -12,7 +11,7 @@ export default function VideoEmbed({
   const [playing, setPlaying] = useState(false);
   const resolvedSrc =
     src ||
-    `https://player.vimeo.com/video/${id}?autoplay=1&title=0&byline=0&portrait=0&playsinline=1`;
+    `https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1&rel=0`;
 
   return (
     <div className={`relative mx-auto w-full ${className}`}>
@@ -37,7 +36,7 @@ export default function VideoEmbed({
             >
               <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-br from-plum-800 via-plum-700 to-plum-600" />
               <img
-                src={`https://i.vimeocdn.com/video/${id}_640.jpg`}
+                src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
                 alt=""
                 loading="lazy"
                 decoding="async"

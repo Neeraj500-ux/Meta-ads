@@ -428,7 +428,7 @@ export function HeroBenefits({ benefits = defaultBenefits } = {}) {
 
 export function HeroImageSection({
   image = defaultHeroImage,
-  videoUrl = "https://player.vimeo.com/video/1234072596?autoplay=0&title=0&byline=0&portrait=0&playsinline=1",
+  videoUrl = "https://www.youtube.com/embed/ERZnOLH1J9Y?autoplay=1&playsinline=1&rel=0",
 } = {}) {
 
   return (
