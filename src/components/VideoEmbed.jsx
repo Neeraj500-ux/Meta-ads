@@ -19,12 +19,15 @@ export default function VideoEmbed({
       <style>{`
         /*
          * Fix the surrounding Hero.jsx frame only when it contains
-         * this video. Remove the solid, downward-offset shadow.
+         * this video. Height / aspect-ratio are reset so the parent
+         * never clips the bottom border.
          */
         .institute-hero .hero-image-shell:has(.video-frame-fixed) {
-          display: block;
-          height: auto;
-          min-height: 0;
+          display: block !important;
+          height: auto !important;
+          min-height: 0 !important;
+          max-height: none !important;
+          aspect-ratio: auto !important;
           padding: 9px;
           border: 1px solid rgba(255, 255, 255, .95);
           border-radius: 38px;
@@ -43,14 +46,16 @@ export default function VideoEmbed({
         }
 
         .institute-hero .hero-image-screen:has(.video-frame-fixed) {
-          display: block;
-          height: auto;
-          min-height: 0;
+          display: block !important;
+          height: auto !important;
+          min-height: 0 !important;
+          max-height: none !important;
+          aspect-ratio: auto !important;
           margin: 0;
           padding: 0;
           border: 0;
           border-radius: 28px;
-          overflow: hidden;
+          overflow: visible;
           background: transparent;
           line-height: 0;
         }
@@ -73,18 +78,20 @@ export default function VideoEmbed({
         }
 
         /*
-         * A real, uniform border provides the dark frame.
-         * There is no padding or extra bottom spacer.
+         * Uniform border on all 4 sides (top right bottom left).
+         * No padding or extra bottom spacer.
          */
         .video-frame-fixed .vf-frame {
           position: relative;
           display: block;
+          flex: none;
           width: 100%;
           height: auto;
           min-height: 0;
+          max-height: none;
           margin: 0;
           padding: 0;
-          border-width: 8px;
+          border-width: 8px 8px 8px 8px;
           border-style: solid;
           border-radius: 28px;
           overflow: hidden;
@@ -231,7 +238,7 @@ export default function VideoEmbed({
           }
 
           .video-frame-fixed .vf-frame {
-            border-width: 6px;
+            border-width: 6px 6px 6px 6px;
             border-radius: 24px;
           }
 
