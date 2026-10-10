@@ -1860,7 +1860,7 @@ const styles = `
 
 export default function Hero() {
   return (
-    <section aria-labelledby="institute-hero-title" className="institute-hero">
+    <section id="hero" aria-labelledby="institute-hero-title" className="institute-hero">
       <style>{styles}</style>
       <HeroHeading />
       <HeroBenefits benefits={benefits} />

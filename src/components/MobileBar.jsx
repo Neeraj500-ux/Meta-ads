@@ -154,6 +154,7 @@ export default function MobileBar() {
         <button
           type="button"
           data-enquiry-popup-trigger
+          data-contact-method="call"
           className="cc-mobile-bar__button cc-mobile-bar__call pm-btn"
         >
           <PhoneIcon />

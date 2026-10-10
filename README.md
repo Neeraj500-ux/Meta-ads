@@ -25,6 +25,8 @@ Copy `.env.example` to `.env` and fill in what you have. Anything left blank is 
 | `VITE_FORM_ENDPOINT` | URL that accepts a JSON `POST`. See below. |
 | `VITE_BOOKING_URL` | Optional Calendly / Cal.com link for "Book a Strategy Call". If blank, those buttons scroll to the enquiry form. |
 | `VITE_PRIVACY_URL`, `VITE_TERMS_URL` | Footer and form links. Hidden until set. |
+| `VITE_META_PIXEL_ID` | Meta Pixel ID used by the Pixel initializer and the no-script fallback. |
+| `VITE_META_TEST_CODE` | Meta Events Manager test code; attached to browser events only in development. |
 
 Restart `npm run dev` after editing `.env`. Variables are baked in at build time, so rebuild before deploying.
 
@@ -49,7 +51,11 @@ If you want every enquiry saved directly to a Google Sheet, use a Google Apps Sc
    - **Execute as:** Me
    - **Who has access:** Anyone
 5. Copy the generated Web App URL and set it as `VITE_FORM_ENDPOINT` in `.env`.
-6. Restart the app or rebuild for production.
+6. In Apps Script, select `authorizeSheetAccess` and click **Run** once; review and allow the spreadsheet permissions. The script is configured for spreadsheet ID `1XTbbrrr8UzQO-V0dHcUpgepjRa7Gxgicm2fJscHRk7w` and tab `Enquiries`.
+7. After changing the Apps Script, open **Deploy → Manage deployments**, edit the Web App deployment, select **New version**, and deploy it. Keep the same URL if editing the existing deployment.
+8. Restart the app or rebuild for production.
+
+If an older version installed a CRM sync trigger, remove that old trigger from Apps Script **Triggers** (clock icon). This script no longer contains or uses CRM sync code.
 
 Example:
 
@@ -57,7 +63,27 @@ Example:
 VITE_FORM_ENDPOINT=https://script.google.com/macros/s/AKfycby.../exec
 ```
 
-The script appends each submission as a new row in a sheet named `Enquiries` and includes the timestamp plus the form values.
+The script opens the configured spreadsheet by ID (not whichever spreadsheet happens to be active) and writes each enquiry to the `Enquiries` tab. The first step is saved before the form proceeds; the final step updates that same row by lead ID while retaining its original timestamp. The frontend waits for a JSONP verification from the Web App before showing success; a failed save or verification leaves the entered details in the form and displays an error. The POST uses URL-encoded `no-cors` because Apps Script does not provide browser CORS headers for its response.
+
+If a test does not save, confirm the `.env` value is the deployed URL ending in `/exec`, the deployment is set to **Execute as: Me** and **Anyone**, the account deploying the script can edit the spreadsheet, and a new deployment version was deployed after replacing the Apps Script code. The deployment URL should respond to a browser GET with `Google Sheet endpoint is live.`. Check the sheet tab is named exactly `Enquiries`.
+
+## Pixel Testing
+
+Set `VITE_META_PIXEL_ID` and `VITE_META_TEST_CODE` in `.env` (or the deployment environment), then restart the dev server. The test event code is attached only when `import.meta.env.DEV` is true. In Meta Events Manager, open **Test Events**, select the pixel, and verify events from the running local site. The Meta Pixel Helper browser extension can also confirm that the pixel loads and that events fire once. Ad blockers can prevent browser events from appearing.
+
+Every event gets a generated `eventID` for future Conversions API deduplication. The development-only `test_event_code` is also included in event parameters. Personal fields (name, institute, phone, city, email, website, and free-text course details) are never sent as Pixel parameters.
+
+| Event | Parameters |
+| --- | --- |
+| `PageView` | None |
+| `ViewContent` | None |
+| `QuizStart` | None |
+| `QuestionAnswered` | `question_id`, `question_text`, `answer`, `points`, `step_number` (identity/free-text fields use only the value `provided`) |
+| `QuizAbandon` | `last_step` |
+| `Lead` | `lead_score`, `lead_temperature`, `total_points`, `value`, `currency`, `content_name` |
+| `LeadCold` / `LeadWarm` / `LeadHot` | Same parameters as `Lead`; only the matching temperature event fires |
+| `Contact` | `method` (`whatsapp` or `call`) |
+| `CompleteRegistration` | Same parameters as `Lead`; fires only for scores 4–5 |
 
 ## 2. Edit the content
 
@@ -82,6 +108,7 @@ src/
   main.jsx, App.jsx     entry and page composition
   index.css             Tailwind layers, buttons, form fields, reduced-motion rules
   config/site.js        reads .env, builds WhatsApp / booking links
+  lib/                  Meta Pixel events and configurable lead scoring
   data/content.js       all page copy
   hooks/useInView.js    scroll-reveal hook (respects reduced motion)
   components/           Header, Hero, HeroVisual, Sections1-3, EnquiryForm, Footer, MobileBar, ui
@@ -92,7 +119,7 @@ src/
 - Responsive from 320px to wide desktop with no horizontal scroll; mobile menu and sticky mobile CTA bar
 - Skip link, semantic landmarks, visible keyboard focus, labelled form fields, accessible accordion (`aria-expanded` / `aria-controls`)
 - Entrance animations, hover states and the logo marquee are disabled under `prefers-reduced-motion`
-- Self-hosted fonts (Bricolage Grotesque, DM Sans) via Fontsource, with no external requests
+- Self-hosted fonts (Bricolage Grotesque, DM Sans) via Fontsource; Meta Pixel loads from Meta when configured
 
 ## Deploying
 

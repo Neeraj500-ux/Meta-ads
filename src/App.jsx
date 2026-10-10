@@ -7,6 +7,7 @@ import { Consultation, Faq } from "./components/Sections3.jsx";
 import EnquiryForm from "./components/EnquiryForm.jsx";
 import Footer from "./components/Footer.jsx";
 import MobileBar from "./components/MobileBar.jsx";
+import { trackContact, trackEvent } from "./lib/pixel.ts";
 
 export default function App() {
   const [enquiryOpen, setEnquiryOpen] = useState(false);
@@ -27,6 +28,37 @@ export default function App() {
       triggerRef.current?.focus({ preventScroll: true });
     };
   }, [enquiryOpen]);
+
+  useEffect(() => {
+    const hero = document.getElementById("hero");
+    if (!hero) return undefined;
+
+    let tracked = false;
+    const checkHeroScroll = () => {
+      if (tracked || hero.getBoundingClientRect().bottom > 0) return;
+      tracked = true;
+      trackEvent("ViewContent");
+      window.removeEventListener("scroll", checkHeroScroll);
+    };
+
+    window.addEventListener("scroll", checkHeroScroll, { passive: true });
+    checkHeroScroll();
+    return () => window.removeEventListener("scroll", checkHeroScroll);
+  }, []);
+
+  const handleTrackingClick = (event) => {
+    if (!(event.target instanceof Element)) return;
+    const target = event.target.closest("a, button");
+    if (!target) return;
+
+    const method = target.dataset.contactMethod;
+    const href = target.getAttribute("href") || "";
+    if (method === "call" || href.startsWith("tel:")) {
+      trackContact("call");
+    } else if (/wa\.me|api\.whatsapp\.com/i.test(href)) {
+      trackContact("whatsapp");
+    }
+  };
 
   const openEnquiry = (event) => {
     const trigger = event.target.closest("[data-enquiry-popup-trigger]");
@@ -67,7 +99,13 @@ export default function App() {
   };
 
   return (
-    <div id="top" onClickCapture={openEnquiry}>
+    <div
+      id="top"
+      onClickCapture={(event) => {
+        handleTrackingClick(event);
+        openEnquiry(event);
+      }}
+    >
       <a href="#main" className="sr-only z-[60] rounded-lg bg-plum-800 px-4 py-2 text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Skip to content</a>
       {/* <Header /> */}
       <main id="main">
