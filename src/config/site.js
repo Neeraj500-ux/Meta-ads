@@ -11,6 +11,7 @@ export const site = {
   privacyUrl: env.VITE_PRIVACY_URL || "",
   termsUrl: env.VITE_TERMS_URL || "",
   bookingUrl: env.VITE_BOOKING_URL || "",
+  crmEndpoint: "https://nuursmovhbhislrphakl.supabase.co/functions/v1/capture-lead",
 };
 
 const waMessage =
