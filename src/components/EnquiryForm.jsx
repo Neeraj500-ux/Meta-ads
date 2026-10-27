@@ -915,6 +915,47 @@ export default function EnquiryForm({
     await verifySheetSave(payload.leadId, payload.stage, signal);
   };
 
+  const saveToCrm = async (data, signal) => {
+    const query = new URLSearchParams(window.location.search);
+
+    const response = await fetch(site.crmEndpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      signal,
+      body: JSON.stringify({
+        external_lead_id: data.leadId,
+        name: data.name,
+        phone: data.phone,
+        email: data.email,
+        company: data.institute,
+        service_name: data.courses,
+        lead_source: "IGS",
+        message: [
+          `City: ${data.city}`,
+          `Challenge: ${data.challenge}`,
+          `Budget: ${data.budget}`,
+          `Start: ${data.start}`,
+          `Role: ${data.role}`,
+          `Website/Instagram: ${data.link}`,
+          `Lead score: ${data.leadSummary}`,
+        ].join("\n"),
+        attribution: {
+          utm_source: query.get("utm_source"),
+          utm_medium: query.get("utm_medium"),
+          utm_campaign: query.get("utm_campaign"),
+          utm_content: query.get("utm_content"),
+        },
+        marketing_consent: false,
+        landing_page_url: window.location.href,
+      }),
+    });
+
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || !result.ok) {
+      throw new Error(result.error || "CRM mein enquiry save nahi hui.");
+    }
+  };
+
   useEffect(() => {
     alive.current = true;
     const handleVisibilityChange = () => {
@@ -1108,6 +1149,7 @@ export default function EnquiryForm({
       });
       try {
         await saveToSheet(data, controller.signal);
+        await saveToCrm(data, controller.signal);
         if (!alive.current) return;
         setStatus({
           type: "success",
